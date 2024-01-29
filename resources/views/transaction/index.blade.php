@@ -28,7 +28,7 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-8">
+                <section class="col-lg-8 connectedSortable">
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
@@ -45,32 +45,32 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex flex-column mb-3">
-                                    <div class="d-flex flex-wrap">
-                                        <div class="form-group mr-3">
-                                            <label for="product_id">Kode/Nama Barang</label>
-                                            <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="product_id" id="product_id">
-                                                <option selected="selected" data-select2-id="" value="">-- Pilih Product --</option>
-                                                @foreach ($products as $i => $product)
-                                                    <option value="{{ $product->id }}" data-product="{{ $product }}" data-select2-id="{{ $product->id }}">{{ $product->code }}-{{ $product->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group mr-3">
-                                            <label class="form-label" for="description">Nama Barang</label>
-                                            <input type="text" class="form-control" id="description" name="description" readonly>
-                                        </div>
-                                        <div class="form-group mr-3">
-                                            <label class="form-label" for="price">Harga</label>
-                                            <input type="text" class="form-control mask-money" id="price" name="price">
-                                        </div>
-                                        <div class="form-group mr-3">
-                                            <label class="form-label" for="qty">Quantity Pembelian</label>
-                                            <input type="number" class="form-control" id="qty" name="qty" value="{{ old('qty') }}">
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <button class="btn btn-primary btn-submit">Simpan</button>
-                                        </div>
+                                <div class="d-flex flex-wrap">
+                                    <div class="form-group mr-3">
+                                        <label for="product_id">Kode/Nama Barang</label>
+                                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="product_id" id="product_id">
+                                            <option selected="selected" data-select2-id="" value="">-- Pilih Product --</option>
+                                            @foreach ($products as $i => $product)
+                                                <option value="{{ $product->id }}" data-product="{{ $product }}" data-select2-id="{{ $product->id }}">{{ $product->code }}-{{ $product->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                    <div class="form-group mr-3">
+                                        <label class="form-label" for="description">Nama Barang</label>
+                                        <input type="text" class="form-control" id="description" name="description" readonly>
+                                    </div>
+                                    <div class="form-group mr-3">
+                                        <label class="form-label" for="price">Harga</label>
+                                        <input type="text" class="form-control mask-money" id="price" name="price">
+                                    </div>
+                                    <div class="form-group mr-3">
+                                        <label class="form-label" for="qty">Quantity Pembelian</label>
+                                        <input type="number" class="form-control" id="qty" name="qty" value="{{ old('qty') }}">
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn btn-primary btn-submit">Simpan</button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
@@ -95,8 +95,8 @@
                         <!-- /.card-footer-->
                     </div>
                     <!-- /.card -->
-                </div>
-                <div class="col-4">
+                </section>
+                <section class="col-lg-4 connectedSortable">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Transaksi Penjualan</h3>
@@ -136,7 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between mb-3">
+                                <div class="d-flex justify-content-between flex-wrap mb-3">
                                     <div class="mr-2">
                                         <p class="text-bold">Total</p>
                                     </div>
@@ -153,26 +153,26 @@
                                         <input type="text" class="form-control mask-money" id="cash" name="cash" value="0">
                                     </div>
                                 </div>
-                                <div class="d-flex flex-row justify-content-between mb-3">
+                                <div class="d-flex flex-row justify-content-between flex-wrap mb-3">
                                     <div class="col-3">
-                                        <a class="btn btn-outline-primary" style="width: 100px" id="2000">+2.000</a>
+                                        <a class="btn btn-outline-primary" style="width: 90px" id="2000">+2.000</a>
                                     </div>
                                     <div class="col-3">
-                                        <a class="btn btn-outline-primary" style="width: 100px" id="5000">+5.000</a>
+                                        <a class="btn btn-outline-primary" style="width: 90px" id="5000">+5.000</a>
                                     </div>
                                     <div class="col-3">
-                                        <a class="btn btn-outline-primary" style="width: 100px" id="10000">+10.000</a>
+                                        <a class="btn btn-outline-primary" style="width: 90px" id="10000">+10.000</a>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-row justify-content-between mb-3">
+                                <div class="d-flex flex-row justify-content-between flex-wrap mb-3">
                                     <div class="col-3">
-                                        <a class="btn btn-outline-primary" style="width: 100px" id="20000">+20.000</a>
+                                        <a class="btn btn-outline-primary" style="width: 90px" id="20000">+20.000</a>
                                     </div>
                                     <div class="col-3">
-                                        <a class="btn btn-outline-primary" style="width: 100px" id="50000">+50.000</a>
+                                        <a class="btn btn-outline-primary" style="width: 90px" id="50000">+50.000</a>
                                     </div>
                                     <div class="col-3">
-                                        <a class="btn btn-outline-primary" style="width: 100px" id="100000">+100.000</a>
+                                        <a class="btn btn-outline-primary" style="width: 90px" id="100000">+100.000</a>
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -201,7 +201,7 @@
                         </div>
                         <!-- /.card-footer-->
                     </div>
-                </div>
+                </section>
             </div>
         </div>
     </section>
