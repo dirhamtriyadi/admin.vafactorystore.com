@@ -13,8 +13,10 @@ class TransactionDetail extends Model
     [
         'transaction_id',
         'product_id',
-        'quantity',
+        'qty',
         'price',
+        'total',
+        'description',
     ];
 
     public function transaction()
