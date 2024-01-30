@@ -44,6 +44,59 @@
                             </div> --}}
                         </div>
                         <div class="card-body">
+                            <div class="d-flex flex-row justify-content-between mb-3">
+                                <div class="d-flex flex-col">
+                                    <form action="{{ route('transaction-report.index') }}" method="GET">
+                                        <div class="d-flex flex-col">
+                                            <div class="mr-3">
+                                                <label for="start_date" class="form-label">Tanggal Dari</label>
+                                                <div class="input-group date mb-3" id="start_date" data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#start_date" name="start_date" value="{{ old('start_date') ? old('start_date') : $start_date }}">
+                                                    <div class="input-group-append" data-target="#start_date" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mr-3">
+                                                <label for="end_date" class="form-label">Tanggal Sampai</label>
+                                                <div class="input-group date mb-3" id="end_date" data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#end_date" name="end_date" value="{{ old('end_date') ? old('end_date') : $end_date }}">
+                                                    <div class="input-group-append" data-target="#end_date" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="perPage" value="{{ $perPage }}">
+                                            <div class="d-flex align-items-center">
+                                                <button type="submit" class="btn btn-primary">Cari</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <form action="{{ route('transaction-report.index') }}" method="GET">
+                                        <select name="perPage" id="perPage">
+                                            <option value="3" {{ $perPage == 3 ? 'selected' : '' }}>3</option>
+                                            <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
+                                            <option value="7" {{ $perPage == 7 ? 'selected' : '' }}>7</option>
+                                            <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
+                                            <option value="15" {{ $perPage == 15 ? 'selected' : '' }}>15</option>
+                                            <option value="20" {{ $perPage == 20 ? 'selected' : '' }}>20</option>
+                                            <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
+                                            <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                                            <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                                            <option value="250" {{ $perPage == 250 ? 'selected' : '' }}>250</option>
+                                            <option value="500" {{ $perPage == 500 ? 'selected' : '' }}>500</option>
+                                            <option value="1000" {{ $perPage == 1000 ? 'selected' : '' }}>1000</option>
+                                            <option value="5000" {{ $perPage == 5000 ? 'selected' : '' }}>5000</option>
+                                            <option value="10000" {{ $perPage == 10000 ? 'selected' : '' }}>10000</option>
+                                        </select>
+                                        <input type="hidden" name="start_date" value="{{ $start_date }}">
+                                        <input type="hidden" name="end_date" value="{{ $end_date }}">
+                                        <button type="submit" class="btn btn-primary ml-3">Apply</button>
+                                    </form>
+                                </div>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
                                     <thead class="table-primary">
@@ -158,6 +211,13 @@
 @push('scripts')
 <script>
     $(function () {
+        $('#start_date').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+        $('#end_date').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+
         $('.btn-show').on('click', function () {
             let detail = $(this).data('detail');
             $('#modal-lg').modal('show');

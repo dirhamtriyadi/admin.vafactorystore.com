@@ -10,13 +10,29 @@ class TransactionReportController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $transactionReports = Transaction::with(['customer', 'user', 'paymentMethod', 'transactionDetails.product'])->paginate(5);
+        $perPage = $request->perPage ?? 5;
+
+        $start_date = date('Y-m-01');
+        $end_date = date('Y-m-d');
+
+        // $transactionReports = Transaction::with(['customer', 'user', 'paymentMethod', 'transactionDetails.product'])->paginate(5);
+        $transactionReports = Transaction::with(['customer', 'user', 'paymentMethod', 'transactionDetails.product'])->whereBetween('date', [$start_date, $end_date])->orderBy('date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage);
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
+
+            $transactionReports = Transaction::with(['customer', 'user', 'paymentMethod', 'transactionDetails.product'])->whereBetween('date', [$start_date, $end_date])->orderBy('date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage, 'start_date=' . $start_date, 'end_date=' . $end_date);
+        }
 
         // dd($transactionReports);
         return view('transaction-report.index', [
             'transactionReports' => $transactionReports,
+            'perPage' => $perPage,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
         ]);
     }
 
