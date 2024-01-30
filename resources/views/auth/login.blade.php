@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in (v2)</title>
+    <title>{{ config('app.name') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -25,6 +25,15 @@
                 <a href="#" class="h1"><b>{{ config('app.name') }}</b></a>
             </div>
             <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li><strong>Whoops!</strong> {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form action="{{ route('authenticate') }}" method="post">
