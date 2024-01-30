@@ -66,7 +66,7 @@
                                         <form action="{{ route('user.index') }}" method="GET">
                                             <div class="input-group">
                                                 <input type="hidden" name="perPage" value="{{ $perPage }}">
-                                                <input type="text" name="search" id="search" class="form-control" placeholder="Cari Barang" value="{{ $search }}">
+                                                <input type="text" name="search" id="search" class="form-control" placeholder="Cari User" value="{{ $search }}">
                                                 <input type="submit" value="Cari" class="btn btn-primary ml-3">
                                             </div>
                                         </form>
