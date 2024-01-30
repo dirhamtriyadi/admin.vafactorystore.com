@@ -224,11 +224,12 @@
 
             console.log(detail);
 
-            $('.modal-title').text("Detail Order");
+            $('.modal-title').text("Detail Transaksi");
             $('#transaction_number').val(detail.transaction_number);
             $('#user_name').val(detail.user.name);
             $('#customer_name').val(detail.customer.name);
             $('#date').val(moment(detail.date).format('DD-MM-YYYY'));
+            $('#table-detail').empty();
 
             $.each(detail, function (indexInArray, valueOfElement) {
                 if (indexInArray == 'transaction_details') {

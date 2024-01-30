@@ -17,9 +17,11 @@ return new class extends Migration
             $table->string('transaction_number')->unique();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('payment_method_id')->nullable();
             $table->timestamps();
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('payment_method_id')->references('id')->on('payment_methods');
         });
     }
 
