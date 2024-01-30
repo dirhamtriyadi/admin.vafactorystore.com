@@ -104,12 +104,12 @@
                                                     <td>{{ $cashFlow->description }}</td>
                                                     <td>{{ $cashFlow->user->name }}</td>
                                                     <td>{{ $cashFlow->created_at }}</td>
-                                                    <td>{{ $cashFlow->amount }}</td>
+                                                    <td>@money($cashFlow->amount)</td>
                                                     <td>
                                                         <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="btn btn-warning">Edit</a>
-                                                        <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="POST" class="d-inline">
+                                                        <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
                                                             @csrf
-                                                            @method('DELETE')
+                                                            @method('delete')
                                                             <button type="submit" class="btn btn-danger">Hapus</button>
                                                         </form>
                                                     </td>
