@@ -25,6 +25,15 @@
                 <a href="#" class="h1"><b>{{ config('app.name') }}</b></a>
             </div>
             <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li><strong>Whoops!</strong> {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form action="{{ route('authenticate') }}" method="post">
