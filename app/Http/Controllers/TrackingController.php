@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class TrackingController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:tracking-list|tracking-create|tracking-edit|tracking-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:tracking-create', ['only' => ['create','store']]);
+        $this->middleware('permission:tracking-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:tracking-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */

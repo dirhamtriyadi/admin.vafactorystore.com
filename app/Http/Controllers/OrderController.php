@@ -9,6 +9,14 @@ use App\Models\PrintType;
 
 class OrderController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:order-list|order-create|order-edit|order-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:order-create', ['only' => ['create','store']]);
+        $this->middleware('permission:order-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:order-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
