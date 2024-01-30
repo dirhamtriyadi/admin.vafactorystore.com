@@ -112,8 +112,8 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item {{ Route::is('cash-flow.*') | Route::is('cash-flow-statement.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ Route::is('cash-flow.*') | Route::is('cash-flow-statement.*') ? 'active' : '' }}">
+                <li class="nav-item {{ Route::is('cash-flow.*') | Route::is('cash-flow-report.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Route::is('cash-flow.*') | Route::is('cash-flow-report.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-money-check"></i>
                         <p>
                             Uang Kas
@@ -128,7 +128,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('cash-flow-statement.index') }}" class="nav-link {{ Route::is('cash-flow-statement.*') ? 'active' : '' }}">
+                            <a href="{{ route('cash-flow-report.index') }}" class="nav-link {{ Route::is('cash-flow-report.*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Laporan Uang Kas</p>
                             </a>

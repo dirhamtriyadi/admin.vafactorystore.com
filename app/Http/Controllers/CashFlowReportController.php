@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CashFlow;
 
-class CashFlowStatementController extends Controller
+class CashFlowReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class CashFlowStatementController extends Controller
             }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage, 'start_date=' . $start_date, 'end_date=' . $end_date);
         }
 
-        return view('cash-flow-statement.index', [
+        return view('cash-flow-report.index', [
             'cashFlows' => $cashFlows,
             'perPage' => $perPage,
             'start_date' => $start_date,

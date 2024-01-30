@@ -10,7 +10,7 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PrintTypeController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\CashFlowController;
-use App\Http\Controllers\CashFlowStatementController;
+use App\Http\Controllers\CashFlowReportController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionReportController;
@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('print-type', PrintTypeController::class);
     Route::resource('tracking', TrackingController::class);
     Route::resource('cash-flow', CashFlowController::class);
-    Route::resource('cash-flow-statement', CashFlowStatementController::class);
+    Route::resource('cash-flow-report', CashFlowReportController::class);
     Route::resource('product', ProductController::class);
     Route::resource('transaction', TransactionController::class);
     Route::resource('transaction-report', TransactionReportController::class);
