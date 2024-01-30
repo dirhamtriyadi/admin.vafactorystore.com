@@ -46,7 +46,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('cash-flow.create') }}" class="btn btn-primary mb-3">Tambah Uang Kas</a>
+                                    @can('cashflow-create')
+                                        <a href="{{ route('cash-flow.create') }}" class="btn btn-primary mb-3">Tambah Uang Kas</a>
+                                    @endcan
                                 </div>
                                 <div class="d-flex justify-content-end mb-3">
                                     <form action="{{ route('cash-flow.index') }}" method="GET">
@@ -106,12 +108,16 @@
                                                     <td>{{ $cashFlow->created_at }}</td>
                                                     <td>@money($cashFlow->amount)</td>
                                                     <td>
-                                                        <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="btn btn-warning">Edit</a>
-                                                        <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                                        </form>
+                                                        @can('cashflow-edit')
+                                                            <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="btn btn-warning">Edit</a>
+                                                        @endcan
+                                                        @can('cashflow-delete')
+                                                            <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                                            </form>
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                             @else

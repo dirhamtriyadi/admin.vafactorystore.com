@@ -46,7 +46,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('customer.create') }}" class="btn btn-primary mb-3">Tambah Pelanggan</a>
+                                    @can('customer-create')
+                                        <a href="{{ route('customer.create') }}" class="btn btn-primary mb-3">Tambah Pelanggan</a>
+                                    @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
                                     <div class="mb-3">
@@ -98,12 +100,16 @@
                                                 <td>{{ $customer->phone }}</td>
                                                 <td>{{ $customer->address }}</td>
                                                 <td>
-                                                    <a href="{{ route('customer.edit', $customer->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    <form action="{{ route('customer.destroy', $customer->id) }}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
+                                                    @can('customer-edit')
+                                                        <a href="{{ route('customer.edit', $customer->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    @endcan
+                                                    @can('customer-delete')
+                                                        <form action="{{ route('customer.destroy', $customer->id) }}" method="post" class="d-inline">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                        </form>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach

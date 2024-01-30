@@ -54,7 +54,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('order.create') }}" class="btn btn-primary mb-3">Tambah Order</a>
+                                    @can('order-create')
+                                        <a href="{{ route('order.create') }}" class="btn btn-primary mb-3">Tambah Order</a>
+                                    @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
                                     <div class="mb-3">
@@ -110,13 +112,17 @@
                                                 <td>{{ $order->name }}</td>
                                                 <td>{{ $order->date }}</td>
                                                 <td>
-                                                    <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    @can('order-edit')
+                                                        <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    @endcan
                                                     <a href="#" class="btn btn-info btn-sm btn-show" data-detail="{{ $order }}">Detail</a>
-                                                    <form action="{{ route('order.destroy', $order->id) }}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
+                                                    @can('order-delete')
+                                                        <form action="{{ route('order.destroy', $order->id) }}" method="post" class="d-inline">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                        </form>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach

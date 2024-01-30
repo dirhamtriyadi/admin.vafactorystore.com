@@ -54,7 +54,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('product.create') }}" class="btn btn-primary mb-3">Tambah Barang</a>
+                                    @can('product-create')
+                                        <a href="{{ route('product.create') }}" class="btn btn-primary mb-3">Tambah Barang</a>
+                                    @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
                                     <div class="mb-3">
@@ -108,13 +110,17 @@
                                                 <td>{{ $product->description }}</td>
                                                 <td>@money($product->price)</td>
                                                 <td>
-                                                    <a href="{{ route('product.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    @can('product-edit')
+                                                        <a href="{{ route('product.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    @endcan
                                                     <a href="#" class="btn btn-info btn-sm btn-show" data-image="/storage/images/products/{{ $product->image }}">Gambar</a>
-                                                    <form action="{{ route('product.destroy', $product->id) }}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
+                                                    @can('product-delete')
+                                                        <form action="{{ route('product.destroy', $product->id) }}" method="post" class="d-inline">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                        </form>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach
