@@ -2,8 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Halaman Login Admin Vafactory - Pembuatan Jersey, Kerudung, dan Maklun. Masuk untuk mengelola konten dan pesanan.">
+    <meta name="keywords" content="Vafactory, admin login, login page, pembuatan jersey, kerudung, maklun">
+    <meta name="author" content="Vafactory Admin">
+    <meta name="robots" content="noindex, nofollow"> <!-- Hindari diindeks oleh mesin pencari -->
     <title>{{ config('app.name') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
