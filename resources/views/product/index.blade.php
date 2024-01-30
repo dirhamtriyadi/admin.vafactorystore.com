@@ -113,7 +113,8 @@
                                                     @can('product-edit')
                                                         <a href="{{ route('product.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
-                                                    <a href="#" class="btn btn-info btn-sm btn-show" data-image="/storage/images/products/{{ $product->image }}">Gambar</a>
+                                                    <a href="#" class="btn btn-info btn-sm btn-show" data-image="/images/products/{{ $product->image }}">Gambar</a>
+                                                    {{-- <a href="#" class="btn btn-info btn-sm btn-show" data-image="/storage/images/products/{{ $product->image }}">Gambar</a> --}}
                                                     @can('product-delete')
                                                         <form action="{{ route('product.destroy', $product->id) }}" method="post" class="d-inline">
                                                             @csrf
