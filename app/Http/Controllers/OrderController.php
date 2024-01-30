@@ -15,13 +15,30 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->perPage ?? 5;
+        $search = $request->search;
 
-        $orders = Order::with(['user', 'customer', 'printType'])->orderBy('date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $orders = Order::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+
+        if ($request->has('search')) {
+            $orders = Order::with('user', 'customer', 'printType')
+                ->where('order_number', 'like', '%' . $request->search . '%')
+                ->orWhereHas('customer', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('printType', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhere('name', 'like', '%' . $request->search . '%')
+                ->orWhere('date', 'like', '%' . $request->search . '%')
+                ->paginate($perPage)
+                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+        }
         // dd($orders);
 
         return view('order.index', [
             'orders' => $orders,
             'perPage' => $perPage,
+            'search' => $search,
         ]);
     }
 
