@@ -2,8 +2,23 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vafactory - Spesialis Pembuatan Jersey, Kerudung, dan Maklun. Pesan produk berkualitas tinggi sesuai kebutuhan Anda.">
+    <meta name="keywords" content="Vafactory, jersey, kerudung, maklun, pembuatan jersey, pesan jersey, desain jersey, pesan kerudung, desain kerudung, pesan maklun, desain maklun">
+    <meta name="author" content="Vafactory Admin">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Vafactory - Pembuatan Jersey, Kerudung, dan Maklun">
+    <meta property="og:description" content="Spesialis pembuatan jersey, kerudung, dan maklun dengan kualitas terbaik. Pesan produk sesuai kebutuhan Anda.">
+    <meta property="og:image" content="https://admin.vafactorystore.com/favicon.ico"> <!-- Ganti dengan URL gambar thumbnail yang sesuai -->
+    <meta property="og:url" content="https://admin.vafactorystore.com/"> <!-- Ganti dengan URL website yang sesuai -->
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@vafactory">
+    <meta name="twitter:title" content="Vafactory - Pembuatan Jersey, Kerudung, dan Maklun">
+    <meta name="twitter:description" content="Spesialis pembuatan jersey, kerudung, dan maklun dengan kualitas terbaik. Pesan produk sesuai kebutuhan Anda.">
+    <meta name="twitter:image" content="https://admin.vafactorystore.com/favicon.ico"> <!-- Ganti dengan URL gambar thumbnail yang sesuai -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ config('app.name') }}</title>
 
