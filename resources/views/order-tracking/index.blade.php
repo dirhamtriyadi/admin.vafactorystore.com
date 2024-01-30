@@ -46,7 +46,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('order-tracking.create') }}" class="btn btn-primary mb-3">Tambah Order Tracking</a>
+                                    @can('order-tracking-create')
+                                        <a href="{{ route('order-tracking.create') }}" class="btn btn-primary mb-3">Tambah Order Tracking</a>
+                                    @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
                                     <div class="mb-3">
@@ -108,12 +110,16 @@
                                                 @endphp</td>
                                                 <td>{{ $orderTracking->date }}</td>
                                                 <td>
-                                                    <a href="{{ route('order-transaction.edit', $orderTracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    <form action="{{ route('order-transaction.destroy', $orderTracking->id) }}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
+                                                    @can('order-tracking-edit')
+                                                        <a href="{{ route('order-transaction.edit', $orderTracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    @endcan
+                                                    @can('order-tracking-delete')
+                                                        <form action="{{ route('order-transaction.destroy', $orderTracking->id) }}" method="post" class="d-inline">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                        </form>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach

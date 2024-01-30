@@ -50,7 +50,9 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-end">
-                                <a href="{{ route('role.create') }}" class="btn btn-primary mb-3">Tambah Role</a>
+                                @can('role-create')
+                                    <a href="{{ route('role.create') }}" class="btn btn-primary mb-3">Tambah Role</a>
+                                @endcan
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
@@ -67,12 +69,16 @@
                                                 <td>{{ $i + $roles->firstitem() }}</td>
                                                 <td>{{ $role->name }}</td>
                                                 <td>
-                                                    <a href="{{ route('role.edit', $role->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    <form action="{{ route('role.destroy', $role->id) }}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
+                                                    @can('role-edit')
+                                                        <a href="{{ route('role.edit', $role->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    @endcan
+                                                    @can('role-delete')
+                                                        <form action="{{ route('role.destroy', $role->id) }}" method="post" class="d-inline">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                        </form>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach

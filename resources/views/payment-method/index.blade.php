@@ -54,7 +54,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('payment-method.create') }}" class="btn btn-primary mb-3">Tambah Jenis Pembayaran</a>
+                                    @can('payment-method-create')
+                                        <a href="{{ route('payment-method.create') }}" class="btn btn-primary mb-3">Tambah Jenis Pembayaran</a>
+                                    @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
                                     <div class="mb-3">
@@ -104,12 +106,16 @@
                                                 <td>{{ $paymentMethod->name }}</td>
                                                 <td>{{ $paymentMethod->description }}</td>
                                                 <td>
-                                                    <a href="{{ route('payment-method.edit', $paymentMethod->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    <form action="{{ route('payment-method.destroy', $paymentMethod->id) }}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
+                                                    @can('payment-method-edit')
+                                                        <a href="{{ route('payment-method.edit', $paymentMethod->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    @endcan
+                                                    @can('payment-method-delete')
+                                                        <form action="{{ route('payment-method.destroy', $paymentMethod->id) }}" method="post" class="d-inline">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                        </form>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach

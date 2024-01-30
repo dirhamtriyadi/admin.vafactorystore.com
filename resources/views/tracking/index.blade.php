@@ -54,7 +54,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('tracking.create') }}" class="btn btn-primary mb-3">Tambah Pelacakan</a>
+                                    @can('tracking-create')
+                                        <a href="{{ route('tracking.create') }}" class="btn btn-primary mb-3">Tambah Pelacakan</a>
+                                    @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
                                     <div class="mb-3">
@@ -104,12 +106,16 @@
                                                 <td>{{ $tracking->name }}</td>
                                                 <td>{{ $tracking->description }}</td>
                                                 <td>
-                                                    <a href="{{ route('tracking.edit', $tracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    <form action="{{ route('tracking.destroy', $tracking->id) }}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
+                                                    @can('tracking-edit')
+                                                        <a href="{{ route('tracking.edit', $tracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                    @endcan
+                                                    @can('tracking-delete')
+                                                        <form action="{{ route('tracking.destroy', $tracking->id) }}" method="post" class="d-inline">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                        </form>
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach
