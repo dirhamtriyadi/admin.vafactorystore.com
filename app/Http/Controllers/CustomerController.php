@@ -10,10 +10,26 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::paginate(10);
-        return view('customer.index', ['customers' => $customers]);
+        $perPage = $request->perPage ?? 5;
+        $search = $request->search;
+
+        $customers = Customer::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+
+        if ($request->has('search')) {
+            $customers = Customer::where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('phone', 'like', '%' . $request->search . '%')
+                ->orWhere('address', 'like', '%' . $request->search . '%')
+                ->paginate($perPage)
+                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+        }
+
+        return view('customer.index', [
+            'customers' => $customers,
+            'perPage' => $perPage,
+            'search' => $search,
+        ]);
     }
 
     /**

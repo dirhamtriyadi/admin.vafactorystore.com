@@ -11,12 +11,26 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(10);
+        $perPage = $request->perPage ?? 5;
+        $search = $request->search;
+
+        $products = Product::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+
+        if ($request->has('search')) {
+            $products = Product::where('code', 'like', '%' . $request->search . '%')
+                ->orWhere('name', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%')
+                ->orWhere('price', 'like', '%' . $request->search . '%')
+                ->paginate($perPage)
+                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+        }
 
         return view('product.index', [
             'products' => $products,
+            'perPage' => $perPage,
+            'search' => $search,
         ]);
     }
 

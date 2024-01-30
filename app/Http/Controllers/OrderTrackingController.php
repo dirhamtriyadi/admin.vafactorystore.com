@@ -12,12 +12,32 @@ class OrderTrackingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orderTrackings = OrderTracking::with(['order', 'tracking'])->paginate(10);
+        $perPage = $request->perPage ?? 5;
+        $search = $request->search;
+
+        $orderTrackings = OrderTracking::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+
+        if ($request->has('search')) {
+            $orderTrackings = OrderTracking::with('order', 'tracking')
+                ->whereHas('order', function ($query) use ($request) {
+                    $query->where('order_number', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('tracking', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhere('description', 'like', '%' . $request->search . '%')
+                ->orWhere('status', 'like', '%' . $request->search . '%')
+                ->orWhere('date', 'like', '%' . $request->search . '%')
+                ->paginate($perPage)
+                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+        }
 
         return view('order-tracking.index', [
             'orderTrackings' => $orderTrackings,
+            'perPage' => $perPage,
+            'search' => $search,
         ]);
     }
 

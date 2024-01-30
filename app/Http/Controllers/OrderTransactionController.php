@@ -12,12 +12,35 @@ class OrderTransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orderTransactions = OrderTransaction::with(['order', 'paymentMethod'])->paginate(10);
+        $perPage = $request->perPage ?? 5;
+        $search = $request->search;
+
+        $orderTransactions = OrderTransaction::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+
+        if ($request->has('search')) {
+            $orderTransactions = OrderTransaction::with('order', 'paymentMethod', 'user')
+                ->whereHas('order', function ($query) use ($request) {
+                    $query->where('order_number', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('paymentMethod', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhereHas('user', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->search . '%');
+                })
+                ->orWhere('amount', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%')
+                ->orWhere('date', 'like', '%' . $request->search . '%')
+                ->paginate($perPage)
+                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+        }
 
         return view('order-transaction.index', [
             'orderTransactions' => $orderTransactions,
+            'perPage' => $perPage,
+            'search' => $search,
         ]);
     }
 

@@ -10,12 +10,24 @@ class TrackingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $trackings = Tracking::paginate(10);
+        $perPage = $request->perPage ?? 5;
+        $search = $request->search;
+
+        $trackings = Tracking::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+
+        if ($request->has('search')) {
+            $trackings = Tracking::where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%')
+                ->paginate($perPage)
+                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+        }
 
         return view('tracking.index', [
             'trackings' => $trackings,
+            'perPage' => $perPage,
+            'search' => $search,
         ]);
     }
 

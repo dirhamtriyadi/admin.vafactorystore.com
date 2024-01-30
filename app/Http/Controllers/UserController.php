@@ -12,11 +12,24 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
+        $perPage = $request->perPage ?? 5;
+        $search = $request->search;
+
+        $users = User::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+
+        if ($request->has('search')) {
+            $users = User::where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%')
+                ->paginate($perPage)
+                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+        }
+
         return view('user.index', [
             'users' => $users,
+            'perPage' => $perPage,
+            'search' => $search,
         ]);
     }
 

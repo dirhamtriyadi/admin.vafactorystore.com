@@ -10,12 +10,25 @@ class PrintTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $printTypes = PrintType::paginate(10);
+        $perPage = $request->perPage ?? 5;
+        $search = $request->search;
+
+        $printTypes = PrintType::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+
+        if ($request->has('search')) {
+            $printTypes = PrintType::where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('price', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%')
+                ->paginate($perPage)
+                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+        }
 
         return view('print-type.index', [
             'printTypes' => $printTypes,
+            'perPage' => $perPage,
+            'search' => $search,
         ]);
     }
 
