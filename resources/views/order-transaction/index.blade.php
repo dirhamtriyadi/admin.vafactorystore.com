@@ -71,8 +71,10 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nomor Order</th>
+                                            <th>Nama Penginput</th>
                                             <th>Kategori Pembayaran</th>
-                                            <th>Nama Order</th>
+                                            <th>Jumlah</th>
+                                            <th>Keterangan</th>
                                             <th>Tanggal</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -82,8 +84,10 @@
                                             <tr>
                                                 <td>{{ $i + $orderTransactions->firstitem() }}</td>
                                                 <td>{{ $orderTransaction->order->order_number }}</td>
+                                                <td>{{ $orderTransaction->user->name }}</td>
                                                 <td>{{ $orderTransaction->paymentMethod->name }}</td>
-                                                <td>{{ $orderTransaction->order->name }}</td>
+                                                <td>@money($orderTransaction->amount)</td>
+                                                <td>{{ $orderTransaction->description }}</td>
                                                 <td>{{ $orderTransaction->date }}</td>
                                                 <td>
                                                     <a href="{{ route('order-transaction.edit', $orderTransaction->id) }}" class="btn btn-warning btn-sm">Edit</a>
