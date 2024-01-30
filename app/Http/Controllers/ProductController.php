@@ -75,11 +75,12 @@ class ProductController extends Controller
             // $name = date('Y-m-d') . '-' . $product->code . '.' . $image->getClientOriginalExtension();
 
             // disimpan di folder public/images/products
-            // $destinationPath = public_path('/images/products');
-            // $image->move($destinationPath, $name);
+            $destinationPath = public_path('/images/products');
+            $image->move($destinationPath, $name);
 
             // disimpan di folder storage/app/public/images/products
-            $image->storeAs('public/images/products', $name);
+            // $image->storeAs('public/images/products', $name);
+
             $product->image = $name;
         }
 
@@ -133,26 +134,27 @@ class ProductController extends Controller
             // $name = date('Y-m-d') . '-' . $product->code . '.' . $image->getClientOriginalExtension();
 
             // Menghapus file dari public
-            // $file = $product->image;
-            // if ($file) {
-            //     $path = public_path('images/products/' . $file);
-            //     if (file_exists($path)) {
-            //         unlink($path);
-            //     }
-            // }
+            $file = $product->image;
+            if ($file) {
+                $path = public_path('images/products/' . $file);
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
 
             // Menghapus file dari storage
             $file = $product->image;
-            if ($file) {
-                Storage::delete('public/images/products/' . $file);
-            }
+            // if ($file) {
+            //     Storage::delete('public/images/products/' . $file);
+            // }
 
             // disimpan di folder public/images/products
-            // $destinationPath = public_path('/images/products');
-            // $image->move($destinationPath, $name);
+            $destinationPath = public_path('/images/products');
+            $image->move($destinationPath, $name);
 
             // disimpan di folder storage/app/public/images/products
-            $image->storeAs('public/images/products', $name);
+            // $image->storeAs('public/images/products', $name);
+
             $product->image = $name;
         }
 
@@ -175,19 +177,19 @@ class ProductController extends Controller
 
 
         // Menghapus file dari public
-        // $file = $product->image;
-        // if ($file) {
-        //     $path = public_path('images/products/' . $file);
-        //     if (file_exists($path)) {
-        //         unlink($path);
-        //     }
-        // }
-
-        // Menghapus file dari storage
         $file = $product->image;
         if ($file) {
-            Storage::delete('public/images/products/' . $file);
+            $path = public_path('images/products/' . $file);
+            if (file_exists($path)) {
+                unlink($path);
+            }
         }
+
+        // Menghapus file dari storage
+        // $file = $product->image;
+        // if ($file) {
+        //     Storage::delete('public/images/products/' . $file);
+        // }
 
         return redirect()->route('product.index')->with('success', 'Product deleted successfully.');
     }
