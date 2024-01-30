@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class CashFlowController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:cashflow-list|cashflow-create|cashflow-edit|cashflow-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:cashflow-create', ['only' => ['create','store']]);
+        $this->middleware('permission:cashflow-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:cashflow-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */

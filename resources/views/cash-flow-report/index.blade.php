@@ -46,7 +46,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-row justify-content-between mb-3">
                                 <div class="d-flex flex-col">
-                                    <form action="{{ route('cash-flow-statement.index') }}" method="GET">
+                                    <form action="{{ route('cash-flow-report.index') }}" method="GET">
                                         <div class="d-flex flex-col">
                                             <div class="mr-3">
                                                 <label for="start_date" class="form-label">Tanggal Dari</label>
@@ -74,7 +74,7 @@
                                     </form>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <form action="{{ route('cash-flow-statement.index') }}" method="GET">
+                                    <form action="{{ route('cash-flow-report.index') }}" method="GET">
                                         <select name="perPage" id="perPage">
                                             <option value="3" {{ $perPage == 3 ? 'selected' : '' }}>3</option>
                                             <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
