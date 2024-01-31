@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use PDF;
 
 class TransactionReportController extends Controller
 {
@@ -90,5 +91,19 @@ class TransactionReportController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function print(Request $request)
+    {
+
+        $transaction = Transaction::with(['customer', 'user', 'paymentMethod', 'transactionDetails.product'])->findOrFail($request->id);
+        // dd($transaction);
+
+        $pdf = PDF::loadView('transaction-report.print', [
+            'transaction' => $transaction,
+        ]);
+
+        return $pdf->stream();
+
     }
 }

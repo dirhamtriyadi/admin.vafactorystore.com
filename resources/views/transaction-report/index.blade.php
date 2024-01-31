@@ -127,7 +127,7 @@
                                                 <td>@money($totalPrice)</td>
                                                 <td>
                                                     {{-- <a href="{{ route('transaction-report.show', $transactionReport->id) }}" class="btn btn-info btn-sm">Detail</a> --}}
-                                                    <a href="#" class="btn btn-info btn-sm btn-show" data-detail="{{ $transactionReport }}">Detail</a>
+                                                    <a class="btn btn-info btn-sm btn-show" data-detail="{{ $transactionReport }}">Detail</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -200,7 +200,8 @@
                     </div> --}}
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Print</button>
+                        {{-- <button type="button" class="btn btn-primary">Print</button> --}}
+                        <a class="btn btn-primary btn-print">Print</a>
                     </div>
                 </div>
             </div>
@@ -246,6 +247,8 @@
                     });
                 }
             });
+
+            $('.btn-print').attr('href', `{{ route('transaction-report.print') }}?id=${detail.id}`);
         })
     })
 </script>
