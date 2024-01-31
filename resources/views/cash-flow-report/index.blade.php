@@ -97,6 +97,17 @@
                                     </form>
                                 </div>
                             </div>
+                            <div class="d-flex flex-row justify-content-end mb-3">
+                                <form action="{{ route('cash-flow-report.print') }}" method="GET">
+                                    <div class="d-flex flex-col">
+                                        <input type="hidden" name="start_date" value="{{ $start_date }}">
+                                        <input type="hidden" name="end_date" value="{{ $end_date }}">
+                                        <div class="d-flex align-items-center">
+                                            <button type="submit" class="btn btn-primary">Print</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
                                     <thead class="table-primary">

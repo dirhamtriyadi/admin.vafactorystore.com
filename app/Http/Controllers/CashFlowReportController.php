@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CashFlow;
+use PDF;
 
 class CashFlowReportController extends Controller
 {
@@ -96,5 +97,34 @@ class CashFlowReportController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function print(Request $request)
+    {
+        $start_date = date('Y-m-01');
+        $end_date = date('Y-m-d');
+
+        $cashFlows = CashFlow::with(['user' => function ($query) {
+            $query->select('id', 'name');
+        }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->get();
+
+        if ($request->has('start_date') && $request->has('end_date')) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
+
+            $cashFlows = CashFlow::with(['user' => function ($query) {
+                $query->select('id', 'name');
+            }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->get();
+        }
+
+        // dd($cashFlows);
+
+        $pdf = PDF::loadview('cash-flow-report.print', [
+            'cashFlows' => $cashFlows,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+        ]);
+
+        return $pdf->stream();
     }
 }

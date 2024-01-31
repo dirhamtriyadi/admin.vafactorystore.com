@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
 
         Blade::directive('money', function ($amount) {
-            return "<?php echo 'RP. ' . number_format($amount, 2); ?>";
+            return "<?php echo 'Rp. ' . number_format($amount, 2); ?>";
         });
     }
 }
