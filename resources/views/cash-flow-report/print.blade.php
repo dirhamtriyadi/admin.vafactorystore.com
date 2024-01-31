@@ -108,7 +108,7 @@
                         @endphp
                         @if ($item->cash_flow_type == 'UANGMASUK')
                             <tr style="background-color: #F1948A">
-                                <td>{{ $item->date }}</td>
+                                <td>{{ $item->transaction_date }}</td>
                                 <td>{{ $item->description }}</td>
                                 <td>@money($item->amount)</td>
                                 <td></td>
@@ -116,7 +116,7 @@
                         @endif
                         @if ($item->cash_flow_type == 'UANGKELUAR')
                             <tr style="background-color: #82E0AA">
-                                <td>{{ $item->date }}</td>
+                                <td>{{ $item->transaction_date }}</td>
                                 <td>{{ $item->description }}</td>
                                 <td></td>
                                 <td>@money($item->amount)</td>
