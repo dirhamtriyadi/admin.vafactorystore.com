@@ -75,7 +75,7 @@
 
                                 <div class="mb-3">
                                     <label for="price" class="form-label">Harga *</label>
-                                    <input type="number" class="form-control" id="price" name="price" value="{{ old('price') }}">
+                                    <input type="text" class="form-control mask-money" id="price" name="price" value="{{ old('price') }}">
                                 </div>
 
                                 <div class="mb-3">

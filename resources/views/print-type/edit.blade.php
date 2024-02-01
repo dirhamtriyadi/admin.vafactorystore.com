@@ -65,7 +65,7 @@
 
                                 <div class="mb-3">
                                     <label for="price" class="form-label">Harga *</label>
-                                    <input type="number" class="form-control" id="price" name="price" value="{{ old('price') ? old('price') : $printType->price }}">
+                                    <input type="text" class="mask-money form-control" id="price" name="price" value="{{ old('price') ? old('price') : $printType->price }}">
                                 </div>
 
                                 <div class="mb-3">
