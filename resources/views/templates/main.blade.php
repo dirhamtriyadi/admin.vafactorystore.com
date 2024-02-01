@@ -132,6 +132,12 @@
                 format: 'YYYY-MM-DD'
             })
 
+            $('#reservationdatetime').datetimepicker({
+                icons: {
+                    time: 'far fa-clock'
+                }
+            })
+
             $('.select2').select2({
                 placeholder: 'select..'
             })
