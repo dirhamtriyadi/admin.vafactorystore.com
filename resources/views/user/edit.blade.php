@@ -60,12 +60,12 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama</label>
+                                    <label for="name" class="form-label">Nama *</label>
                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ? old('name') : $user->name }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email address</label>
+                                    <label for="email" class="form-label">Email address *</label>
                                     <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="{{ old('email') ? old('email') : $user->email }}">
                                 </div>
 
@@ -81,13 +81,26 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                                    <label for="exampleInputPassword1" class="form-label">Password *</label>
                                     <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Konfirmasi Password</label>
+                                    <label for="exampleInputPassword1" class="form-label">Konfirmasi Password *</label>
                                     <input type="password" class="form-control" id="exampleInputPassword1" name="password_confirmation">
+                                </div>
+
+                                <div class="mb-3">
+                                    <table>
+                                        <tr>
+                                            <td>Catatan: </td>
+                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>Jika password dan konfirmasi password tidak diisi maka password otomatis jadi "password"</td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div class="d-flex justify-content-end">
