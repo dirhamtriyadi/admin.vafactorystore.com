@@ -72,7 +72,7 @@
 
                                 <div class="mb-3">
                                     <label for="amount" class="form-label">Nominal *</label>
-                                    <input type="text" class="form-control" id="amount" name="amount" value="{{ old('amount') ? old('amount') : $cashFlow->amount }}">
+                                    <input type="text" class="form-control mask-money" id="amount" name="amount" value="{{ old('amount') ? old('amount') : $cashFlow->amount }}">
                                 </div>
 
                                 <div class="mb-3">
