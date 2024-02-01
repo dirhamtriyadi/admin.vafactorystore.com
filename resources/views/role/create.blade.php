@@ -58,17 +58,26 @@
                             <form action="{{ route('role.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama</label>
+                                    <label for="name" class="form-label">Nama *</label>
                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label for="permissions" class="form-label">Permission</label>
+                                    <label for="permissions" class="form-label">Permission *</label>
                                     <select name="permissions[]" id="permissions" class="form-control" multiple>
                                         @foreach ($permissions as $permission)
                                             <option value="{{ $permission->name }}">{{ $permission->name }}</option>
                                         @endforeach
                                     </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <table>
+                                        <tr>
+                                            <td>Catatan: </td>
+                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div class="d-flex justify-content-end">

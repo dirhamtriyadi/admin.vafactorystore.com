@@ -59,7 +59,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
-                                    <label for="transaction_date" class="form-label">Tanggal</label>
+                                    <label for="transaction_date" class="form-label">Tanggal *</label>
                                     <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="transaction_date" value="{{ old('transaction_date') ? old('transaction_date') : $cashFlow->transaction_date }}">
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
@@ -71,14 +71,14 @@
                                 <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">
 
                                 <div class="mb-3">
-                                    <label for="amount" class="form-label">Nominal</label>
+                                    <label for="amount" class="form-label">Nominal *</label>
                                     <input type="text" class="form-control" id="amount" name="amount" value="{{ old('amount') ? old('amount') : $cashFlow->amount }}">
                                 </div>
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="cash_flow_type" class="form-label">Type</label>
-                                        <select class="form-control" id="cash_flow_type" name="cash_flow_type">
+                                        <label for="cash_flow_type" class="form-label">Type *</label>
+                                        <select class="form-control select2" id="cash_flow_type" name="cash_flow_type">
                                             <option selected value="">-- Pilih Type --</option>
                                             <option value="UANGMASUK" {{ old('cash_flow_type') == "UANGMASUK" | $cashFlow->cash_flow_type == "UANGMASUK" ? 'selected' : '' }}>Uang Masuk</option>
                                             <option value="UANGKELUAR" {{ old('cash_flow_type') == "UANGKELUAR" | $cashFlow->cash_flow_type == "UANGKELUAR" ? 'selected' : '' }}>Uang Keluar</option>
@@ -102,6 +102,15 @@
                                     <label for="description" class="form-label">Deskripsi</label>
                                     {{-- <input type="text" class="form-control" id="description" name="description"> --}}
                                     <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') ? old('description') : $cashFlow->description }}</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <table>
+                                        <tr>
+                                            <td>Catatan: </td>
+                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div class="d-flex justify-content-end">

@@ -58,12 +58,12 @@
                             <form action="{{ route('customer.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama</label>
+                                    <label for="name" class="form-label">Nama *</label>
                                     <input type="text" class="form-control" id="name" name="name">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="phone" class="form-label">Nomor HP</label>
+                                    <label for="phone" class="form-label">Nomor HP *</label>
                                     <input type="number" class="form-control" id="phone" name="phone">
                                 </div>
 
@@ -71,6 +71,15 @@
                                     <label for="address" class="form-label">Alamat</label>
                                     {{-- <input type="text" class="form-control" id="address" name="address"> --}}
                                     <textarea name="address" id="address" cols="30" rows="10" class="form-control"></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <table>
+                                        <tr>
+                                            <td>Catatan: </td>
+                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div class="d-flex justify-content-end">
