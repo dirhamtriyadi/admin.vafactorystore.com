@@ -59,12 +59,12 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama</label>
+                                    <label for="name" class="form-label">Nama *</label>
                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ? old('name') : $printType->name }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="price" class="form-label">Harga</label>
+                                    <label for="price" class="form-label">Harga *</label>
                                     <input type="number" class="form-control" id="price" name="price" value="{{ old('price') ? old('price') : $printType->price }}">
                                 </div>
 
@@ -72,6 +72,15 @@
                                     <label for="description" class="form-label">Deskripsi</label>
                                     {{-- <input type="text" class="form-control" id="description" name="description"> --}}
                                     <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') ? old('description') : $printType->description }}</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <table>
+                                        <tr>
+                                            <td>Catatan: </td>
+                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div class="d-flex justify-content-end">
