@@ -60,9 +60,9 @@
                                 @method('PUT')
                                 <div class="mb-3">
                                     <label for="transaction_date" class="form-label">Tanggal *</label>
-                                    <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="transaction_date" value="{{ old('transaction_date') ? old('transaction_date') : $cashFlow->transaction_date }}">
-                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group date mb-3" id="reservationdatetime" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" name="transaction_date" value="{{ old('transaction_date') ? old('transaction_date') : $cashFlow->transaction_date }}">
+                                        <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
