@@ -60,13 +60,13 @@
                                 <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">
 
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama Order</label>
+                                    <label for="name" class="form-label">Nama Order *</label>
                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
                                 </div>
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="customer_id" class="form-label">Pelanggan</label>
+                                        <label for="customer_id" class="form-label">Pelanggan *</label>
                                         <select class="form-control select2" id="customer_id" name="customer_id">
                                             <option selected value="">-- Pilih Pelanggan --</option>
                                             @foreach ($customers as $i => $customer)
@@ -78,7 +78,7 @@
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="print_type_id" class="form-label">Kategori</label>
+                                        <label for="print_type_id" class="form-label">Kategori *</label>
                                         <select class="form-control select2" id="print_type_id" name="print_type_id">
                                             <option selected value="">-- Pilih Kategori --</option>
                                             @foreach ($printTypes as $i => $printType)
@@ -89,44 +89,53 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="qty" class="form-label">Qty</label>
+                                    <label for="qty" class="form-label">Qty *</label>
                                     <input type="number=" class="form-control" id="qty" name="qty" value="{{ old('qty') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="price" class="form-label">Harga</label>
+                                    <label for="price" class="form-label">Harga *</label>
                                     <input type="text=" class="form-control mask-money" id="price" name="price" value="{{ old('price') }}" readonly>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="subtotal" class="form-label">Sub Total</label>
+                                    <label for="subtotal" class="form-label">Sub Total *</label>
                                     <input type="text=" class="form-control mask-money" id="subtotal" name="subtotal" value="{{ old('subtotal') }}" readonly>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="discount" class="form-label">Diskon</label>
-                                    <input type="text=" class="form-control mask-money" id="discount" name="discount" value="{{ old('discount') }}">
+                                    <input type="text=" class="form-control mask-money" id="discount" name="discount" value="{{ old('discount') ? old('discount') : 0 }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="total" class="form-label">Total</label>
+                                    <label for="total" class="form-label">Total *</label>
                                     <input type="text=" class="form-control mask-money" id="total" name="total" value="{{ old('total') }}" readonly>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">Deskripsi</label>
+                                    <label for="description" class="form-label">Deskripsi *</label>
                                     {{-- <input type="text" class="form-control" id="description" name="description"> --}}
                                     <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') }}</textarea>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="date" class="form-label">Tanggal</label>
+                                    <label for="date" class="form-label">Tanggal *</label>
                                     <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{{ old('date') }}">
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <table>
+                                        <tr>
+                                            <td>Catatan: </td>
+                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div class="d-flex justify-content-end">

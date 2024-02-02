@@ -105,7 +105,7 @@
 
                                 <div class="mb-3">
                                     <label for="discount" class="form-label">Diskon</label>
-                                    <input type="text=" class="form-control mask-money" id="discount" name="discount" value="{{ old('discount') ? old('discount') : $order->discount }}">
+                                    <input type="text=" class="form-control mask-money" id="discount" name="discount" value="{{ old('discount') ? old('discount') : ($order->discount ? $order->discount : 0) }}">
                                 </div>
 
                                 <div class="mb-3">
