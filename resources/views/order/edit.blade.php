@@ -57,6 +57,7 @@
                             </div>
                             <form action="{{ route('order.update', $order->id) }}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">
 
                                 <div class="mb-3">

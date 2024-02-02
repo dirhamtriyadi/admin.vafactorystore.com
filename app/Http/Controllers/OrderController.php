@@ -131,7 +131,36 @@ class OrderController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        //
+        $validatedData = $request->validate([
+            'customer_id' => 'required|numeric',
+            'print_type_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
+            'qty' => 'required|numeric',
+            'price' => 'required|numeric',
+            'subtotal' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'total' => 'required|numeric',
+            'name' => 'required',
+            'description' => '',
+            'date' => 'required|date',
+        ]);
+
+        $order = Order::findOrFail($id);
+        $order->update([
+            'customer_id' => $validatedData['customer_id'],
+            'print_type_id' => $validatedData['print_type_id'],
+            'user_id' => $validatedData['user_id'],
+            'qty' => $validatedData['qty'],
+            'price' => $validatedData['price'],
+            'subtotal' => $validatedData['subtotal'],
+            'discount' => $validatedData['discount'],
+            'total' => $validatedData['total'],
+            'name' => $validatedData['name'],
+            'description' => $validatedData['description'],
+            'date' => $validatedData['date'],
+        ]);
+
+        return redirect()->route('order.index')->with('success', 'Order updated successfully');
     }
 
     /**
