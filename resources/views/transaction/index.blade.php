@@ -209,6 +209,10 @@
 
 @push('scripts')
 <script>
+    function formatIDR(number) {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+    }
+
     $(function () {
         $('.select2').select2({
             placeholder: 'select..'
@@ -233,13 +237,16 @@
                 totalCheckout += parseInt(valueOfElement.total);
                 totalStatus -= parseInt(valueOfElement.total);
 
+                formattedPrice = formatIDR(valueOfElement.price);
+                formattedTotal = formatIDR(valueOfElement.total);
+
                 let html = `
                     <tr>
                         <td>${valueOfElement.code}</td>
                         <td>${valueOfElement.description}</td>
                         <td>${valueOfElement.qty}</td>
-                        <td class="money">${valueOfElement.price}</td>
-                        <td>${valueOfElement.total}</td>
+                        <td>${formattedPrice}</td>
+                        <td>${formattedTotal}</td>
                         <td>
                             <button class="btn btn-danger btn-sm btn-delete" data-table="${valueOfElement.code}">Hapus</button>
                         </td>
@@ -387,14 +394,17 @@
             localStorage.setItem('product', JSON.stringify([data]));
         }
 
+        formattedPrice = formatIDR(price);
+        formattedTotal = formatIDR(total);
+
         let html = `
             <tr>
                 td>${product_id}</td>
                 <td>${product.code}</td>
                 <td>${description}</td>
                 <td>${qty}</td>
-                <td>${price}</td>
-                <td>${total}</td>
+                <td>${formattedPrice}</td>
+                <td>${formattedTotal}</td>
                 <td>
                     <button class="btn btn-danger btn-sm btn-delete" data-table="${product.code}">Hapus</button>
                 </td>

@@ -94,7 +94,15 @@ class OrderTrackingController extends Controller
      */
     public function edit(int $id)
     {
-        //
+        $orderTracking = OrderTracking::findOrFail($id);
+        $orders = Order::all();
+        $trackings = Tracking::all();
+
+        return view('order-tracking.edit', [
+            'orderTracking' => $orderTracking,
+            'orders' => $orders,
+            'trackings' => $trackings,
+        ]);
     }
 
     /**
@@ -102,7 +110,18 @@ class OrderTrackingController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        //
+        $validatedData = $request->validate([
+            'order_id' => 'required|exists:orders,id',
+            'tracking_id' => 'required|exists:trackings,id',
+            'description' => 'required|string',
+            'status' => 'required',
+            'date' => 'required|date',
+        ]);
+
+        $orderTracking = OrderTracking::findOrFail($id);
+        $orderTracking->update($validatedData);
+
+        return redirect()->route('order-tracking.index')->with('success', 'Order tracking updated successfully.');
     }
 
     /**

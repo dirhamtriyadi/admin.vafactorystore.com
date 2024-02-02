@@ -61,7 +61,7 @@
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="order_id" class="form-label">Order</label>
+                                        <label for="order_id" class="form-label">Order *</label>
                                         <select class="form-control select2" id="order_id" name="order_id">
                                             <option selected value="">-- Pilih Order --</option>
                                             @foreach ($orders as $i => $order)
@@ -73,7 +73,7 @@
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="payment_method_id" class="form-label">Jenis Pembayaran</label>
+                                        <label for="payment_method_id" class="form-label">Jenis Pembayaran *</label>
                                         <select class="form-control select2" id="payment_method_id" name="payment_method_id">
                                             <option selected value="">-- Pilih Jenis Pembayaran --</option>
                                             @foreach ($paymentMethods as $i => $paymentMethod)
@@ -84,24 +84,33 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="amount" class="form-label">Uang</label>
+                                    <label for="amount" class="form-label">Uang *</label>
                                     <input type="number=" class="form-control mask-money" id="amount" name="amount" value="{{ old('amount') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">Deskripsi</label>
+                                    <label for="description" class="form-label">Deskripsi *</label>
                                     {{-- <input type="text" class="form-control" id="description" name="description"> --}}
                                     <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') }}</textarea>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="date" class="form-label">Tanggal</label>
+                                    <label for="date" class="form-label">Tanggal *</label>
                                     <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{{ old('date') }}">
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <table>
+                                        <tr>
+                                            <td>Catatan: </td>
+                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div class="d-flex justify-content-end">

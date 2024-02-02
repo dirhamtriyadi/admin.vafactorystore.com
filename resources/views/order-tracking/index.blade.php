@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>List Data Order Tracking</h1>
+                <h1>List Data Order Pelacakan</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -32,7 +32,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">List Data Order Tracking</h3>
+                            <h3 class="card-title">List Data Order Pelacakan</h3>
 
                             {{-- <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -47,7 +47,7 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('order-tracking-create')
-                                        <a href="{{ route('order-tracking.create') }}" class="btn btn-primary mb-3">Tambah Order Tracking</a>
+                                        <a href="{{ route('order-tracking.create') }}" class="btn btn-primary mb-3">Tambah Order Pelacakan</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
@@ -90,6 +90,7 @@
                                             <th>Nama Order</th>
                                             <th>Pelacakan</th>
                                             <th>Status</th>
+                                            <th>Deskripsi</th>
                                             <th>Tanggal</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -108,13 +109,14 @@
                                                         echo "Dalam Proses";
                                                     }
                                                 @endphp</td>
+                                                <td>{{ $orderTracking->description }}</td>
                                                 <td>{{ $orderTracking->date }}</td>
                                                 <td>
                                                     @can('order-tracking-edit')
-                                                        <a href="{{ route('order-transaction.edit', $orderTracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                        <a href="{{ route('order-tracking.edit', $orderTracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     @can('order-tracking-delete')
-                                                        <form action="{{ route('order-transaction.destroy', $orderTracking->id) }}" method="post" class="d-inline">
+                                                        <form action="{{ route('order-tracking.destroy', $orderTracking->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>

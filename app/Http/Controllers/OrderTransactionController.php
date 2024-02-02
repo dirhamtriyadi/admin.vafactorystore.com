@@ -98,7 +98,15 @@ class OrderTransactionController extends Controller
      */
     public function edit(int $id)
     {
-        //
+        $orderTransaction = OrderTransaction::findOrFail($id);
+        $orders = Order::all();
+        $paymentMethods = PaymentMethod::all();
+
+        return view('order-transaction.edit', [
+            'orderTransaction' => $orderTransaction,
+            'orders' => $orders,
+            'paymentMethods' => $paymentMethods,
+        ]);
     }
 
     /**
@@ -106,7 +114,19 @@ class OrderTransactionController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        //
+        $validatedData = $request->validate([
+            'order_id' => 'required|exists:orders,id',
+            'payment_method_id' => 'required|exists:payment_methods,id',
+            'user_id' => 'required|exists:users,id',
+            'amount' => 'required|numeric',
+            'description' => 'required|string',
+            'date' => 'required|date',
+        ]);
+
+        $orderTransaction = OrderTransaction::findOrFail($id);
+        $orderTransaction->update($validatedData);
+
+        return redirect()->route('order-transaction.index')->with('success', 'Order transaction updated successfully.');
     }
 
     /**

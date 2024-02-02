@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Tambah Order Tracking</h1>
+                <h1>Tambah Order Pelacakan</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -40,7 +40,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Tambah Order Tracking</h3>
+                            <h3 class="card-title">Tambah Order Pelacakan</h3>
 
                             {{-- <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -59,7 +59,7 @@
                                 @csrf
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="order_id" class="form-label">Order</label>
+                                        <label for="order_id" class="form-label">Order *</label>
                                         <select class="form-control select2" id="order_id" name="order_id">
                                             <option selected value="">-- Pilih Order --</option>
                                             @foreach ($orders as $i => $order)
@@ -71,7 +71,7 @@
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="tracking_id" class="form-label">Pelacakan</label>
+                                        <label for="tracking_id" class="form-label">Pelacakan *</label>
                                         <select class="form-control select2" id="tracking_id" name="tracking_id">
                                             <option selected value="">-- Pilih Pelacakan --</option>
                                             @foreach ($trackings as $i => $tracking)
@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">Deskripsi</label>
+                                    <label for="description" class="form-label">Deskripsi *</label>
                                     {{-- <input type="text" class="form-control" id="description" name="description"> --}}
                                     <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') }}</textarea>
                                 </div>
@@ -90,13 +90,22 @@
                                 <input type="hidden" id="status" name="status" value="1">
 
                                 <div class="mb-3">
-                                    <label for="date" class="form-label">Tanggal</label>
+                                    <label for="date" class="form-label">Tanggal *</label>
                                     <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
                                         <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{{ old('date') }}">
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <table>
+                                        <tr>
+                                            <td>Catatan: </td>
+                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                        </tr>
+                                    </table>
                                 </div>
 
                                 <div class="d-flex justify-content-end">
