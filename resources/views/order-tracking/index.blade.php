@@ -90,6 +90,7 @@
                                             <th>Nama Order</th>
                                             <th>Pelacakan</th>
                                             <th>Status</th>
+                                            <th>Deskripsi</th>
                                             <th>Tanggal</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -108,6 +109,7 @@
                                                         echo "Dalam Proses";
                                                     }
                                                 @endphp</td>
+                                                <td>{{ $orderTracking->description }}</td>
                                                 <td>{{ $orderTracking->date }}</td>
                                                 <td>
                                                     @can('order-tracking-edit')
