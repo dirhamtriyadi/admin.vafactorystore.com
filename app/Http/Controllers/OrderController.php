@@ -80,7 +80,7 @@ class OrderController extends Controller
             'discount' => 'required|numeric',
             'total' => 'required|numeric',
             'name' => 'required',
-            'description' => 'required',
+            'description' => '',
             'date' => 'required|date',
         ]);
 
