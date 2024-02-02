@@ -111,10 +111,10 @@
                                                 <td>{{ $orderTracking->date }}</td>
                                                 <td>
                                                     @can('order-tracking-edit')
-                                                        <a href="{{ route('order-transaction.edit', $orderTracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                                        <a href="{{ route('order-tracking.edit', $orderTracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     @can('order-tracking-delete')
-                                                        <form action="{{ route('order-transaction.destroy', $orderTracking->id) }}" method="post" class="d-inline">
+                                                        <form action="{{ route('order-tracking.destroy', $orderTracking->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
