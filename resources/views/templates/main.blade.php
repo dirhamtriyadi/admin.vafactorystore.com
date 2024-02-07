@@ -93,6 +93,8 @@
     <script src="{{ asset('adminlte') }}/plugins/jquery-maskmoney/jquery.maskMoney.min.js"></script>
     <!-- Tempus Dominus -->
     <script src="{{ asset('adminlte') }}/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Custom File Input -->
+    <script src="{{ asset('adminlte') }}/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('adminlte') }}/dist/js/adminlte.min.js"></script>
     <script>
@@ -111,6 +113,8 @@
                 removeMaskOnSubmit: true,
                 unmaskAsNumber: true
             });
+
+            bsCustomFileInput.init();
 
             var Toast = Swal.mixin({
                 toast: true,

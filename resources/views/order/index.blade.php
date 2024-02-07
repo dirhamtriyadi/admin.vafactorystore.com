@@ -95,6 +95,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nomor Order</th>
+                                            <th>Nama Penginput/Edit</th>
                                             <th>Nama Pelanggan</th>
                                             <th>Kategori</th>
                                             <th>Nama Order</th>
@@ -107,6 +108,7 @@
                                             <tr>
                                                 <td>{{ $i + $orders->firstitem() }}</td>
                                                 <td>{{ $order->order_number }}</td>
+                                                <td>{{ $order->user->name }}</td>
                                                 <td>{{ $order->customer->name }}</td>
                                                 <td>{{ $order->printType->name }}</td>
                                                 <td>{{ $order->name }}</td>
