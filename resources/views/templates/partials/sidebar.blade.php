@@ -132,6 +132,31 @@
                         </ul>
                     </li>
                 @endcanany
+                <li class="nav-item {{ Route::is('makloon.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Route::is('makloon.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>
+                            Maklun
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('makloon.index') }}" class="nav-link {{ Route::is('makloon.*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Maklun</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Maklun Transaksi</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @canany(['cashflow-list', 'cashflow-create', 'cashflow-edit', 'cashflow-delete', 'cashflow-report-list', 'cashflow-report-create', 'cashflow-report-edit', 'cashflow-report-delete'])
                     <li class="nav-item {{ Route::is('cash-flow.*') | Route::is('cash-flow-report.*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ Route::is('cash-flow.*') | Route::is('cash-flow-report.*') ? 'active' : '' }}">
