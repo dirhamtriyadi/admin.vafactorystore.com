@@ -60,7 +60,7 @@ class MakloonController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             // 'makloon_number' => 'required',
             'user_id' => 'required',
             'customer_id' => 'required',
@@ -69,13 +69,19 @@ class MakloonController extends Controller
             'date' => 'required',
         ]);
 
+        if (!$request->has('items')) {
+            return response()->json([
+                'message' => 'Items is required'
+            ], 422);
+        }
+
         $makloon = Makloon::create([
             'makloon_number' => 'MKL-' . date('YmdHis'),
-            'user_id' => $request->user_id,
-            'customer_id' => $request->customer_id,
-            'name' => $request->name,
-            'description' => $request->description,
-            'date' => $request->date,
+            'user_id' => $validatedData['user_id'],
+            'customer_id' => $validatedData['customer_id'],
+            'name' => $validatedData['name'],
+            'description' => $validatedData['description'],
+            'date' => $validatedData['date'],
 
         ]);
 
@@ -125,6 +131,12 @@ class MakloonController extends Controller
             'description' => '',
             'date' => 'required',
         ]);
+
+        if (!$request->has('items')) {
+            return response()->json([
+                'message' => 'Items is required'
+            ], 422);
+        }
 
         $makloon = Makloon::findOrFail($id);
         $makloon->update($validatedData);

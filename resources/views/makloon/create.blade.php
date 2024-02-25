@@ -367,6 +367,10 @@
                     },
                     error: function (xhr, status, error) {
                         console.error('error', error);
+                        Toast.fire({
+                            icon: 'error',
+                            title: xhr.responseJSON.message
+                        });
                     }
                 });
             });
