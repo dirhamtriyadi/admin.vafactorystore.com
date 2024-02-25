@@ -241,6 +241,22 @@
 @push('scripts')
     <script>
         $(function () {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: '2000',
+                timerProgressBar: true,
+                didOpen: function(toast) {
+                    $(toast.el).addClass('bg-success')
+                },
+                didClose: function(toast, reason) {
+                    if (reason === 'timer') {
+                        $(toast.el).removeClass('bg-success')
+                    }
+                }
+            })
+
             let storedFormData = JSON.parse(localStorage.getItem('formData')) || [];
             let tableItemMakloon = $('#table-item-makloon');
             let tableItemMakloonBody = tableItemMakloon.find('tbody');
@@ -342,7 +358,12 @@
                     success: function (response) {
                         console.log('response', response);
                         localStorage.removeItem('formData');
-                        window.location.href = "{{ route('makloon.index') }}";
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message
+                        }).then(function () {
+                            window.location.href = "{{ route('makloon.index') }}";
+                        });
                     },
                     error: function (xhr, status, error) {
                         console.error('error', error);

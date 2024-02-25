@@ -171,11 +171,13 @@
                                         <th>Kode Barang</th>
                                         <th>Qty</th>
                                         <th>Price</th>
+                                        <th>Total</th>
                                         <th>Ukuran</th>
                                         <th>Satuan</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
+                                <tfoot></tfoot>
                             </table>
                         </div>
                     </div>
@@ -203,17 +205,39 @@
                 let tableItemMakloonBody = tableItemMakloon.find('tbody');
                 tableItemMakloonBody.empty();
 
+                let qty = 0;
+                let price = 0;
+                let totalPrice = 0;
+
+
                 detail.details.forEach((item, index) => {
+                    qty += item.qty;
+                    price += item.price;
+                    totalPrice += item.qty * item.price;
                     let tr = $('<tr>');
                     tr.append($('<td>').text(index + 1));
                     tr.append($('<td>').text(item.name));
                     tr.append($('<td>').text(item.code));
                     tr.append($('<td>').text(item.qty));
                     tr.append($('<td>').text('Rp. ' + item.price.toLocaleString('id-ID')));
+                    tr.append($('<td>').text('Rp. ' + (item.qty * item.price).toLocaleString('id-ID')));
                     tr.append($('<td>').text(item.size));
                     tr.append($('<td>').text(item.unit));
                     tableItemMakloonBody.append(tr);
                 });
+
+                let tableItemMakloonFoot = tableItemMakloon.find('tfoot');
+                tableItemMakloonFoot.empty();
+                let trFoot = $('<tr>');
+                trFoot.append($('<td>').text('Total').attr({
+                    'colspan': 3,
+                    'class': 'text-bold text-center',
+                }));
+                trFoot.append($('<td>').text(qty).attr('class', 'text-bold'));
+                trFoot.append($('<td>').text('Rp. ' + price.toLocaleString('id-ID')).attr('class', 'text-bold'));
+                trFoot.append($('<td>').text('Rp. ' + totalPrice.toLocaleString('id-ID')).attr('class', 'text-bold'));
+                trFoot.append($('<td>').text('').attr('colspan', 2));
+                tableItemMakloonFoot.append(trFoot);
             })
         })
     </script>
