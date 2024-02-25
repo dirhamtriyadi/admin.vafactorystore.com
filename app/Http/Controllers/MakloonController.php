@@ -87,7 +87,7 @@ class MakloonController extends Controller
         }
 
         return response()->json([
-            'message' => 'Transaction created successfully'
+            'message' => 'Makloon created successfully'
         ], 200);
     }
 
@@ -104,7 +104,13 @@ class MakloonController extends Controller
      */
     public function edit(int $id)
     {
-        //
+        $makloon = Makloon::with('details')->findOrFail($id);
+        $customers = Customer::all();
+
+        return view('makloon.edit', [
+            'makloon' => $makloon,
+            'customers' => $customers,
+        ]);
     }
 
     /**
@@ -112,7 +118,32 @@ class MakloonController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        //
+        $validatedData = $request->validate([
+            'user_id' => 'required',
+            'customer_id' => 'required',
+            'name' => 'required',
+            'description' => '',
+            'date' => 'required',
+        ]);
+
+        $makloon = Makloon::findOrFail($id);
+        $makloon->update($validatedData);
+
+        if($request->has('items')) {
+            foreach($request->items as $item) {
+                if(isset($item['id'])) {
+                    MakloonDetail::findOrFail($item['id'])->update($item);
+                } else {
+                    $item['makloon_id'] = $makloon->id;
+                    MakloonDetail::create($item);
+                }
+            }
+        }
+
+        // return redirect()->route('makloon.index')->with('success', 'Makloon updated successfully');
+        return response()->json([
+            'message' => 'Makloon updated successfully'
+        ], 200);
     }
 
     /**

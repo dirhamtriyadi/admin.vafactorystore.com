@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Edit Order</h1>
+                <h1>Tambah Maklun</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -40,7 +40,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Order</h3>
+                            <h3 class="card-title">Tambah Maklun</h3>
 
                             {{-- <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -53,16 +53,15 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('order.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('makloon.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
-                            <form action="{{ route('order.update', $order->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
+                            <form action="#" id="makloon-form">
                                 <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">
+                                <input type="hidden" id="id" name="id" value="{{ $makloon->id }}">
 
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama Order *</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ? old('name') : $order->name }}">
+                                    <label for="name" class="form-label">Nama Maklun *</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ? old('name') : $makloon->name }}">
                                 </div>
 
                                 <div class="mb-3">
@@ -71,59 +70,22 @@
                                         <select class="form-control select2" id="customer_id" name="customer_id">
                                             <option selected value="">-- Pilih Pelanggan --</option>
                                             @foreach ($customers as $i => $customer)
-                                                <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id | $order->customer_id == $customer->id ? 'selected' : ''  }}>{{ $customer->name }}</option>
+                                                <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id | $makloon->customer_id == $customer->id ? 'selected' : ''  }}>{{ $customer->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <label for="print_type_id" class="form-label">Kategori *</label>
-                                        <select class="form-control select2" id="print_type_id" name="print_type_id">
-                                            <option selected value="">-- Pilih Kategori --</option>
-                                            @foreach ($printTypes as $i => $printType)
-                                                <option value="{{ $printType->id }}" {{ old('print_type_id') == $printType->id | $order->print_type_id == $printType->id ? 'selected' : ''  }} data-print_type="{{ $printType }}">{{ $printType->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="qty" class="form-label">Qty *</label>
-                                    <input type="number=" class="form-control" id="qty" name="qty" value="{{ old('qty') ? old('qty') : $order->qty }}">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="price" class="form-label">Harga *</label>
-                                    <input type="text=" class="form-control mask-money" id="price" name="price" value="{{ old('price') ? old('price') : $order->price }}" readonly>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="subtotal" class="form-label">Sub Total *</label>
-                                    <input type="text=" class="form-control mask-money" id="subtotal" name="subtotal" value="{{ old('subtotal') ? old('subtotal') : $order->subtotal }}" readonly>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="discount" class="form-label">Diskon</label>
-                                    <input type="text=" class="form-control mask-money" id="discount" name="discount" value="{{ old('discount') ? old('discount') : ($order->discount ? $order->discount : 0) }}">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="total" class="form-label">Total *</label>
-                                    <input type="text=" class="form-control mask-money" id="total" name="total" value="{{ old('total') ? old('total') : $order->total }}" readonly>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="description" class="form-label">Deskripsi</label>
                                     {{-- <input type="text" class="form-control" id="description" name="description"> --}}
-                                    <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') ? old('description') : $order->description }}</textarea>
+                                    <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') ? old('description') : $makloon->description }}</textarea>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="date" class="form-label">Tanggal *</label>
                                     <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{{ old('date') ? old('date') : $order->date }}">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{{ old('date') ? old('date') : $makloon->date }}">
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
@@ -139,10 +101,131 @@
                                     </table>
                                 </div>
 
-                                <div class="d-flex justify-content-end">
+                                {{-- <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div> --}}
+                            </form>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            Footer
+                        </div>
+                        <!-- /.card-footer-->
+                    </div>
+                    <!-- /.card -->
+                    <!-- Default box -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Tambah Barang Maklun</h3>
+
+                            {{-- <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div> --}}
+                        </div>
+                        <div class="card-body">
+
+                            <form action="#" id="add-item-makloon-form">
+
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Nama Barang *</label>
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="code" class="form-label">Kode Barang *</label>
+                                    <input type="text" class="form-control" id="code" name="code" value="{{ old('code') }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="qty" class="form-label">Qty Barang *</label>
+                                    <input type="number" class="form-control" id="qty" name="qty" value="{{ old('qty') }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Harga Barang *</label>
+                                    <input type="text" class="form-control mask-money" id="price" name="price" value="{{ old('price') }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="size" class="form-label">Ukuran Barang *</label>
+                                    <input type="text" class="form-control" id="size" name="size" value="{{ old('size') }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="unit" class="form-label">Satuan Barang *</label>
+                                    <input type="text" class="form-control" id="unit" name="unit" value="{{ old('unit') }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Deskripsi</label>
+                                    {{-- <input type="text" class="form-control" id="description" name="description"> --}}
+                                    <textarea name="description" id="description" cols="30" rows="5" class="form-control">{{ old('description') }}</textarea>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <table>
+                                        <tr>
+                                            <td>Catatan: </td>
+                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" href="#" class="btn btn-primary" id="add-item-makloon">Tambah</button>
                                 </div>
                             </form>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            Footer
+                        </div>
+                        <!-- /.card-footer-->
+                    </div>
+                    <!-- /.card -->
+                    <!-- Default box -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Barang Maklun</h3>
+
+                            {{-- <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div> --}}
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="table-item-makloon" class="table table-bordered table-hover table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Barang</th>
+                                            <th>Kode barang</th>
+                                            <th>Qty</th>
+                                            <th>Harga</th>
+                                            <th>Ukuran</th>
+                                            <th>Satuan</th>
+                                            <th>Deskripsi</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-end">
+                                    <a href="#" class="btn btn-primary" id="save-makloon">Simpan Maklun</a>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
@@ -160,24 +243,138 @@
 @push('scripts')
     <script>
         $(function () {
-            if ($('#cash_flow_type').find(':selected').val() == 'UANGMASUK') {
-                    // console.log('masuk');
-                    $('.payment_method').removeClass('d-none');
-                } else {
-                    // console.log('keluar');
-                    $('.payment_method').addClass('d-none');
-                }
-
-            $('#cash_flow_type').change(function () {
-                console.log($('#cash_flow_type option:selected').val());
-                if ($('#cash_flow_type').find(':selected').val() == 'UANGMASUK') {
-                    // console.log('masuk');
-                    $('.payment_method').removeClass('d-none');
-                } else {
-                    // console.log('keluar');
-                    $('.payment_method').addClass('d-none');
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: '2000',
+                timerProgressBar: true,
+                didOpen: function(toast) {
+                    $(toast.el).addClass('bg-success')
+                },
+                didClose: function(toast, reason) {
+                    if (reason === 'timer') {
+                        $(toast.el).removeClass('bg-success')
+                    }
                 }
             })
-        })
+
+            localStorage.setItem('formData', JSON.stringify({{ Js::from($makloon->details) }}));
+            console.log({{ Js::from($makloon->details) }});
+            let storedFormData = JSON.parse(localStorage.getItem('formData')) || [];
+            let tableItemMakloon = $('#table-item-makloon');
+            let tableItemMakloonBody = tableItemMakloon.find('tbody');
+            tableItemMakloonBody.empty();
+            let storedFormDataLength = storedFormData.length;
+            for (let i = 0; i < storedFormDataLength; i++) {
+                let data = storedFormData[i];
+                let tr = $('<tr>');
+                tr.append($('<td>').text(i + 1));
+                tr.append($('<td>').text(data.name));
+                tr.append($('<td>').text(data.code));
+                tr.append($('<td>').text(data.qty));
+                tr.append($('<td>').text("Rp. " + data.price.toLocaleString("id-ID")));
+                tr.append($('<td>').text(data.size));
+                tr.append($('<td>').text(data.unit));
+                tr.append($('<td>').text(data.description));
+                tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger').text('Hapus').on('click', function (e) {
+                    e.preventDefault();
+                    storedFormData.splice(i, 1);
+                    localStorage.setItem('formData', JSON.stringify(storedFormData));
+                    $(this).closest('tr').remove();
+                })));
+                tableItemMakloonBody.append(tr);
+            }
+
+            $('#add-item-makloon-form').on('submit', function (e) {
+                e.preventDefault();
+                let dataForm = {
+                    name: $('#add-item-makloon-form #name').val(),
+                    code: $('#add-item-makloon-form #code').val(),
+                    qty: $('#add-item-makloon-form #qty').val(),
+                    price: $('#add-item-makloon-form #price').val(),
+                    size: $('#add-item-makloon-form #size').val(),
+                    unit: $('#add-item-makloon-form #unit').val(),
+                    description: $('#add-item-makloon-form #description').val(),
+                }
+
+                let storedFormData = JSON.parse(localStorage.getItem('formData')) || [];
+                storedFormData.push(dataForm);
+                localStorage.setItem('formData', JSON.stringify(storedFormData));
+
+                console.log('add item makloon form', dataForm);
+
+                $(this).trigger('reset');
+                $('#add-item-makloon-form #price').val(0);
+                $('#add-item-makloon-form #name').focus();
+
+                let tableItemMakloon = $('#table-item-makloon');
+                let tableItemMakloonBody = tableItemMakloon.find('tbody');
+                tableItemMakloonBody.empty();
+                let storedFormDataLength = storedFormData.length;
+                for (let i = 0; i < storedFormDataLength; i++) {
+                    let data = storedFormData[i];
+                    let tr = $('<tr>');
+                    tr.append($('<td>').text(i + 1));
+                    tr.append($('<td>').text(data.name));
+                    tr.append($('<td>').text(data.code));
+                    tr.append($('<td>').text(data.qty));
+                    tr.append($('<td>').text("Rp. " + data.price.toLocaleString("id-ID")));
+                    tr.append($('<td>').text(data.size));
+                    tr.append($('<td>').text(data.unit));
+                    tr.append($('<td>').text(data.description));
+                    tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger').text('Hapus').on('click', function (e) {
+                        e.preventDefault();
+                        storedFormData.splice(i, 1);
+                        localStorage.setItem('formData', JSON.stringify(storedFormData));
+                        $(this).closest('tr').remove();
+                    })));
+                    tableItemMakloonBody.append(tr);
+                }
+
+            });
+
+            $('#save-makloon').on('click', function (e) {
+                e.preventDefault();
+                let storedFormData = JSON.parse(localStorage.getItem('formData')) || [];
+                let id = $('#id').val();
+                let user_id = $('#user_id').val();
+                let customer_id = $('#customer_id').val();
+                let name = $('#name').val();
+                let description = $('#description').val();
+                let date = $('#reservationdate').find('input').val();
+
+                let data = {
+                    _token: "{{ csrf_token() }}",
+                    user_id: user_id,
+                    customer_id: customer_id,
+                    name: name,
+                    description: description,
+                    date: date,
+                    items: storedFormData
+                }
+
+                data.items = storedFormData;
+                // console.log('makloon form', data);
+                $.ajax({
+                    url: "{{ route('makloon.update', '') }}/" + id,
+                    method: 'PUT',
+                    data: data,
+                    success: function (response) {
+                        console.log('response', response);
+                        localStorage.removeItem('formData');
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message
+                        }).then(function () {
+                            window.location.href = "{{ route('makloon.index') }}";
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('error', error);
+                    }
+                });
+            });
+        });
     </script>
 @endpush
