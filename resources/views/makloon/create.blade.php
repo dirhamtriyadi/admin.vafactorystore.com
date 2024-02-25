@@ -211,6 +211,7 @@
                                             <th>Kode barang</th>
                                             <th>Qty</th>
                                             <th>Harga</th>
+                                            <th>Total</th>
                                             <th>Ukuran</th>
                                             <th>Satuan</th>
                                             <th>Deskripsi</th>
@@ -219,6 +220,8 @@
                                     </thead>
                                     <tbody>
                                     </tbody>
+                                    <tfoot>
+                                    </tfoot>
                                 </table>
                                 <div class="d-flex justify-content-end">
                                     <a href="#" class="btn btn-primary" id="save-makloon">Simpan Maklun</a>
@@ -257,12 +260,19 @@
                 }
             })
 
+            localStorage.setItem('formData', JSON.stringify([]));
             let storedFormData = JSON.parse(localStorage.getItem('formData')) || [];
             let tableItemMakloon = $('#table-item-makloon');
             let tableItemMakloonBody = tableItemMakloon.find('tbody');
             tableItemMakloonBody.empty();
             let storedFormDataLength = storedFormData.length;
+            let qty = 0;
+            let price = 0;
+            let total = 0;
             for (let i = 0; i < storedFormDataLength; i++) {
+                qty += parseInt(storedFormData[i].qty);
+                price += parseInt(storedFormData[i].price);
+                total += parseInt(storedFormData[i].qty) * parseInt(storedFormData[i].price);
                 let data = storedFormData[i];
                 let tr = $('<tr>');
                 tr.append($('<td>').text(i + 1));
@@ -270,6 +280,7 @@
                 tr.append($('<td>').text(data.code));
                 tr.append($('<td>').text(data.qty));
                 tr.append($('<td>').text("Rp. " + data.price.toLocaleString("id-ID")));
+                tr.append($('<td>').text("Rp. " + (parseInt(data.qty) * parseInt(data.price)).toLocaleString("id-ID")));
                 tr.append($('<td>').text(data.size));
                 tr.append($('<td>').text(data.unit));
                 tr.append($('<td>').text(data.description));
@@ -281,6 +292,18 @@
                 })));
                 tableItemMakloonBody.append(tr);
             }
+
+            let tableItemMakloonFooter = tableItemMakloon.find('tfoot');
+            let trFooter = $('<tr>');
+            trFooter.append($('<td>').text('Total').attr({
+                'colspan': 3,
+                'class': 'text-center font-weight-bold'
+            }));
+            trFooter.append($('<td>').text(qty).addClass('font-weight-bold'));
+            trFooter.append($('<td>').text("Rp. " + price.toLocaleString("id-ID")).addClass('font-weight-bold'));
+            trFooter.append($('<td>').text("Rp. " + total.toLocaleString("id-ID")).addClass('font-weight-bold'));
+            trFooter.append($('<td>').text('').attr('colspan', 4));
+            tableItemMakloonFooter.append(trFooter);
 
             $('#add-item-makloon-form').on('submit', function (e) {
                 e.preventDefault();
@@ -308,7 +331,13 @@
                 let tableItemMakloonBody = tableItemMakloon.find('tbody');
                 tableItemMakloonBody.empty();
                 let storedFormDataLength = storedFormData.length;
+                let qty = 0;
+                let price = 0;
+                let total = 0;
                 for (let i = 0; i < storedFormDataLength; i++) {
+                    qty += parseInt(storedFormData[i].qty);
+                    price += parseInt(storedFormData[i].price);
+                    total += parseInt(storedFormData[i].qty) * parseInt(storedFormData[i].price);
                     let data = storedFormData[i];
                     let tr = $('<tr>');
                     tr.append($('<td>').text(i + 1));
@@ -316,6 +345,7 @@
                     tr.append($('<td>').text(data.code));
                     tr.append($('<td>').text(data.qty));
                     tr.append($('<td>').text("Rp. " + data.price.toLocaleString("id-ID")));
+                    tr.append($('<td>').text("Rp. " + (parseInt(data.qty) * parseInt(data.price)).toLocaleString("id-ID")));
                     tr.append($('<td>').text(data.size));
                     tr.append($('<td>').text(data.unit));
                     tr.append($('<td>').text(data.description));
@@ -327,6 +357,19 @@
                     })));
                     tableItemMakloonBody.append(tr);
                 }
+
+                let tableItemMakloonFooter = tableItemMakloon.find('tfoot');
+                tableItemMakloonFooter.empty();
+                let trFooter = $('<tr>');
+                trFooter.append($('<td>').text('Total').attr({
+                    'colspan': 3,
+                    'class': 'text-center font-weight-bold'
+                }));
+                trFooter.append($('<td>').text(qty).addClass('font-weight-bold'));
+                trFooter.append($('<td>').text("Rp. " + price.toLocaleString("id-ID")).addClass('font-weight-bold'));
+                trFooter.append($('<td>').text("Rp. " + total.toLocaleString("id-ID")).addClass('font-weight-bold'));
+                trFooter.append($('<td>').text('').attr('colspan', 4));
+                tableItemMakloonFooter.append(trFooter);
 
             });
 
