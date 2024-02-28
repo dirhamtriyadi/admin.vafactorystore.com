@@ -38,7 +38,7 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
-                @canany(['dashboard-list', 'dashboard-create', 'dashboard-edit', 'dashboard-delete'])
+                {{-- @canany(['dashboard-list', 'dashboard-create', 'dashboard-edit', 'dashboard-delete'])
                     <li class="nav-item">
                         <a href="{{ route('dashboard.index') }}" class="nav-link {{ Route::is('dashboard.index') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -47,7 +47,15 @@
                             </p>
                         </a>
                     </li>
-                @endcanany
+                @endcanany --}}
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.index') }}" class="nav-link {{ Route::is('dashboard.index') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
                 @canany(['customer-list', 'customer-create', 'customer-edit', 'customer-delete'])
                     <li class="nav-item">
                         <a href="{{ route('customer.index') }}" class="nav-link {{ Route::is('customer.*') ? 'active' : '' }}">
