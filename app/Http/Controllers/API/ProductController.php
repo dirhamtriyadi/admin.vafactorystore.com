@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->perPage ?? 2;
+        $perPage = $request->perPage ?? 10;
         $search = $request->search;
 
         $products = Product::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
