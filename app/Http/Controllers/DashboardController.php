@@ -6,20 +6,20 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('permission:dashboard-list|dashboard-create|dashboard-edit|dashboard-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:dashboard-create', ['only' => ['create','store']]);
-        $this->middleware('permission:dashboard-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:dashboard-delete', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware('permission:dashboard-list|dashboard-create|dashboard-edit|dashboard-delete', ['only' => ['index','store']]);
+    //     $this->middleware('permission:dashboard-create', ['only' => ['create','store']]);
+    //     $this->middleware('permission:dashboard-edit', ['only' => ['edit','update']]);
+    //     $this->middleware('permission:dashboard-delete', ['only' => ['destroy']]);
+    // }
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('templates.main');
+        return view('dashboard.index');
     }
 
     /**
