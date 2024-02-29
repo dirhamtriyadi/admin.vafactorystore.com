@@ -87,7 +87,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        if ($request->hashFile('image')) {
+        if ($product->image) {
             $product_woocommerce = ProductWooCommerce::create([
                 'name' => $product->name,
                 'type' => 'simple',
@@ -187,7 +187,7 @@ class ProductController extends Controller
 
         $product->save();
 
-        if ($request->hasFile('image')) {
+        if ($product->image) {
             $product_woocommerce = ProductWooCommerce::update($product->woocommerce_id, [
                 'name' => $product->name,
                 'type' => 'simple',
