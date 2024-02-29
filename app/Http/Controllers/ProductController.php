@@ -103,18 +103,18 @@ class ProductController extends Controller
 
             $product->woocommerce_id = $product_woocommerce['id'];
             $product->save();
+        } else {
+            $product_woocommerce = ProductWooCommerce::create([
+                'name' => $product->name,
+                'type' => 'simple',
+                'regular_price' => $product->price,
+                'description' => $product->description,
+                'short_description' => $product->description,
+            ]);
+
+            $product->woocommerce_id = $product_woocommerce['id'];
+            $product->save();
         }
-
-        $product_woocommerce = ProductWooCommerce::create([
-            'name' => $product->name,
-            'type' => 'simple',
-            'regular_price' => $product->price,
-            'description' => $product->description,
-            'short_description' => $product->description,
-        ]);
-
-        $product->woocommerce_id = $product_woocommerce['id'];
-        $product->save();
 
         return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
