@@ -55,7 +55,7 @@
                             <div class="d-flex justify-content-between mb-3">
                                 <a href="{{ route('product.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
-                            <form action="{{ route('product.update') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
