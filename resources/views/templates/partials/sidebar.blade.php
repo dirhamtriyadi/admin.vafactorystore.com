@@ -140,8 +140,8 @@
                         </ul>
                     </li>
                 @endcanany
-                <li class="nav-item {{ Route::is('makloon.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ Route::is('makloon.*') ? 'active' : '' }}">
+                <li class="nav-item {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>
                             Maklun
@@ -158,7 +158,7 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('makloon-transaction.index') }}" class="nav-link {{ Route::is('makloon-transaction.*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Maklun Transaksi</p>
                             </a>
