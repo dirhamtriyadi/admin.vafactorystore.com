@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Codexshaper\WooCommerce\Facades\Product as ProductWooCommerce;
 
 class ProductController extends Controller
 {
@@ -85,6 +86,19 @@ class ProductController extends Controller
         }
 
         $product->save();
+
+        $product_woocommerce = ProductWooCommerce::create([
+            'name' => $product->name,
+            'type' => 'simple',
+            'regular_price' => $product->price,
+            'description' => $product->description,
+            'short_description' => $product->description,
+            'images' => [
+                [
+                    'src' => 'http://admin.vafactorystore.com/images/products/' . $product->image,
+                ]
+            ]
+        ]);
 
         return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
