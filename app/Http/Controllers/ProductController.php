@@ -224,6 +224,8 @@ class ProductController extends Controller
         try {
 			$product = Product::findOrFail($id);
             $product->delete();
+
+            $product_woocommerce = ProductWooCommerce::delete($product->woocommerce_id, ['force' => true]);
 		} catch (\Throwable $th) {
 			return back()->withErrors(['Data ini tidak dapat dihapus karena memiliki relasi ke data lain.']);
 		}
