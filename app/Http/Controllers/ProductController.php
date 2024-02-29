@@ -96,7 +96,7 @@ class ProductController extends Controller
                 'short_description' => $product->description,
                 'images' => [
                     [
-                        'src' => 'https://admin.vafactorystore.com/images/products/' . $product->image,
+                        'src' => asset('') . '/images/products/' . $product->image,
                     ]
                 ]
             ]);
@@ -199,7 +199,7 @@ class ProductController extends Controller
                 'short_description' => $product->description,
                 'images' => [
                     [
-                        'src' => 'https://admin.vafactorystore.com/images/products/' . $product->image,
+                        'src' => asset('') . '/images/products/' . $product->image,
                     ]
                 ]
             ]);
