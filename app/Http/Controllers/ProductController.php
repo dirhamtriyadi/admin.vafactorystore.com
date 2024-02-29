@@ -101,7 +101,7 @@ class ProductController extends Controller
                 ]
             ]);
 
-            $product->woocommerce_id = $product_woocommerce->id;
+            $product->woocommerce_id = $product_woocommerce['id'];
             $product->save();
         }
 
@@ -112,6 +112,9 @@ class ProductController extends Controller
             'description' => $product->description,
             'short_description' => $product->description,
         ]);
+
+        $product->woocommerce_id = $product_woocommerce['id'];
+        $product->save();
 
         return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
