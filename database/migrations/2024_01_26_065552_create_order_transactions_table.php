@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('payment_method_id');
             $table->unsignedBigInteger('user_id');
             $table->bigInteger('amount');
-            $table->text('description')->nullable();
+            $table->text('description');
             $table->date('date');
             $table->timestamps();
             $table->foreign('order_id')->references('id')->on('orders');
