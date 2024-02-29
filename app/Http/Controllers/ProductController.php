@@ -87,17 +87,30 @@ class ProductController extends Controller
 
         $product->save();
 
+        if ($request->hashFile('image')) {
+            $product_woocommerce = ProductWooCommerce::create([
+                'name' => $product->name,
+                'type' => 'simple',
+                'regular_price' => $product->price,
+                'description' => $product->description,
+                'short_description' => $product->description,
+                'images' => [
+                    [
+                        'src' => 'https://admin.vafactorystore.com/images/products/' . $product->image,
+                    ]
+                ]
+            ]);
+
+            $product->woocommerce_id = $product_woocommerce->id;
+            $product->save();
+        }
+
         $product_woocommerce = ProductWooCommerce::create([
             'name' => $product->name,
             'type' => 'simple',
             'regular_price' => $product->price,
             'description' => $product->description,
             'short_description' => $product->description,
-            'images' => [
-                [
-                    'src' => 'http://admin.vafactorystore.com/images/products/' . $product->image,
-                ]
-            ]
         ]);
 
         return redirect()->route('product.index')->with('success', 'Product created successfully.');
@@ -173,6 +186,29 @@ class ProductController extends Controller
         }
 
         $product->save();
+
+        if ($request->hasFile('image')) {
+            $product_woocommerce = ProductWooCommerce::update($product->woocommerce_id, [
+                'name' => $product->name,
+                'type' => 'simple',
+                'regular_price' => $product->price,
+                'description' => $product->description,
+                'short_description' => $product->description,
+                'images' => [
+                    [
+                        'src' => 'https://admin.vafactorystore.com/images/products/' . $product->image,
+                    ]
+                ]
+            ]);
+        }
+
+        $product_woocommerce = ProductWooCommerce::update($product->woocommerce_id, [
+            'name' => $product->name,
+            'type' => 'simple',
+            'regular_price' => $product->price,
+            'description' => $product->description,
+            'short_description' => $product->description,
+        ]);
 
         return redirect()->route('product.index')->with('success', 'Product updated successfully.');
     }
