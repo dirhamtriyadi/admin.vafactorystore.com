@@ -19,6 +19,7 @@ use App\Http\Controllers\OrderTransactionController;
 use App\Http\Controllers\OrderTrackingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MakloonController;
+use App\Http\Controllers\MakloonTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,5 +64,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('order-tracking', OrderTrackingController::class);
     Route::put('profile/{id}/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::resource('makloon', MakloonController::class);
+    Route::resource('makloon-transaction', MakloonTransactionController::class);
     Route::resource('profile', ProfileController::class);
 });

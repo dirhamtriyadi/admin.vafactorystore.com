@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Tambah Uang Kas</h1>
+                <h1>Edit Maklun Transaksi</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -40,7 +40,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Tambah Uang Kas</h3>
+                            <h3 class="card-title">Edit Maklun Transaksi</h3>
 
                             {{-- <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -53,54 +53,56 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('cash-flow.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('makloon-transaction.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
-                            <form action="{{ route('cash-flow.store') }}" method="POST">
+                            <form action="{{ route('makloon-transaction.update', $makloonTransaction->id) }}" method="POST">
                                 @csrf
-                                <div class="mb-3">
-                                    <label for="transaction_date" class="form-label">Tanggal *</label>
-                                    <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="transaction_date" value="{{ old('transaction_date') }}">
-                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                @method('PUT')
                                 <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">
 
                                 <div class="mb-3">
-                                    <label for="amount" class="form-label">Nominal *</label>
-                                    <input type="text" class="form-control mask-money" id="amount" name="amount" value="{{ old('amount') }}">
-                                </div>
-
-                                <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="cash_flow_type" class="form-label">Type *</label>
-                                        <select class="form-control select2" id="cash_flow_type" name="cash_flow_type">
-                                            <option selected value="">-- Pilih Type --</option>
-                                            <option value="UANGMASUK" {{ old('cash_flow_type') == "UANGMASUK" ? 'selected' : '' }}>Uang Masuk</option>
-                                            <option value="UANGKELUAR" {{ old('cash_flow_type') == "UANGKELUAR" ? 'selected' : '' }}>Uang Keluar</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 payment_method">
-                                    <div class="form-group">
-                                        <label for="payment_method_id" class="form-label">Jenis Pembayaran</label>
-                                        <select class="select2 form-control" id="payment_method_id" name="payment_method_id">
-                                            <option selected value="">-- Pilih Type --</option>
-                                            @foreach ($paymentMethods as $i => $paymentMethod)
-                                                <option value="{{ $paymentMethod->id }}" {{ old('payment_method_id') == $paymentMethod->id ? 'selected' : ''  }}>{{ $paymentMethod->name }}</option>
+                                        <label for="makloon_id" class="form-label">Maklun *</label>
+                                        <select class="form-control select2" id="makloon_id" name="makloon_id">
+                                            <option selected value="">-- Pilih Maklun --</option>
+                                            @foreach ($makloons as $i => $makloon)
+                                                <option value="{{ $makloon->id }}" {{ old('makloon_id') == $makloon->id | $makloonTransaction->makloon_id == $makloon->id ? 'selected' : ''  }}>{{ $makloon->makloon_number }} - {{ $makloon->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">Deskripsi</label>
+                                    <div class="form-group">
+                                        <label for="payment_method_id" class="form-label">Jenis Pembayaran *</label>
+                                        <select class="form-control select2" id="payment_method_id" name="payment_method_id">
+                                            <option selected value="">-- Pilih Jenis Pembayaran --</option>
+                                            @foreach ($paymentMethods as $i => $paymentMethod)
+                                                <option value="{{ $paymentMethod->id }}" {{ old('payment_method_id') == $paymentMethod->id | $makloonTransaction->payment_method_id == $paymentMethod->id ? 'selected' : ''  }}>{{ $paymentMethod->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="amount" class="form-label">Uang *</label>
+                                    <input type="number=" class="form-control mask-money" id="amount" name="amount" value="{{ old('amount') ? old('amount') : $makloonTransaction   ->amount }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Deskripsi *</label>
                                     {{-- <input type="text" class="form-control" id="description" name="description"> --}}
-                                    <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') }}</textarea>
+                                    <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') ? old('description') : $makloonTransaction ->description }}</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="date" class="form-label">Tanggal *</label>
+                                    <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{{ old('date') ? old('date') : $makloonTransaction   ->date }}">
+                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mb-3">
@@ -131,18 +133,5 @@
 @endsection
 
 @push('scripts')
-    <script>
-        $(function () {
-            $('#cash_flow_type').change(function () {
-                console.log($('#cash_flow_type option:selected').val());
-                if ($('#cash_flow_type').find(':selected').val() == 'UANGMASUK') {
-                    // console.log('masuk');
-                    $('.payment_method').removeClass('d-none');
-                } else {
-                    // console.log('keluar');
-                    $('.payment_method').addClass('d-none');
-                }
-            })
-        })
-    </script>
+
 @endpush
