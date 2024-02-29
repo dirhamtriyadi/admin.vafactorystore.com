@@ -95,7 +95,7 @@ class ProductController extends Controller
             'short_description' => $product->description,
             'images' => [
                 [
-                    'src' => 'http://admin.vafactorystore.com/images/products/' . $product->image,
+                    'src' => 'https://admin.vafactorystore.com/images/products/' . $product->image,
                 ]
             ]
         ]);
