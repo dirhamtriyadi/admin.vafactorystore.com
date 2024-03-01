@@ -240,8 +240,8 @@
                                 <td>${valueOfElement.product.code}</td>
                                 <td>${valueOfElement.product.name}</td>
                                 <td>${valueOfElement.qty}</td>
-                                <td>${valueOfElement.price}</td>
-                                <td>${valueOfElement.total}</td>
+                                <td>Rp. ${valueOfElement.price.toLocaleString('id-ID')}</td>
+                                <td>Rp. ${valueOfElement.total.toLocaleString('id-ID')}</td>
                             </tr>
                         `);
                     });
