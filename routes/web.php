@@ -41,9 +41,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout')->middlew
 // });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/', function () {
-        return view('templates.main');
-    });
+    Route::get('/', [DashboardController::class, 'index']);
 
     Route::resource('dashboard', DashboardController::class);
     Route::resource('user', UserController::class);
@@ -63,6 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('order-transaction', OrderTransactionController::class);
     Route::resource('order-tracking', OrderTrackingController::class);
     Route::put('profile/{id}/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+    Route::get('makloon/print', [MakloonController::class, 'print'])->name('makloon.print');
     Route::resource('makloon', MakloonController::class);
     Route::resource('makloon-transaction', MakloonTransactionController::class);
     Route::resource('profile', ProfileController::class);
