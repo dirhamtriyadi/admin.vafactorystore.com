@@ -186,6 +186,7 @@
                     </div> --}}
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <a class="btn btn-primary btn-print">Print</a>
                     </div>
                 </div>
             </div>
@@ -238,7 +239,10 @@
                 trFoot.append($('<td>').text('Rp. ' + totalPrice.toLocaleString('id-ID')).attr('class', 'text-bold'));
                 trFoot.append($('<td>').text('').attr('colspan', 2));
                 tableItemMakloonFoot.append(trFoot);
+
+                $('.btn-print').attr('href', `{{ route('makloon.print') }}?id=${detail.id}`);
             })
+
         })
     </script>
 @endpush

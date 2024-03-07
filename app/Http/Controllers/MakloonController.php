@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Makloon;
 use App\Models\MakloonDetail;
 use Illuminate\Http\Request;
+use PDF;
 
 class MakloonController extends Controller
 {
@@ -171,5 +172,16 @@ class MakloonController extends Controller
         }
 
         return redirect()->route('makloon.index')->with('success', 'Makloon is successfully deleted');
+    }
+
+    public function print(Request $request)
+    {
+        $makloon = Makloon::with('details')->findOrFail($request->id);
+
+        $pdf = PDF::loadView('makloon.print', [
+            'makloon' => $makloon,
+        ]);
+
+        return $pdf->stream();
     }
 }
