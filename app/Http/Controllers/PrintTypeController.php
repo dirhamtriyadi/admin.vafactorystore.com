@@ -9,10 +9,10 @@ class PrintTypeController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:print-type-index|print-type-create|print-type-edit|print-type-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:print-type-create', ['only' => ['create','store']]);
-        $this->middleware('permission:print-type-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:print-type-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:print-type.index|print-type.create|print-type.edit|print-type.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:print-type.create', ['only' => ['create','store']]);
+        $this->middleware('permission:print-type.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:print-type.delete', ['only' => ['destroy']]);
     }
 
     /**

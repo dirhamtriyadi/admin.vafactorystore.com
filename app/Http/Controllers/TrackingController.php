@@ -9,10 +9,10 @@ class TrackingController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:tracking-index|tracking-create|tracking-edit|tracking-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:tracking-create', ['only' => ['create','store']]);
-        $this->middleware('permission:tracking-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:tracking-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:tracking.index|tracking.create|tracking.edit|tracking.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:tracking.create', ['only' => ['create','store']]);
+        $this->middleware('permission:tracking.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:tracking.delete', ['only' => ['destroy']]);
     }
 
     /**

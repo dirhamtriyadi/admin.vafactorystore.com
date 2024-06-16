@@ -50,7 +50,7 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-end">
-                                @can('role-create')
+                                @can('role.create')
                                     <a href="{{ route('role.create') }}" class="btn btn-primary mb-3">Tambah Role</a>
                                 @endcan
                             </div>
@@ -69,10 +69,10 @@
                                                 <td>{{ $i + $roles->firstitem() }}</td>
                                                 <td>{{ $role->name }}</td>
                                                 <td>
-                                                    @can('role-edit')
+                                                    @can('role.edit')
                                                         <a href="{{ route('role.edit', $role->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
-                                                    @can('role-delete')
+                                                    @can('role.delete')
                                                         <form action="{{ route('role.destroy', $role->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')

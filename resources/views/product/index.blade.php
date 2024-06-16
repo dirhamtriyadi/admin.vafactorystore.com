@@ -54,7 +54,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    @can('product-create')
+                                    @can('product.create')
                                         <a href="{{ route('product.create') }}" class="btn btn-primary mb-3">Tambah Barang</a>
                                     @endcan
                                 </div>
@@ -110,12 +110,12 @@
                                                 <td>{{ $product->description }}</td>
                                                 <td>@money($product->price)</td>
                                                 <td>
-                                                    @can('product-edit')
+                                                    @can('product.edit')
                                                         <a href="{{ route('product.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     <a href="#" class="btn btn-info btn-sm btn-show" data-image="/images/products/{{ $product->image }}">Gambar</a>
                                                     {{-- <a href="#" class="btn btn-info btn-sm btn-show" data-image="/storage/images/products/{{ $product->image }}">Gambar</a> --}}
-                                                    @can('product-delete')
+                                                    @can('product.delete')
                                                         <form action="{{ route('product.destroy', $product->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')

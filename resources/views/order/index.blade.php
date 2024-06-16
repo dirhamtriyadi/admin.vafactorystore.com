@@ -54,7 +54,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    @can('order-create')
+                                    @can('order.create')
                                         <a href="{{ route('order.create') }}" class="btn btn-primary mb-3">Tambah Order</a>
                                     @endcan
                                 </div>
@@ -114,11 +114,11 @@
                                                 <td>{{ $order->name }}</td>
                                                 <td>{{ $order->date }}</td>
                                                 <td>
-                                                    @can('order-edit')
+                                                    @can('order.edit')
                                                         <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     <a href="#" class="btn btn-info btn-sm btn-show" data-detail="{{ $order }}">Detail</a>
-                                                    @can('order-delete')
+                                                    @can('order.delete')
                                                         <form action="{{ route('order.destroy', $order->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')

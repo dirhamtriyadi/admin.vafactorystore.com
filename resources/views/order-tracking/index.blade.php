@@ -46,7 +46,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    @can('order-tracking-create')
+                                    @can('order-tracking.create')
                                         <a href="{{ route('order-tracking.create') }}" class="btn btn-primary mb-3">Tambah Order Pelacakan</a>
                                     @endcan
                                 </div>
@@ -112,10 +112,10 @@
                                                 <td>{{ $orderTracking->description }}</td>
                                                 <td>{{ $orderTracking->date }}</td>
                                                 <td>
-                                                    @can('order-tracking-edit')
+                                                    @can('order-tracking.edit')
                                                         <a href="{{ route('order-tracking.edit', $orderTracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
-                                                    @can('order-tracking-delete')
+                                                    @can('order-tracking.delete')
                                                         <form action="{{ route('order-tracking.destroy', $orderTracking->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')

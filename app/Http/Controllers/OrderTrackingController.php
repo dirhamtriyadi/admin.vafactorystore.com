@@ -11,10 +11,10 @@ class OrderTrackingController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:order-tracking-index|order-tracking-create|order-tracking-edit|order-tracking-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:order-tracking-create', ['only' => ['create','store']]);
-        $this->middleware('permission:order-tracking-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:order-tracking-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:order-tracking.index|order-tracking.create|order-tracking.edit|order-tracking.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:order-tracking.create', ['only' => ['create','store']]);
+        $this->middleware('permission:order-tracking.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:order-tracking.delete', ['only' => ['destroy']]);
     }
 
     /**

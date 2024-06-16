@@ -54,7 +54,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    @can('tracking-create')
+                                    @can('tracking.create')
                                         <a href="{{ route('tracking.create') }}" class="btn btn-primary mb-3">Tambah Pelacakan</a>
                                     @endcan
                                 </div>
@@ -106,10 +106,10 @@
                                                 <td>{{ $tracking->name }}</td>
                                                 <td>{{ $tracking->description }}</td>
                                                 <td>
-                                                    @can('tracking-edit')
+                                                    @can('tracking.edit')
                                                         <a href="{{ route('tracking.edit', $tracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
-                                                    @can('tracking-delete')
+                                                    @can('tracking.delete')
                                                         <form action="{{ route('tracking.destroy', $tracking->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
