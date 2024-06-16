@@ -11,7 +11,7 @@ class OrderTransactionController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:order-transaction-list|order-transaction-create|order-transaction-edit|order-transaction-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:order-transaction-index|order-transaction-create|order-transaction-edit|order-transaction-delete', ['only' => ['index','store']]);
         $this->middleware('permission:order-transaction-create', ['only' => ['create','store']]);
         $this->middleware('permission:order-transaction-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:order-transaction-delete', ['only' => ['destroy']]);

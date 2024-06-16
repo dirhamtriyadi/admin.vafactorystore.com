@@ -10,7 +10,7 @@ class CashFlowReportController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:cashflow-report-list|cashflow-report-create|cashflow-report-edit|cashflow-report-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:cashflow-report-index|cashflow-report-create|cashflow-report-edit|cashflow-report-delete', ['only' => ['index','store']]);
         $this->middleware('permission:cashflow-report-create', ['only' => ['create','store']]);
         $this->middleware('permission:cashflow-report-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:cashflow-report-delete', ['only' => ['destroy']]);

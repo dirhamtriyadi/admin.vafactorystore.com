@@ -10,7 +10,7 @@ class TransactionReportController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:transaction-report-list|transaction-report-create|transaction-report-edit|transaction-report-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:transaction-report-index|transaction-report-create|transaction-report-edit|transaction-report-delete', ['only' => ['index','store']]);
         $this->middleware('permission:transaction-report-create', ['only' => ['create','store']]);
         $this->middleware('permission:transaction-report-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:transaction-report-delete', ['only' => ['destroy']]);

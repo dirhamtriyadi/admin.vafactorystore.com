@@ -8,7 +8,7 @@ class DashboardController extends Controller
 {
     // function __construct()
     // {
-    //     $this->middleware('permission:dashboard-list|dashboard-create|dashboard-edit|dashboard-delete', ['only' => ['index','store']]);
+    //     $this->middleware('permission:dashboard-index|dashboard-create|dashboard-edit|dashboard-delete', ['only' => ['index','store']]);
     //     $this->middleware('permission:dashboard-create', ['only' => ['create','store']]);
     //     $this->middleware('permission:dashboard-edit', ['only' => ['edit','update']]);
     //     $this->middleware('permission:dashboard-delete', ['only' => ['destroy']]);
