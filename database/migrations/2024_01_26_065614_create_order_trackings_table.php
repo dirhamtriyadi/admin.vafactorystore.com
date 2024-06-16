@@ -18,7 +18,12 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->boolean('status')->default(0);
             $table->date('date');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('tracking_id')->references('id')->on('trackings');
         });

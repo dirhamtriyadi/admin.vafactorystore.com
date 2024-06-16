@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_number')->unique();
-            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->unsignedBigInteger('print_type_id')->nullable();
             $table->integer('qty');
@@ -25,8 +24,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->date('date');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('print_type_id')->references('id')->on('print_types');
         });

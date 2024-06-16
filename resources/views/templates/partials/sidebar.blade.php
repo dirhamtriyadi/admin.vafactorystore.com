@@ -36,9 +36,8 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-       with font-awesome or any other icon font library -->
-                {{-- @canany(['dashboard-list', 'dashboard-create', 'dashboard-edit', 'dashboard-delete'])
+                <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                @canany(['dashboard.index', 'dashboard.create', 'dashboard.edit', 'dashboard.delete'])
                     <li class="nav-item">
                         <a href="{{ route('dashboard.index') }}" class="nav-link {{ Route::is('dashboard.index') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -47,16 +46,8 @@
                             </p>
                         </a>
                     </li>
-                @endcanany --}}
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.index') }}" class="nav-link {{ Route::is('dashboard.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Dashboard
-                        </p>
-                    </a>
-                </li>
-                @canany(['customer-list', 'customer-create', 'customer-edit', 'customer-delete'])
+                @endcanany
+                @canany(['customer.index', 'customer.create', 'customer.edit', 'customer.delete'])
                     <li class="nav-item">
                         <a href="{{ route('customer.index') }}" class="nav-link {{ Route::is('customer.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
@@ -66,7 +57,7 @@
                         </a>
                     </li>
                 @endcanany
-                @canany(['transaction-list', 'transaction-create', 'transaction-edit', 'transaction-delete', 'transaction-report-list', 'transaction-report-create', 'transaction-report-edit', 'transaction-report-delete', 'product-list', 'product-create', 'product-edit', 'product-delete'])
+                @canany(['transaction.index', 'transaction.create', 'transaction.edit', 'transaction.delete', 'transaction-report.index', 'transaction-report.create', 'transaction-report.edit', 'transaction-report.delete', 'product.index', 'product.create', 'product.edit', 'product.delete'])
                     <li class="nav-item {{ Route::is('transaction.*') | Route::is('transaction-report.*') | Route::is('product.*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ Route::is('transaction.*') | Route::is('transaction-report.*') | Route::is('product.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-store"></i>
@@ -76,7 +67,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @canany(['transaction-list', 'transaction-create', 'transaction-edit', 'transaction-delete'])
+                            @canany(['transaction.index', 'transaction.create', 'transaction.edit', 'transaction.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('transaction.index') }}" class="nav-link {{ Route::is('transaction.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -84,7 +75,7 @@
                                     </a>
                                 </li>
                             @endcanany
-                            @canany(['transaction-report-list', 'transaction-report-create', 'transaction-report-edit', 'transaction-report-delete'])
+                            @canany(['transaction-report.index', 'transaction-report.create', 'transaction-report.edit', 'transaction-report.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('transaction-report.index') }}" class="nav-link {{ Route::is('transaction-report.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -92,7 +83,7 @@
                                     </a>
                                 </li>
                             @endcanany
-                            @canany(['product-list', 'product-create', 'product-edit', 'product-delete'])
+                            @canany(['product.index', 'product.create', 'product.edit', 'product.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('product.index') }}" class="nav-link {{ Route::is('product.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -103,7 +94,7 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['order-list', 'order-create', 'order-edit', 'order-delete', 'order-transaction-list', 'order-transaction-create', 'order-transaction-edit', 'order-transaction-delete', 'order-tracking-list', 'order-tracking-create', 'order-tracking-edit', 'order-tracking-delete'])
+                @canany(['order.index', 'order.create', 'order.edit', 'order.delete', 'order-transaction.index', 'order-transaction.create', 'order-transaction.edit', 'order-transaction.delete', 'order-tracking.index', 'order-tracking.create', 'order-tracking.edit', 'order-tracking.delete'])
                     <li class="nav-item {{ Route::is('order.*') | Route::is('order-transaction.*') | Route::is('order-tracking.*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ Route::is('order.*') | Route::is('order-transaction.*') | Route::is('order-tracking.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-chart-pie"></i>
@@ -113,7 +104,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @canany(['order-list', 'order-create', 'order-edit', 'order-delete'])
+                            @canany(['order.index', 'order.create', 'order.edit', 'order.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('order.index') }}" class="nav-link {{ Route::is('order.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -121,7 +112,7 @@
                                     </a>
                                 </li>
                             @endcanany
-                            @canany(['order-transaction-list', 'order-transaction-create', 'order-transaction-edit', 'order-transaction-delete'])
+                            @canany(['order-transaction.index', 'order-transaction.create', 'order-transaction.edit', 'order-transaction.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('order-transaction.index') }}" class="nav-link {{ Route::is('order-transaction.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -129,7 +120,7 @@
                                     </a>
                                 </li>
                             @endcanany
-                            @canany(['order-tracking-list', 'order-tracking-create', 'order-tracking-edit', 'order-tracking-delete'])
+                            @canany(['order-tracking.index', 'order-tracking.create', 'order-tracking.edit', 'order-tracking.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('order-tracking.index') }}" class="nav-link {{ Route::is('order-tracking.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -140,32 +131,38 @@
                         </ul>
                     </li>
                 @endcanany
-                <li class="nav-item {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>
-                            Maklun
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('makloon.index') }}" class="nav-link {{ Route::is('makloon.*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Maklun</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('makloon-transaction.index') }}" class="nav-link {{ Route::is('makloon-transaction.*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Maklun Transaksi</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                @canany(['cashflow-list', 'cashflow-create', 'cashflow-edit', 'cashflow-delete', 'cashflow-report-list', 'cashflow-report-create', 'cashflow-report-edit', 'cashflow-report-delete'])
+                @canany(['makloon.index', 'makloon.create', 'makloon.edit', 'makloon.delete', 'makloon-transaction.index', 'makloon-transaction.create', 'makloon-transaction.edit', 'makloon-transaction.delete'])
+                    <li class="nav-item {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>
+                                Maklun
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        @canany(['makloon.index', 'makloon.create', 'makloon.edit', 'makloon.delete'])
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('makloon.index') }}" class="nav-link {{ Route::is('makloon.*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Maklun</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcanany
+                        @canany(['makloon-transaction.index', 'makloon-transaction.create', 'makloon-transaction.edit', 'makloon-transaction.delete'])
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('makloon-transaction.index') }}" class="nav-link {{ Route::is('makloon-transaction.*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Maklun Transaksi</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcanany
+                    </li>
+                @endcanany
+                @canany(['cashflow.index', 'cashflow.create', 'cashflow.edit', 'cashflow.delete', 'cashflow-report.index', 'cashflow-report.create', 'cashflow-report.edit', 'cashflow-report.delete'])
                     <li class="nav-item {{ Route::is('cash-flow.*') | Route::is('cash-flow-report.*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ Route::is('cash-flow.*') | Route::is('cash-flow-report.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-money-check"></i>
@@ -175,7 +172,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @canany(['cashflow-list', 'cashflow-create', 'cashflow-edit', 'cashflow-delete'])
+                            @canany(['cashflow.index', 'cashflow.create', 'cashflow.edit', 'cashflow.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('cash-flow.index') }}" class="nav-link {{ Route::is('cash-flow.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -183,7 +180,7 @@
                                     </a>
                                 </li>
                             @endcanany
-                            @canany(['cashflow-report-list', 'cashflow-report-create', 'cashflow-report-edit', 'cashflow-report-delete'])
+                            @canany(['cashflow-report.index', 'cashflow-report.create', 'cashflow-report.edit', 'cashflow-report.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('cash-flow-report.index') }}" class="nav-link {{ Route::is('cash-flow-report.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -194,7 +191,7 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['payment-method-list', 'payment-method-create', 'payment-method-edit', 'payment-method-delete', 'print-type-list', 'print-type-create', 'print-type-edit', 'print-type-delete', 'tracking-list', 'tracking-create', 'tracking-edit', 'tracking-delete'])
+                @canany(['payment-method.index', 'payment-method.create', 'payment-method.edit', 'payment-method.delete', 'print-type.index', 'print-type.create', 'print-type.edit', 'print-type.delete', 'tracking.index', 'tracking.create', 'tracking.edit', 'tracking.delete'])
                     <li class="nav-item {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-database"></i>
@@ -204,7 +201,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @canany(['payment-method-list', 'payment-method-create', 'payment-method-edit', 'payment-method-delete'])
+                            @canany(['payment-method.index', 'payment-method.create', 'payment-method.edit', 'payment-method.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('payment-method.index') }}" class="nav-link {{ Route::is('payment-method.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -212,7 +209,7 @@
                                     </a>
                                 </li>
                             @endcanany
-                            @canany(['print-type-list', 'print-type-create', 'print-type-edit', 'print-type-delete'])
+                            @canany(['print-type.index', 'print-type.create', 'print-type.edit', 'print-type.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('print-type.index') }}" class="nav-link {{ Route::is('print-type.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -220,7 +217,7 @@
                                     </a>
                                 </li>
                             @endcanany
-                            @canany(['tracking-list', 'tracking-create', 'tracking-edit', 'tracking-delete'])
+                            @canany(['tracking.index', 'tracking.create', 'tracking.edit', 'tracking.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('tracking.index') }}" class="nav-link {{ Route::is('tracking.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
@@ -231,7 +228,7 @@
                         </ul>
                     </li>
                 @endcanany
-                @canany(['user-list', 'user-create', 'user-edit', 'user-delete'])
+                @canany(['user.index', 'user.create', 'user.edit', 'user.delete'])
                     <li class="nav-item">
                         <a href="{{ route('user.index') }}" class="nav-link {{ Route::is('user.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-user-alt"></i>
@@ -241,7 +238,7 @@
                         </a>
                     </li>
                 @endcanany
-                @canany(['role-list', 'role-create', 'role-edit', 'role-delete'])
+                @canany(['role.index', 'role.create', 'role.edit', 'role.delete'])
                     <li class="nav-item">
                         <a href="{{ route('role.index') }}" class="nav-link {{ Route::is('role.*') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-user-lock"></i>

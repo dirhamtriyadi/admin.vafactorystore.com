@@ -46,7 +46,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end">
                                 <div class="d-flex justify-content-end">
-                                    @can('cashflow-create')
+                                    @can('cashflow.create')
                                         <a href="{{ route('cash-flow.create') }}" class="btn btn-primary mb-3">Tambah Uang Kas</a>
                                     @endcan
                                 </div>
@@ -104,14 +104,14 @@
                                                     <td>{{ $i + 1 }}</td>
                                                     <td>{{ $cashFlow->cash_flow_type }}</td>
                                                     <td>{{ $cashFlow->description }}</td>
-                                                    <td>{{ $cashFlow->user->name }}</td>
+                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
                                                     <td>{{ $cashFlow->created_at }}</td>
                                                     <td>@money($cashFlow->amount)</td>
                                                     <td>
-                                                        @can('cashflow-edit')
+                                                        @can('cashflow.edit')
                                                             <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="btn btn-warning">Edit</a>
                                                         @endcan
-                                                        @can('cashflow-delete')
+                                                        @can('cashflow.delete')
                                                             <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
                                                                 @csrf
                                                                 @method('delete')
@@ -125,7 +125,7 @@
                                                     <td>{{ $i + $cashFlows->firstitem() }}</td>
                                                     <td>{{ $cashFlow->cash_flow_type }}</td>
                                                     <td>{{ $cashFlow->description }}</td>
-                                                    <td>{{ $cashFlow->user->name }}</td>
+                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
                                                     <td>{{ $cashFlow->transaction_date }}</td>
                                                     <td>@money($cashFlow->amount)</td>
                                                     <td>

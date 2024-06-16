@@ -9,10 +9,10 @@ class TrackingController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:tracking-list|tracking-create|tracking-edit|tracking-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:tracking-create', ['only' => ['create','store']]);
-        $this->middleware('permission:tracking-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:tracking-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:tracking.index|tracking.create|tracking.edit|tracking.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:tracking.create', ['only' => ['create','store']]);
+        $this->middleware('permission:tracking.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:tracking.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -57,6 +57,8 @@ class TrackingController extends Controller
             'description' => '',
         ]);
 
+        $validatedData['created_by'] = auth()->user()->id;
+
         Tracking::updateOrCreate($validatedData);
 
         return redirect()->route('tracking.index')->with('success', 'Tracking is successfully saved');
@@ -91,6 +93,8 @@ class TrackingController extends Controller
             'name' => 'required|unique:trackings|max:255',
             'description' => '',
         ]);
+
+        $validatedData['updated_by'] = auth()->user()->id;
 
         $tracking = Tracking::findOrFail($id);
         $tracking->update($validatedData);

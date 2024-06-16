@@ -12,7 +12,6 @@ class Order extends Model
     protected $fillable =
     [
         'order_number',
-        'user_id',
         'customer_id',
         'print_type_id',
         'qty',
@@ -23,11 +22,18 @@ class Order extends Model
         'name',
         'description',
         'date',
+        'created_by',
+        'updated_by',
     ];
 
-    public function user()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 
     public function customer()

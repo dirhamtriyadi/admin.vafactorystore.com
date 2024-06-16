@@ -13,10 +13,10 @@ class TransactionController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:transaction-list|transaction-create|transaction-edit|transaction-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:transaction-create', ['only' => ['create','store']]);
-        $this->middleware('permission:transaction-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:transaction-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:transaction.index|transaction.create|transaction.edit|transaction.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:transaction.create', ['only' => ['create','store']]);
+        $this->middleware('permission:transaction.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:transaction.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -51,7 +51,6 @@ class TransactionController extends Controller
         if($request->ajax()) {
             $validatedData = $request->validate([
                 'date' => 'required',
-                'user_id' => 'required',
                 'customer_id' => 'required',
                 'payment_method_id' => 'required',
                 'items' => 'required',
@@ -60,9 +59,9 @@ class TransactionController extends Controller
             $transaction = Transaction::create([
                 'date' => $validatedData['date'],
                 'transaction_number' => 'TRX-'.date('YmdHis'),
-                'user_id' => $validatedData['user_id'],
                 'customer_id' => $validatedData['customer_id'],
                 'payment_method_id' => $validatedData['payment_method_id'],
+                'created_by' => auth()->user()->id,
             ]);
 
             foreach($validatedData['items'] as $item) {

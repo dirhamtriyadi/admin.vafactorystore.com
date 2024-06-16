@@ -10,10 +10,10 @@ class CashFlowReportController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:cashflow-report-list|cashflow-report-create|cashflow-report-edit|cashflow-report-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:cashflow-report-create', ['only' => ['create','store']]);
-        $this->middleware('permission:cashflow-report-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:cashflow-report-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:cashflow-report.index|cashflow-report.create|cashflow-report.edit|cashflow-report.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:cashflow-report.create', ['only' => ['create','store']]);
+        $this->middleware('permission:cashflow-report.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:cashflow-report.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -26,11 +26,11 @@ class CashFlowReportController extends Controller
         $start_date = date('Y-m-01');
         $end_date = date('Y-m-d');
 
-        // $cashFlows = CashFlow::with(['user' => function ($query) {
+        // $cashFlows = CashFlow::with(['createdBy' => function ($query) {
         //     $query->select('id', 'name');
         // }])->orderBy('transaction_date', 'DESC')->paginate(10);
 
-        $cashFlows = CashFlow::with(['user' => function ($query) {
+        $cashFlows = CashFlow::with(['createdBy' => function ($query) {
             $query->select('id', 'name');
         }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage);
 
@@ -38,7 +38,7 @@ class CashFlowReportController extends Controller
             $start_date = $request->start_date;
             $end_date = $request->end_date;
 
-            $cashFlows = CashFlow::with(['user' => function ($query) {
+            $cashFlows = CashFlow::with(['createdBy' => function ($query) {
                 $query->select('id', 'name');
             }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage, 'start_date=' . $start_date, 'end_date=' . $end_date);
         }
@@ -104,7 +104,7 @@ class CashFlowReportController extends Controller
         $start_date = date('Y-m-01');
         $end_date = date('Y-m-d');
 
-        $cashFlows = CashFlow::with(['user' => function ($query) {
+        $cashFlows = CashFlow::with(['createdBy' => function ($query) {
             $query->select('id', 'name');
         }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->get();
 
@@ -112,7 +112,7 @@ class CashFlowReportController extends Controller
             $start_date = $request->start_date;
             $end_date = $request->end_date;
 
-            $cashFlows = CashFlow::with(['user' => function ($query) {
+            $cashFlows = CashFlow::with(['createdBy' => function ($query) {
                 $query->select('id', 'name');
             }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->get();
         }

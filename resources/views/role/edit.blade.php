@@ -63,13 +63,54 @@
                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ? old('name') : $role->name }}">
                                 </div>
 
-                                <div class="form-group mb-3">
+                                {{-- <div class="form-group mb-3">
                                     <label for="permissions" class="form-label">Permission *</label>
                                     <select name="permissions[]" id="permissions" class="form-control select2" multiple>
                                         @foreach ($permissions as $permission)
                                             <option value="{{ $permission->name }}" {{ $role->permissions->contains($permission) ? 'selected' : '' }}>{{ $permission->name }}</option>
                                         @endforeach
                                     </select>
+                                </div> --}}
+
+                                <div class="mb-3 card p-3">
+                                    <label for="permissions" class="form-label">Permission *</label>
+                                    <div class="row">
+                                        @foreach ($permissions as $permission)
+                                            @php
+                                                $group = explode('.', $permission->name)[0];
+                                            @endphp
+                                            @if ($loop->first || $group != explode('.', $permissions[$loop->index - 1]->name)[0])
+                                                <div class="col-md-3 p-3">
+                                                    <div
+                                                        class="form-group
+                                                        {{ $loop->first ? 'mb-3' : '' }}">
+                                                        <label for="{{ $group }}-select-all"
+                                                            class="form-label">{{ ucfirst($group) }}</label>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input select-all"
+                                                                id="{{ $group }}-select-all">
+                                                            <label class="custom-control-label"
+                                                                for="{{ $group }}-select-all">Select All</label>
+                                                        </div>
+
+                                                        @foreach ($permissions as $permission)
+                                                            @if (explode('.', $permission->name)[0] == $group)
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox"
+                                                                        {{ $role->permissions->contains($permission) ? 'checked' : '' }}
+                                                                        class="custom-control-input {{ $group }}"
+                                                                        id="{{ $permission->name }}" name="permissions[]"
+                                                                        value="{{ $permission->name }}">
+                                                                    <label class="custom-control-label"
+                                                                        for="{{ $permission->name }}">{{ explode('.', $permission->name)[1] }}</label>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
 
                                 <div class="mb-3">
@@ -100,5 +141,30 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            // Handle Check If All Checkboxes Are Checked
+            $(".custom-control-input").each(function() {
+                var groupClass = $(this).attr("class").split(' ')[1]; // Get the group class
+                var groupCheckboxes = $("." + groupClass);
+                var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
+                $("#" + groupClass + "-select-all").prop("checked", allChecked);
+            });
 
+            // Handle Select All checkboxes
+            $(".select-all").click(function() {
+                var groupClass = $(this).attr("id").replace("-select-all",
+                    ""); // Get the base class for the group
+                $("." + groupClass).prop("checked", $(this).prop("checked"));
+            });
+
+            // If any checkbox within the group is unchecked, uncheck the "Select All" checkbox
+            $(".custom-control-input").not(".select-all").click(function() {
+                var groupClass = $(this).attr("class").split(' ')[1]; // Get the group class
+                var groupCheckboxes = $("." + groupClass);
+                var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
+                $("#" + groupClass + "-select-all").prop("checked", allChecked);
+            });
+        });
+    </script>
 @endpush

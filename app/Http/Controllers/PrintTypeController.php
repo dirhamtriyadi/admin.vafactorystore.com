@@ -9,10 +9,10 @@ class PrintTypeController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:print-type-list|print-type-create|print-type-edit|print-type-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:print-type-create', ['only' => ['create','store']]);
-        $this->middleware('permission:print-type-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:print-type-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:print-type.index|print-type.create|print-type.edit|print-type.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:print-type.create', ['only' => ['create','store']]);
+        $this->middleware('permission:print-type.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:print-type.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -59,6 +59,8 @@ class PrintTypeController extends Controller
             'description' => '',
         ]);
 
+        $validatedData['created_by'] = auth()->user()->id;
+
         PrintType::updateOrCreate($validatedData);
 
         return redirect()->route('print-type.index')->with('success', 'Print type is successfully saved');
@@ -94,6 +96,8 @@ class PrintTypeController extends Controller
             'price' => 'required|numeric',
             'description' => '',
         ]);
+
+        $validatedData['updated_by'] = auth()->user()->id;
 
         $printType = PrintType::findOrFail($id);
         $printType->update($validatedData);

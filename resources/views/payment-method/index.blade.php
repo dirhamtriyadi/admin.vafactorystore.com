@@ -54,7 +54,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    @can('payment-method-create')
+                                    @can('payment-method.create')
                                         <a href="{{ route('payment-method.create') }}" class="btn btn-primary mb-3">Tambah Jenis Pembayaran</a>
                                     @endcan
                                 </div>
@@ -106,10 +106,10 @@
                                                 <td>{{ $paymentMethod->name }}</td>
                                                 <td>{{ $paymentMethod->description }}</td>
                                                 <td>
-                                                    @can('payment-method-edit')
+                                                    @can('payment-method.edit')
                                                         <a href="{{ route('payment-method.edit', $paymentMethod->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
-                                                    @can('payment-method-delete')
+                                                    @can('payment-method.delete')
                                                         <form action="{{ route('payment-method.destroy', $paymentMethod->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')

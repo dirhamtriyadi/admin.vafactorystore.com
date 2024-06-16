@@ -11,10 +11,10 @@ class UserController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:user-create', ['only' => ['create','store']]);
-        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:user.index|user.create|user.edit|user.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:user.create', ['only' => ['create','store']]);
+        $this->middleware('permission:user.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:user.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -64,6 +64,7 @@ class UserController extends Controller
             'password' => ['confirmed'],
         ]);
 
+        $validatedData['created_by'] = auth()->user()->id;
         $validatedData['password'] = bcrypt('password');
 
         $user = User::updateOrCreate($validatedData);
@@ -107,7 +108,11 @@ class UserController extends Controller
             'password' => ['confirmed'],
         ]);
 
-        $validatedData['password'] = bcrypt('password');
+        $validatedData['updated_by'] = auth()->user()->id;
+
+        if ($request->password) {
+            $validatedData['password'] = bcrypt($request->password);
+        }
 
         $user = User::updateOrCreate(['id' => $id], $validatedData);
         DB::table('model_has_roles')->where('model_id', $id)->delete();

@@ -46,7 +46,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    @can('order-transaction-create')
+                                    @can('order-transaction.create')
                                         <a href="{{ route('order-transaction.create') }}" class="btn btn-primary mb-3">Tambah Order Transaksi</a>
                                     @endcan
                                 </div>
@@ -100,16 +100,16 @@
                                             <tr>
                                                 <td>{{ $i + $orderTransactions->firstitem() }}</td>
                                                 <td>{{ $orderTransaction->order->order_number }}</td>
-                                                <td>{{ $orderTransaction->user->name }}</td>
+                                                <td>{{ isset($orderTransaction->createdBy->name) ? $orderTransaction->createdBy->name : '' }}</td>
                                                 <td>{{ $orderTransaction->paymentMethod->name }}</td>
                                                 <td>@money($orderTransaction->amount)</td>
                                                 <td>{{ $orderTransaction->description }}</td>
                                                 <td>{{ $orderTransaction->date }}</td>
                                                 <td>
-                                                    @can('order-transaction-edit')
+                                                    @can('order-transaction.edit')
                                                         <a href="{{ route('order-transaction.edit', $orderTransaction->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
-                                                    @can('order-transaction-delete')
+                                                    @can('order-transaction.delete')
                                                         <form action="{{ route('order-transaction.destroy', $orderTransaction->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')

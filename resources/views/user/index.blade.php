@@ -59,7 +59,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end">
                                 <div class="d-flex justify-content-end">
-                                    @can('user-create')
+                                    @can('user.create')
                                         <a href="{{ route('user.create') }}" class="btn btn-primary mb-3">Tambah User</a>
                                     @endcan
                                 </div>
@@ -120,10 +120,10 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    @can('user-edit')
+                                                    @can('user.edit')
                                                         <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
-                                                    @can('user-delete')
+                                                    @can('user.delete')
                                                         <form action="{{ route('user.destroy', $user->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')

@@ -14,18 +14,24 @@ class Transaction extends Model
         'date',
         'transaction_number',
         'customer_id',
-        'user_id',
         'payment_method_id',
+        'created_by',
+        'updated_by',
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
 
     public function customer()
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 
     public function paymentMethod()

@@ -54,7 +54,7 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    @can('print-type-create')
+                                    @can('print-type.create')
                                         <a href="{{ route('print-type.create') }}" class="btn btn-primary mb-3">Tambah Kategori</a>
                                     @endcan
                                 </div>
@@ -94,7 +94,7 @@
                                     <thead class="table-primary">
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Pelanggan</th>
+                                            <th>Nama Kategori</th>
                                             <th>Harga</th>
                                             <th>Deskripsi</th>
                                             <th>Aksi</th>
@@ -108,10 +108,10 @@
                                                 <td>@money($printType->price)</td>
                                                 <td>{{ $printType->description }}</td>
                                                 <td>
-                                                    @can('print-type-edit')
+                                                    @can('print-type.edit')
                                                         <a href="{{ route('print-type.edit', $printType->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
-                                                    @can('print-type-delete')
+                                                    @can('print-type.delete')
                                                         <form action="{{ route('print-type.destroy', $printType->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')

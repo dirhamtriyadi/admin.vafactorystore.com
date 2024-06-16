@@ -11,10 +11,10 @@ class OrderController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:order-list|order-create|order-edit|order-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:order-create', ['only' => ['create','store']]);
-        $this->middleware('permission:order-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:order-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:order.index|order.create|order.edit|order.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:order.create', ['only' => ['create','store']]);
+        $this->middleware('permission:order.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:order.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -73,7 +73,6 @@ class OrderController extends Controller
             // 'order_number' => 'required|unique:orders',
             'customer_id' => 'required|numeric',
             'print_type_id' => 'required|numeric',
-            'user_id' => 'required|numeric',
             'qty' => 'required|numeric',
             'price' => 'required|numeric',
             'subtotal' => 'required|numeric',
@@ -88,7 +87,6 @@ class OrderController extends Controller
             'order_number' => 'ORD-' . date('YmdHis'), // 'ORD-20210601000001
             'customer_id' => $validatedData['customer_id'],
             'print_type_id' => $validatedData['print_type_id'],
-            'user_id' => $validatedData['user_id'],
             'qty' => $validatedData['qty'],
             'price' => $validatedData['price'],
             'subtotal' => $validatedData['subtotal'],
@@ -97,6 +95,7 @@ class OrderController extends Controller
             'name' => $validatedData['name'],
             'description' => $validatedData['description'],
             'date' => $validatedData['date'],
+            'created_by' => auth()->id(),
         ]);
 
         return redirect()->route('order.index')->with('success', 'Order created successfully');
@@ -134,7 +133,6 @@ class OrderController extends Controller
         $validatedData = $request->validate([
             'customer_id' => 'required|numeric',
             'print_type_id' => 'required|numeric',
-            'user_id' => 'required|numeric',
             'qty' => 'required|numeric',
             'price' => 'required|numeric',
             'subtotal' => 'required|numeric',
@@ -149,7 +147,6 @@ class OrderController extends Controller
         $order->update([
             'customer_id' => $validatedData['customer_id'],
             'print_type_id' => $validatedData['print_type_id'],
-            'user_id' => $validatedData['user_id'],
             'qty' => $validatedData['qty'],
             'price' => $validatedData['price'],
             'subtotal' => $validatedData['subtotal'],
@@ -158,6 +155,7 @@ class OrderController extends Controller
             'name' => $validatedData['name'],
             'description' => $validatedData['description'],
             'date' => $validatedData['date'],
+            'updated_by' => auth()->id(),
         ]);
 
         return redirect()->route('order.index')->with('success', 'Order updated successfully');

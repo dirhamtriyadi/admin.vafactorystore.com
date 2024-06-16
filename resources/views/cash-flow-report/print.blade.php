@@ -89,6 +89,7 @@
                     <tr>
                         <th>Tanggal</th>
                         <th>Deskripsi</th>
+                        <th>Nama Penginput</th>
                         <th>Pemasukan</th>
                         <th>Pengeluaran</th>
                     </tr>
@@ -107,17 +108,19 @@
                             }
                         @endphp
                         @if ($item->cash_flow_type == 'UANGMASUK')
-                            <tr style="background-color: #F1948A">
+                            <tr style="background-color: #82E0AA">
                                 <td>{{ $item->transaction_date }}</td>
                                 <td>{{ $item->description }}</td>
+                                <td>{{ isset($item->createdby->name) ? $item->createdby->name : '' }}</td>
                                 <td>@money($item->amount)</td>
                                 <td></td>
                             </tr>
                         @endif
                         @if ($item->cash_flow_type == 'UANGKELUAR')
-                            <tr style="background-color: #82E0AA">
+                            <tr style="background-color: #F1948A">
                                 <td>{{ $item->transaction_date }}</td>
                                 <td>{{ $item->description }}</td>
+                                <td>{{ isset($item->createdby->name) ? $item->createdby->name : '' }}</td>
                                 <td></td>
                                 <td>@money($item->amount)</td>
                             </tr>

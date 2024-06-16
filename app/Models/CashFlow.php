@@ -11,16 +11,22 @@ class CashFlow extends Model
 
     protected $fillable = [
         'transaction_date',
-        'user_id',
         'cash_flow_type',
         'payment_method_id',
         'amount',
         'description',
+        'created_by',
+        'updated_by',
     ];
 
-    public function user()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 
     public function paymentMethod()

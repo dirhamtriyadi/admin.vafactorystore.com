@@ -14,13 +14,16 @@ return new class extends Migration
         Schema::create('cash_flows', function (Blueprint $table) {
             $table->id();
             $table->date('transaction_date');
-            $table->unsignedBigInteger('user_id');
             $table->string('cash_flow_type');
             $table->unsignedBigInteger('payment_method_id')->nullable();
             $table->bigInteger('amount')->default(0);
             $table->string('description')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
             $table->foreign('payment_method_id')->references('id')->on('payment_methods');
         });
     }

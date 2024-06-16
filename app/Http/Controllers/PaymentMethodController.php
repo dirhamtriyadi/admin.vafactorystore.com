@@ -9,10 +9,10 @@ class PaymentMethodController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:payment-method-list|payment-method-create|payment-method-edit|payment-method-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:payment-method-create', ['only' => ['create','store']]);
-        $this->middleware('permission:payment-method-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:payment-method-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:payment-method.index|payment-method.create|payment-method.edit|payment-method.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:payment-method.create', ['only' => ['create','store']]);
+        $this->middleware('permission:payment-method.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:payment-method.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -57,6 +57,8 @@ class PaymentMethodController extends Controller
             'description' => '',
         ]);
 
+        $validatedData['created_by'] = auth()->user()->id;
+
         PaymentMethod::updateOrCreate($validatedData);
 
         return redirect()->route('payment-method.index')->with('success', 'Payment method is successfully saved');
@@ -91,6 +93,8 @@ class PaymentMethodController extends Controller
             'name' => 'required|unique:payment_methods,name,' . $id . '|max:255',
             'description' => '',
         ]);
+
+        $validatedData['updated_by'] = auth()->user()->id;
 
         $paymentMethod = PaymentMethod::findOrFail($id);
         $paymentMethod->update($validatedData);

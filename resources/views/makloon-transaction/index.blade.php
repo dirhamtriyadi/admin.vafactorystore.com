@@ -46,10 +46,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('makloon-transaction.create') }}" class="btn btn-primary mb-3">Tambah Maklun Transaksi</a>
-                                    {{-- @can('order-transaction-create')
-                                        <a href="{{ route('order-transaction.create') }}" class="btn btn-primary mb-3">Tambah Order Transaksi</a>
-                                    @endcan --}}
+                                    @can('makloon-transaction.create')
+                                        <a href="{{ route('makloon-transaction.create') }}" class="btn btn-primary mb-3">Tambah Maklun Transaksi</a>
+                                    @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
                                     <div class="mb-3">
@@ -101,28 +100,22 @@
                                             <tr>
                                                 <td>{{ $i + $makloonTransactions->firstitem() }}</td>
                                                 <td>{{ $makloonTransaction->makloon->makloon_number }}</td>
-                                                <td>{{ $makloonTransaction->user->name }}</td>
+                                                <td>{{ isset($makloonTransaction->createdBy->name) ? $makloonTransaction->createdBy->name : '' }}</td>
                                                 <td>{{ $makloonTransaction->paymentMethod->name }}</td>
                                                 <td>@money($makloonTransaction->amount)</td>
                                                 <td>{{ $makloonTransaction->description }}</td>
                                                 <td>{{ $makloonTransaction->date }}</td>
                                                 <td>
-                                                    <a href="{{ route('makloon-transaction.edit', $makloonTransaction->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    {{-- @can('makloon-transaction-edit')
+                                                    @can('makloon-transaction.edit')
                                                         <a href="{{ route('makloon-transaction.edit', $makloonTransaction->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    @endcan --}}
-                                                    <form action="{{ route('makloon-transaction.destroy', $makloonTransaction->id) }}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
-                                                    {{-- @can('makloon-transaction-delete')
+                                                    @endcan
+                                                    @can('makloon-transaction.delete')
                                                         <form action="{{ route('makloon-transaction.destroy', $makloonTransaction->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                         </form>
-                                                    @endcan --}}
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach
