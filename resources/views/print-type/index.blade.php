@@ -94,7 +94,7 @@
                                     <thead class="table-primary">
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Pelanggan</th>
+                                            <th>Nama Kategori</th>
                                             <th>Harga</th>
                                             <th>Deskripsi</th>
                                             <th>Aksi</th>
