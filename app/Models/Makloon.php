@@ -12,16 +12,22 @@ class Makloon extends Model
     protected $fillable =
     [
         'makloon_number',
-        'user_id',
         'customer_id',
         'name',
         'description',
         'date',
+        'created_by',
+        'updated_by',
     ];
 
-    public function user()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 
     public function customer()

@@ -64,11 +64,14 @@ class ProductController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $validatedData['created_by'] = auth()->user()->id;
+
         $product = new Product();
         $product->code = $validatedData['code'];
         $product->name = $validatedData['name'];
         $product->description = $validatedData['description'];
         $product->price = $validatedData['price'];
+        $product->created_by = $validatedData['created_by'];
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -87,34 +90,34 @@ class ProductController extends Controller
 
         $product->save();
 
-        if ($product->image) {
-            $product_woocommerce = ProductWooCommerce::create([
-                'name' => $product->name,
-                'type' => 'simple',
-                'regular_price' => $product->price,
-                'description' => $product->description,
-                'short_description' => $product->description,
-                'images' => [
-                    [
-                        'src' => asset('') . '/images/products/' . $product->image,
-                    ]
-                ]
-            ]);
+        // if ($product->image) {
+        //     $product_woocommerce = ProductWooCommerce::create([
+        //         'name' => $product->name,
+        //         'type' => 'simple',
+        //         'regular_price' => $product->price,
+        //         'description' => $product->description,
+        //         'short_description' => $product->description,
+        //         'images' => [
+        //             [
+        //                 'src' => asset('') . '/images/products/' . $product->image,
+        //             ]
+        //         ]
+        //     ]);
 
-            $product->woocommerce_id = $product_woocommerce['id'];
-            $product->save();
-        } else {
-            $product_woocommerce = ProductWooCommerce::create([
-                'name' => $product->name,
-                'type' => 'simple',
-                'regular_price' => $product->price,
-                'description' => $product->description,
-                'short_description' => $product->description,
-            ]);
+        //     $product->woocommerce_id = $product_woocommerce['id'];
+        //     $product->save();
+        // } else {
+        //     $product_woocommerce = ProductWooCommerce::create([
+        //         'name' => $product->name,
+        //         'type' => 'simple',
+        //         'regular_price' => $product->price,
+        //         'description' => $product->description,
+        //         'short_description' => $product->description,
+        //     ]);
 
-            $product->woocommerce_id = $product_woocommerce['id'];
-            $product->save();
-        }
+        //     $product->woocommerce_id = $product_woocommerce['id'];
+        //     $product->save();
+        // }
 
         return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
@@ -152,11 +155,14 @@ class ProductController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $validatedData['updated_by'] = auth()->user()->id;
+
         $product = Product::findOrFail($id);
         $product->code = $validatedData['code'];
         $product->name = $validatedData['name'];
         $product->description = $validatedData['description'];
         $product->price = $validatedData['price'];
+        $product->updated_by = $validatedData['updated_by'];
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -190,28 +196,28 @@ class ProductController extends Controller
 
         $product->save();
 
-        if ($product->image) {
-            $product_woocommerce = ProductWooCommerce::update($product->woocommerce_id, [
-                'name' => $product->name,
-                'type' => 'simple',
-                'regular_price' => $product->price,
-                'description' => $product->description,
-                'short_description' => $product->description,
-                'images' => [
-                    [
-                        'src' => asset('') . '/images/products/' . $product->image,
-                    ]
-                ]
-            ]);
-        }
+        // if ($product->image) {
+        //     $product_woocommerce = ProductWooCommerce::update($product->woocommerce_id, [
+        //         'name' => $product->name,
+        //         'type' => 'simple',
+        //         'regular_price' => $product->price,
+        //         'description' => $product->description,
+        //         'short_description' => $product->description,
+        //         'images' => [
+        //             [
+        //                 'src' => asset('') . '/images/products/' . $product->image,
+        //             ]
+        //         ]
+        //     ]);
+        // }
 
-        $product_woocommerce = ProductWooCommerce::update($product->woocommerce_id, [
-            'name' => $product->name,
-            'type' => 'simple',
-            'regular_price' => $product->price,
-            'description' => $product->description,
-            'short_description' => $product->description,
-        ]);
+        // $product_woocommerce = ProductWooCommerce::update($product->woocommerce_id, [
+        //     'name' => $product->name,
+        //     'type' => 'simple',
+        //     'regular_price' => $product->price,
+        //     'description' => $product->description,
+        //     'short_description' => $product->description,
+        // ]);
 
         return redirect()->route('product.index')->with('success', 'Product updated successfully.');
     }

@@ -10,6 +10,14 @@ use PDF;
 
 class MakloonController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:makloon.index|makloon.create|makloon.edit|makloon.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:makloon.create', ['only' => ['create','store']]);
+        $this->middleware('permission:makloon.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:makloon.delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -18,12 +26,12 @@ class MakloonController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $makloons = Makloon::with('user', 'customer', 'details')->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $makloons = Makloon::with('createdBy', 'updatedBy', 'customer', 'details')->paginate($perPage)->withQueryString('perPage=' . $perPage);
 
         if($request->has('search')) {
-            $makloons = Makloon::with('user', 'customer', 'details')
+            $makloons = Makloon::with('createdBy', 'updatedBy', 'customer', 'details')
                 ->where('makloon_number', 'like', '%' . $request->search . '%')
-                ->orWhereHas('user', function ($query) use ($request) {
+                ->orWhereHas('createdBy', function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->search . '%');
                 })
                 ->orWhereHas('customer', function ($query) use ($request) {
@@ -76,14 +84,15 @@ class MakloonController extends Controller
             ], 422);
         }
 
+        $validatedData['created_by'] = auth()->id();
+
         $makloon = Makloon::create([
             'makloon_number' => 'MKL-' . date('YmdHis'),
-            'user_id' => $validatedData['user_id'],
             'customer_id' => $validatedData['customer_id'],
             'name' => $validatedData['name'],
             'description' => $validatedData['description'],
             'date' => $validatedData['date'],
-
+            'created_by' => $validatedData['created_by'],
         ]);
 
         if($request->has('items')) {
@@ -126,7 +135,6 @@ class MakloonController extends Controller
     public function update(Request $request, int $id)
     {
         $validatedData = $request->validate([
-            'user_id' => 'required',
             'customer_id' => 'required',
             'name' => 'required',
             'description' => '',
@@ -138,6 +146,8 @@ class MakloonController extends Controller
                 'message' => 'Items is required'
             ], 422);
         }
+
+        $validatedData['updated_by'] = auth()->id();
 
         $makloon = Makloon::findOrFail($id);
         $makloon->update($validatedData);
@@ -166,6 +176,7 @@ class MakloonController extends Controller
     {
         try {
             $makloon = Makloon::findOrFail($id);
+            MakloonDetail::where('makloon_id', $makloon->id)->delete();
             $makloon->delete();
         } catch (\Throwable $th) {
             return back()->withErrors(['Data ini tidak dapat dihapus karena memiliki relasi ke data lain.']);

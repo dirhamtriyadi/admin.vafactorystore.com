@@ -15,14 +15,17 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('payment_method_id');
-            $table->unsignedBigInteger('user_id');
             $table->bigInteger('amount');
             $table->text('description');
             $table->date('date');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
             $table->foreign('order_id')->references('id')->on('orders');
             $table->foreign('payment_method_id')->references('id')->on('payment_methods');
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

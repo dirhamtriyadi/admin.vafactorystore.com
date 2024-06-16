@@ -76,6 +76,8 @@ class OrderTrackingController extends Controller
             'date' => 'required|date',
         ]);
 
+        $validatedData['created_by'] = auth()->id();
+
         OrderTracking::create($validatedData);
 
         return redirect()->route('order-tracking.index');
@@ -117,6 +119,8 @@ class OrderTrackingController extends Controller
             'status' => 'required',
             'date' => 'required|date',
         ]);
+
+        $validatedData['updated_by'] = auth()->id();
 
         $orderTracking = OrderTracking::findOrFail($id);
         $orderTracking->update($validatedData);

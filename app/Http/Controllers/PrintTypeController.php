@@ -59,6 +59,8 @@ class PrintTypeController extends Controller
             'description' => '',
         ]);
 
+        $validatedData['created_by'] = auth()->user()->id;
+
         PrintType::updateOrCreate($validatedData);
 
         return redirect()->route('print-type.index')->with('success', 'Print type is successfully saved');
@@ -94,6 +96,8 @@ class PrintTypeController extends Controller
             'price' => 'required|numeric',
             'description' => '',
         ]);
+
+        $validatedData['updated_by'] = auth()->user()->id;
 
         $printType = PrintType::findOrFail($id);
         $printType->update($validatedData);

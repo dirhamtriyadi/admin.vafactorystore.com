@@ -54,10 +54,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
-                                    <a href="{{ route('makloon.create') }}" class="btn btn-primary mb-3">Tambah Maklun</a>
-                                    {{-- @can('order-create')
-                                        <a href="{{ route('order.create') }}" class="btn btn-primary mb-3">Tambah Order</a>
-                                    @endcan --}}
+                                    @can('makloon.create')
+                                        <a href="{{ route('makloon.create') }}" class="btn btn-primary mb-3">Tambah Maklun</a>
+                                    @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
                                     <div class="mb-3">
@@ -96,7 +95,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nomor Maklun</th>
-                                            <th>Nama Penginput/Edit</th>
+                                            <th>Nama Penginput</th>
                                             <th>Nama Pelanggan</th>
                                             <th>Nama Maklun</th>
                                             <th>Deskripsi</th>
@@ -109,35 +108,29 @@
                                             <tr>
                                                 <td>{{ $i + $makloons->firstitem() }}</td>
                                                 <td>{{ $makloon->makloon_number }}</td>
-                                                <td>{{ $makloon->user->name }}</td>
+                                                <td>{{ isset($makloon->createdBy->name) ? $makloon->createdBy->name : '' }}</td>
                                                 <td>{{ $makloon->customer->name }}</td>
                                                 <td>{{ $makloon->name }}</td>
                                                 <td>{{ $makloon->description }}</td>
                                                 <td>{{ $makloon->date }}</td>
                                                 <td>
-                                                    <a href="{{ route('makloon.edit', $makloon->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    {{-- @can('makloon-edit')
+                                                    @can('makloon.edit')
                                                         <a href="{{ route('makloon.edit', $makloon->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    @endcan --}}
+                                                    @endcan
                                                     <a href="#" class="btn btn-info btn-sm btn-show" data-detail="{{ $makloon }}">Detail</a>
-                                                    <form action="{{ route('makloon.destroy', $makloon->id) }}" method="post" class="d-inline">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                    </form>
-                                                    {{-- @can('makloon-delete')
+                                                    @can('makloon.delete')
                                                         <form action="{{ route('makloon.destroy', $makloon->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                         </form>
-                                                    @endcan --}}
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{-- {!! $orders->links() !!} --}}
+                                {!! $makloons->links() !!}
                             </div>
                         </div>
                         <!-- /.card-body -->

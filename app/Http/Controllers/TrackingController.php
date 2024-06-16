@@ -57,6 +57,8 @@ class TrackingController extends Controller
             'description' => '',
         ]);
 
+        $validatedData['created_by'] = auth()->user()->id;
+
         Tracking::updateOrCreate($validatedData);
 
         return redirect()->route('tracking.index')->with('success', 'Tracking is successfully saved');
@@ -91,6 +93,8 @@ class TrackingController extends Controller
             'name' => 'required|unique:trackings|max:255',
             'description' => '',
         ]);
+
+        $validatedData['updated_by'] = auth()->user()->id;
 
         $tracking = Tracking::findOrFail($id);
         $tracking->update($validatedData);

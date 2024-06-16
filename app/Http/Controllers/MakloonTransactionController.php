@@ -9,6 +9,14 @@ use App\Models\PaymentMethod;
 
 class MakloonTransactionController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:makloon-transaction.index|makloon-transaction.create|makloon-transaction.edit|makloon-transaction.delete', ['only' => ['index','store']]);
+        $this->middleware('permission:makloon-transaction.create', ['only' => ['create','store']]);
+        $this->middleware('permission:makloon-transaction.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:makloon-transaction.delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -20,14 +28,14 @@ class MakloonTransactionController extends Controller
         $makloonTransactions = MakloonTransaction::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
 
         if ($request->has('search')) {
-            $makloonTransactions = MakloonTransaction::with('makloon', 'paymentMethod', 'user')
+            $makloonTransactions = MakloonTransaction::with('makloon', 'paymentMethod', 'createdBy', 'updatedBy')
                 ->whereHas('makloon', function ($query) use ($request) {
                     $query->where('makloon_number', 'like', '%' . $request->search . '%');
                 })
                 ->orWhereHas('paymentMethod', function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->search . '%');
                 })
-                ->orWhereHas('user', function ($query) use ($request) {
+                ->orWhereHas('createdBy', function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->search . '%');
                 })
                 ->orWhere('amount', 'like', '%' . $request->search . '%')
@@ -66,11 +74,12 @@ class MakloonTransactionController extends Controller
         $validatedData = $request->validate([
             'makloon_id' => 'required|exists:makloons,id',
             'payment_method_id' => 'required|exists:payment_methods,id',
-            'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric',
             'description' => 'required|string',
             'date' => 'required|date',
         ]);
+
+        $validatedData['created_by'] = auth()->id();
 
         $makloonTransaction = MakloonTransaction::create($validatedData);
 
@@ -109,11 +118,12 @@ class MakloonTransactionController extends Controller
         $validatedData = $request->validate([
             'makloon_id' => 'required|exists:makloons,id',
             'payment_method_id' => 'required|exists:payment_methods,id',
-            'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric',
             'description' => 'required|string',
             'date' => 'required|date',
         ]);
+
+        $validatedData['updated_by'] = auth()->id();
 
         $makloonTransaction = MakloonTransaction::findOrFail($id);
         $makloonTransaction->update($validatedData);

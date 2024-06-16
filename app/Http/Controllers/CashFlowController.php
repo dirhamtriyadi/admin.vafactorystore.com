@@ -27,11 +27,11 @@ class CashFlowController extends Controller
         $start_date = date('Y-m-01');
         $end_date = date('Y-m-d');
 
-        // $cashFlows = CashFlow::with(['user' => function ($query) {
+        // $cashFlows = CashFlow::with(['createdBy' => function ($query) {
         //     $query->select('id', 'name');
         // }])->orderBy('transaction_date', 'DESC')->paginate(10);
 
-        $cashFlows = CashFlow::with(['user' => function ($query) {
+        $cashFlows = CashFlow::with(['createdBy' => function ($query) {
             $query->select('id', 'name');
         }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage);
 
@@ -39,7 +39,7 @@ class CashFlowController extends Controller
             $start_date = $request->start_date;
             $end_date = $request->end_date;
 
-            $cashFlows = CashFlow::with(['user' => function ($query) {
+            $cashFlows = CashFlow::with(['createdBy' => function ($query) {
                 $query->select('id', 'name');
             }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage);
         }
@@ -68,12 +68,13 @@ class CashFlowController extends Controller
     {
         $validatedData = $request->validate([
             'transaction_date' => 'required|date',
-            'user_id' => 'required',
             'cash_flow_type' => 'required',
             'payment_method_id' => '',
             'amount' => 'required|numeric',
             'description' => '',
         ]);
+
+        $validatedData['created_by'] = auth()->user()->id;
 
         CashFlow::updateOrCreate($validatedData);
 
@@ -109,12 +110,13 @@ class CashFlowController extends Controller
     {
         $validatedData = $request->validate([
             'transaction_date' => 'required|date',
-            'user_id' => 'required',
             'cash_flow_type' => 'required',
             'payment_method_id' => '',
             'amount' => 'required|numeric',
             'description' => '',
         ]);
+
+        $validatedData['updated_by'] = auth()->user()->id;
 
         $cashFlow = CashFlow::findOrFail($id);
         $cashFlow->update($validatedData);

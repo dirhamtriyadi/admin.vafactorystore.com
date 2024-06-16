@@ -100,7 +100,7 @@
                                             <tr>
                                                 <td>{{ $i + $orderTransactions->firstitem() }}</td>
                                                 <td>{{ $orderTransaction->order->order_number }}</td>
-                                                <td>{{ $orderTransaction->user->name }}</td>
+                                                <td>{{ isset($orderTransaction->createdBy->name) ? $orderTransaction->createdBy->name : '' }}</td>
                                                 <td>{{ $orderTransaction->paymentMethod->name }}</td>
                                                 <td>@money($orderTransaction->amount)</td>
                                                 <td>{{ $orderTransaction->description }}</td>

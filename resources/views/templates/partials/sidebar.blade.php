@@ -36,9 +36,8 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-       with font-awesome or any other icon font library -->
-                {{-- @canany(['dashboard.index', 'dashboard.create', 'dashboard.edit', 'dashboard.delete'])
+                <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+                @canany(['dashboard.index', 'dashboard.create', 'dashboard.edit', 'dashboard.delete'])
                     <li class="nav-item">
                         <a href="{{ route('dashboard.index') }}" class="nav-link {{ Route::is('dashboard.index') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -47,15 +46,7 @@
                             </p>
                         </a>
                     </li>
-                @endcanany --}}
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.index') }}" class="nav-link {{ Route::is('dashboard.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Dashboard
-                        </p>
-                    </a>
-                </li>
+                @endcanany
                 @canany(['customer.index', 'customer.create', 'customer.edit', 'customer.delete'])
                     <li class="nav-item">
                         <a href="{{ route('customer.index') }}" class="nav-link {{ Route::is('customer.*') ? 'active' : '' }}">
@@ -140,31 +131,37 @@
                         </ul>
                     </li>
                 @endcanany
-                <li class="nav-item {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>
-                            Maklun
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('makloon.index') }}" class="nav-link {{ Route::is('makloon.*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Maklun</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('makloon-transaction.index') }}" class="nav-link {{ Route::is('makloon-transaction.*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Maklun Transaksi</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @canany(['makloon.index', 'makloon.create', 'makloon.edit', 'makloon.delete', 'makloon-transaction.index', 'makloon-transaction.create', 'makloon-transaction.edit', 'makloon-transaction.delete'])
+                    <li class="nav-item {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ Route::is('makloon.*') | Route::is('makloon-transaction.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>
+                                Maklun
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        @canany(['makloon.index', 'makloon.create', 'makloon.edit', 'makloon.delete'])
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('makloon.index') }}" class="nav-link {{ Route::is('makloon.*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Maklun</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcanany
+                        @canany(['makloon-transaction.index', 'makloon-transaction.create', 'makloon-transaction.edit', 'makloon-transaction.delete'])
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('makloon-transaction.index') }}" class="nav-link {{ Route::is('makloon-transaction.*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Maklun Transaksi</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcanany
+                    </li>
+                @endcanany
                 @canany(['cashflow.index', 'cashflow.create', 'cashflow.edit', 'cashflow.delete', 'cashflow-report.index', 'cashflow-report.create', 'cashflow-report.edit', 'cashflow-report.delete'])
                     <li class="nav-item {{ Route::is('cash-flow.*') | Route::is('cash-flow-report.*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{ Route::is('cash-flow.*') | Route::is('cash-flow-report.*') ? 'active' : '' }}">

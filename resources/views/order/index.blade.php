@@ -95,7 +95,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nomor Order</th>
-                                            <th>Nama Penginput/Edit</th>
+                                            <th>Nama Penginput</th>
                                             <th>Nama Pelanggan</th>
                                             <th>Kategori</th>
                                             <th>Nama Order</th>
@@ -108,7 +108,7 @@
                                             <tr>
                                                 <td>{{ $i + $orders->firstitem() }}</td>
                                                 <td>{{ $order->order_number }}</td>
-                                                <td>{{ $order->user->name }}</td>
+                                                <td>{{ isset($order->createdBy->name) ? $order->createdBy->name : '' }}</td>
                                                 <td>{{ $order->customer->name }}</td>
                                                 <td>{{ $order->printType->name }}</td>
                                                 <td>{{ $order->name }}</td>
@@ -166,8 +166,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="user_name" class="form-label">Nama Penginput/Edit</label>
-                            <input type="text" class="form-control" id="user_name" name="user_name" readonly>
+                            <label for="created_by" class="form-label">Nama Penginput</label>
+                            <input type="text" class="form-control" id="created_by" name="created_by" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="updated_by" class="form-label">Nama Pengedit</label>
+                            <input type="text" class="form-control" id="updated_by" name="updated_by" readonly>
                         </div>
 
                         <div class="mb-3">
@@ -235,7 +240,8 @@
                 $('.modal-title').text("Detail Order");
                 $('#order_number').val(detail.order_number);
                 $('#name').val(detail.name);
-                $('#user_name').val(detail.user.name);
+                $('#created_by').val(detail.created_by?.name);
+                $('#updated_by').val(detail.updated_by?.name);
                 $('#customer_name').val(detail.customer.name);
                 $('#print_type').val(detail.print_type.name);
                 $('#print_type_price').val(detail.print_type.price);

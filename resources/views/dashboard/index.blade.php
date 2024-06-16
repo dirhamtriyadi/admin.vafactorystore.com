@@ -24,7 +24,7 @@
 @endsection
 
 @section('main-content')
-    @can('dashboard-list')
+    @can('dashboard.index')
         <section class="content">
 
             <div class="container-fluid">

@@ -164,8 +164,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="user_name" class="form-label">Nama Penginput/Edit</label>
-                            <input type="text" class="form-control" id="user_name" name="user_name" readonly>
+                            <label for="created_by" class="form-label">Nama Penginput</label>
+                            <input type="text" class="form-control" id="created_by" name="created_by" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="updated_by" class="form-label">Nama Pengedit</label>
+                            <input type="text" class="form-control" id="updated_by" name="updated_by" readonly>
                         </div>
 
                         <div class="mb-3">
@@ -227,7 +232,8 @@
 
             $('.modal-title').text("Detail Transaksi");
             $('#transaction_number').val(detail.transaction_number);
-            $('#user_name').val(detail.user.name);
+            $('#created_by').val(detail.created_by?.name);
+            $('#updated_by').val(detail.updated_by?.name);
             $('#customer_name').val(detail.customer.name);
             $('#date').val(moment(detail.date).format('DD-MM-YYYY'));
             $('#table-detail').empty();

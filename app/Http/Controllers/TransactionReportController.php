@@ -27,7 +27,7 @@ class TransactionReportController extends Controller
         $end_date = date('Y-m-d');
 
         // $transactionReports = Transaction::with(['customer', 'user', 'paymentMethod', 'transactionDetails.product'])->paginate(5);
-        $transactionReports = Transaction::with(['customer', 'user', 'paymentMethod', 'transactionDetails.product'])->whereBetween('date', [$start_date, $end_date])->orderBy('date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $transactionReports = Transaction::with(['customer', 'createdBy', 'updatedBy', 'paymentMethod', 'transactionDetails.product'])->whereBetween('date', [$start_date, $end_date])->orderBy('date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage);
 
         if ($request->has('start_date') && $request->has('end_date')) {
             $start_date = $request->start_date;
@@ -96,7 +96,7 @@ class TransactionReportController extends Controller
     public function print(Request $request)
     {
 
-        $transaction = Transaction::with(['customer', 'user', 'paymentMethod', 'transactionDetails.product'])->findOrFail($request->id);
+        $transaction = Transaction::with(['customer', 'createdBy', 'updatedBy', 'paymentMethod', 'transactionDetails.product'])->findOrFail($request->id);
         // dd($transaction);
 
         $pdf = PDF::loadView('transaction-report.print', [

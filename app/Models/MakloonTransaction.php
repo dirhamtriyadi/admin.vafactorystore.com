@@ -13,10 +13,11 @@ class MakloonTransaction extends Model
     [
         'makloon_id',
         'payment_method_id',
-        'user_id',
         'amount',
         'description',
         'date',
+        'created_by',
+        'updated_by',
     ];
 
     public function makloon()
@@ -29,8 +30,13 @@ class MakloonTransaction extends Model
         return $this->belongsTo(PaymentMethod::class);
     }
 
-    public function user()
+    public function createdBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
     }
 }

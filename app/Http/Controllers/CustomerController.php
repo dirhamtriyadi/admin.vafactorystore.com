@@ -59,6 +59,8 @@ class CustomerController extends Controller
             'address' => '',
         ]);
 
+        $validatedData['created_by'] = auth()->id();
+
         $customer = Customer::updateOrCreate($validatedData);
 
         return redirect()->route('customer.index')->with('success', 'Customer is successfully saved');
@@ -92,6 +94,8 @@ class CustomerController extends Controller
             'phone' => 'required|unique:customers,phone,' . $id . '|max:255',
             'address' => '',
         ]);
+
+        $validatedData['updated_by'] = auth()->id();
 
         $customer = Customer::findOrFail($id);
         $customer->update($validatedData);

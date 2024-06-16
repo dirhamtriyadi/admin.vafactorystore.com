@@ -28,14 +28,14 @@ class OrderTransactionController extends Controller
         $orderTransactions = OrderTransaction::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
 
         if ($request->has('search')) {
-            $orderTransactions = OrderTransaction::with('order', 'paymentMethod', 'user')
+            $orderTransactions = OrderTransaction::with('order', 'paymentMethod', 'createdBy', 'updatedBy')
                 ->whereHas('order', function ($query) use ($request) {
                     $query->where('order_number', 'like', '%' . $request->search . '%');
                 })
                 ->orWhereHas('paymentMethod', function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->search . '%');
                 })
-                ->orWhereHas('user', function ($query) use ($request) {
+                ->orWhereHas('createdBy', function ($query) use ($request) {
                     $query->where('name', 'like', '%' . $request->search . '%');
                 })
                 ->orWhere('amount', 'like', '%' . $request->search . '%')
@@ -74,11 +74,12 @@ class OrderTransactionController extends Controller
         $validatedData = $request->validate([
             'order_id' => 'required|exists:orders,id',
             'payment_method_id' => 'required|exists:payment_methods,id',
-            'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric',
             'description' => 'required|string',
             'date' => 'required|date',
         ]);
+
+        $validatedData['created_by'] = auth()->id();
 
         $orderTransaction = OrderTransaction::create($validatedData);
 
@@ -117,11 +118,12 @@ class OrderTransactionController extends Controller
         $validatedData = $request->validate([
             'order_id' => 'required|exists:orders,id',
             'payment_method_id' => 'required|exists:payment_methods,id',
-            'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric',
             'description' => 'required|string',
             'date' => 'required|date',
         ]);
+
+        $validatedData['updated_by'] = auth()->id();
 
         $orderTransaction = OrderTransaction::findOrFail($id);
         $orderTransaction->update($validatedData);

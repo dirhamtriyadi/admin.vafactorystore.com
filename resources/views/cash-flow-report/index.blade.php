@@ -144,7 +144,7 @@
                                                     <td>{{ $i + $cashFlows->firstitem() }}</td>
                                                     <td>{{ $cashFlow->cash_flow_type }}</td>
                                                     <td>{{ $cashFlow->description }}</td>
-                                                    <td>{{ $cashFlow->user->name }}</td>
+                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
                                                     <td>{{ $cashFlow->transaction_date }}</td>
                                                     <td>@money($cashFlow->amount)</td>
                                                 </tr>
@@ -153,7 +153,7 @@
                                                     <td>{{ $i + $cashFlows->firstitem() }}</td>
                                                     <td>{{ $cashFlow->cash_flow_type }}</td>
                                                     <td>{{ $cashFlow->description }}</td>
-                                                    <td>{{ $cashFlow->user->name }}</td>
+                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
                                                     <td>{{ $cashFlow->transaction_date }}</td>
                                                     <td>@money($cashFlow->amount)</td>
                                                 </tr>

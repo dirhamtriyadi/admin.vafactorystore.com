@@ -12,11 +12,22 @@ class OrderTransaction extends Model
     protected $fillable = [
         'order_id',
         'payment_method_id',
-        'user_id',
         'amount',
         'description',
         'date',
+        'created_by',
+        'updated_by',
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by', 'id');
+    }
 
     public function order()
     {
