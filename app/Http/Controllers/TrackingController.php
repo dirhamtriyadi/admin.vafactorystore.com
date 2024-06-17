@@ -23,14 +23,23 @@ class TrackingController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $trackings = Tracking::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $trackings = Tracking::query();
+
+        if (!auth()->user()->hasPermissionTo('tracking.all-data')) {
+            $trackings->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $trackings->latest();
+        }
 
         if ($request->has('search')) {
-            $trackings = Tracking::where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('description', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+            $trackings->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            });
         }
+
+        $trackings = $trackings->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('tracking.index', [
             'trackings' => $trackings,

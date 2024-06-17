@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             PermissionTableSeeder::class,
             CreateAdminUserSeeder::class,
             UserSeeder::class,
+            CustomerSeeder::class,
         ]);
     }
 }

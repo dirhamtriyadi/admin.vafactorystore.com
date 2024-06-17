@@ -25,23 +25,30 @@ class OrderController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $orders = Order::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $orders = Order::with('createdBy', 'customer', 'printType');
+
+        if (!auth()->user()->hasPermissionTo('order.all-data')) {
+            $orders->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $orders->latest();
+        }
 
         if ($request->has('search')) {
-            $orders = Order::with('user', 'customer', 'printType')
-                ->where('order_number', 'like', '%' . $request->search . '%')
-                ->orWhereHas('customer', function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%');
-                })
-                ->orWhereHas('printType', function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%');
-                })
-                ->orWhere('name', 'like', '%' . $request->search . '%')
-                ->orWhere('date', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+            $orders->where(function($q) use ($search) {
+                $q->where('order_number', 'like', '%' . $search . '%')
+                    ->orWhereHas('customer', function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('printType', function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    })
+                    ->orWhere('name', 'like', '%' . $search . '%')
+                    ->orWhere('date', 'like', '%' . $search . '%');
+            });
         }
-        // dd($orders);
+
+        $orders = $orders->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('order.index', [
             'orders' => $orders,

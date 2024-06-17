@@ -27,10 +27,6 @@ class CashFlowController extends Controller
         $start_date = date('Y-m-01');
         $end_date = date('Y-m-d');
 
-        // $cashFlows = CashFlow::with(['createdBy' => function ($query) {
-        //     $query->select('id', 'name');
-        // }])->orderBy('transaction_date', 'DESC')->paginate(10);
-
         $cashFlows = CashFlow::with(['createdBy' => function ($query) {
             $query->select('id', 'name');
         }])->whereBetween('transaction_date', [$start_date, $end_date])->orderBy('transaction_date', 'DESC')->paginate($perPage)->withQueryString('perPage=' . $perPage);

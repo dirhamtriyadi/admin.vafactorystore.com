@@ -25,25 +25,33 @@ class OrderTransactionController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $orderTransactions = OrderTransaction::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $orderTransactions = OrderTransaction::with('order', 'paymentMethod', 'createdBy', 'updatedBy');
+
+        if (!auth()->user()->hasPermissionTo('order-transaction.all-data')) {
+            $orderTransactions->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $orderTransactions->latest();
+        }
 
         if ($request->has('search')) {
-            $orderTransactions = OrderTransaction::with('order', 'paymentMethod', 'createdBy', 'updatedBy')
-                ->whereHas('order', function ($query) use ($request) {
-                    $query->where('order_number', 'like', '%' . $request->search . '%');
+            $orderTransactions->where(function($q) use ($search) {
+                $q->whereHas('order', function ($query) use ($search) {
+                    $query->where('order_number', 'like', '%' . $search . '%');
                 })
-                ->orWhereHas('paymentMethod', function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%');
+                ->orWhereHas('paymentMethod', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
                 })
-                ->orWhereHas('createdBy', function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%');
+                ->orWhereHas('createdBy', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
                 })
-                ->orWhere('amount', 'like', '%' . $request->search . '%')
-                ->orWhere('description', 'like', '%' . $request->search . '%')
-                ->orWhere('date', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+                ->orWhere('amount', 'like', '%' . $search . '%')
+                ->orWhere('description', 'like', '%' . $search . '%')
+                ->orWhere('date', 'like', '%' . $search . '%');
+            });
         }
+
+        $orderTransactions = $orderTransactions->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('order-transaction.index', [
             'orderTransactions' => $orderTransactions,

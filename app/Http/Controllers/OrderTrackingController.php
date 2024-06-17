@@ -25,22 +25,30 @@ class OrderTrackingController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $orderTrackings = OrderTracking::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $orderTrackings = OrderTracking::with('order', 'tracking');
+
+        if (!auth()->user()->hasPermissionTo('order-tracking.all-data')) {
+            $orderTrackings->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $orderTrackings->latest();
+        }
 
         if ($request->has('search')) {
-            $orderTrackings = OrderTracking::with('order', 'tracking')
-                ->whereHas('order', function ($query) use ($request) {
-                    $query->where('order_number', 'like', '%' . $request->search . '%');
+            $orderTrackings->where(function($q) use ($search) {
+                $q->whereHas('order', function ($query) use ($search) {
+                    $query->where('order_number', 'like', '%' . $search . '%');
                 })
-                ->orWhereHas('tracking', function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%');
+                ->orWhereHas('tracking', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
                 })
-                ->orWhere('description', 'like', '%' . $request->search . '%')
-                ->orWhere('status', 'like', '%' . $request->search . '%')
-                ->orWhere('date', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+                ->orWhere('description', 'like', '%' . $search . '%')
+                ->orWhere('status', 'like', '%' . $search . '%')
+                ->orWhere('date', 'like', '%' . $search . '%');
+            });
         }
+
+        $orderTrackings = $orderTrackings->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('order-tracking.index', [
             'orderTrackings' => $orderTrackings,

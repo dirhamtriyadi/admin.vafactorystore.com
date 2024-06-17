@@ -23,15 +23,17 @@ class PrintTypeController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $printTypes = PrintType::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $printTypes = PrintType::query();
 
         if ($request->has('search')) {
-            $printTypes = PrintType::where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('price', 'like', '%' . $request->search . '%')
-                ->orWhere('description', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+            $printTypes->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('price', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            });
         }
+
+        $printTypes = $printTypes->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('print-type.index', [
             'printTypes' => $printTypes,
