@@ -192,8 +192,8 @@
                     </li>
                 @endcanany
                 @canany(['payment-method.index', 'payment-method.create', 'payment-method.edit', 'payment-method.delete', 'print-type.index', 'print-type.create', 'print-type.edit', 'print-type.delete', 'tracking.index', 'tracking.create', 'tracking.edit', 'tracking.delete'])
-                    <li class="nav-item {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') ? 'active' : '' }}">
+                    <li class="nav-item {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') | Route::is('raw-material.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') | Route::is('raw-material.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-database"></i>
                             <p>
                                 Master
