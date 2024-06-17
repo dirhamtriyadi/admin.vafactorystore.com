@@ -225,6 +225,14 @@
                                     </a>
                                 </li>
                             @endcanany
+                            @canany(['raw-material.index', 'raw-material.create', 'raw-material.edit', 'raw-material.delete'])
+                                <li class="nav-item">
+                                    <a href="{{ route('raw-material.index') }}" class="nav-link {{ Route::is('raw-material.*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Bahan Baku</p>
+                                    </a>
+                                </li>
+                            @endcanany
                         </ul>
                     </li>
                 @endcanany

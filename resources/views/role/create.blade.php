@@ -84,7 +84,7 @@
                                                         class="form-group
                                                         {{ $loop->first ? 'mb-3' : '' }}">
                                                         <label for="{{ $group }}-select-all"
-                                                            class="form-label">{{ ucfirst($group) }}</label>
+                                                            class="form-label">{{ str_replace('-', ' ', ucfirst($group)) }}</label>
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input select-all"
                                                                 id="{{ $group }}-select-all">

@@ -22,7 +22,7 @@ class CashFlowController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->perPage ?? 5;
+        $perPage = $request->perPage ?? 10;
 
         $start_date = date('Y-m-01');
         $end_date = date('Y-m-d');

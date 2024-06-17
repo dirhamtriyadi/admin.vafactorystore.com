@@ -22,7 +22,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->perPage ?? 5;
+        $perPage = $request->perPage ?? 10;
         $search = $request->search;
 
         $orders = Order::with('createdBy', 'customer', 'printType');
