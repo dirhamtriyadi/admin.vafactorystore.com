@@ -74,7 +74,7 @@
                                     <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="{{ old('email') ? old('email') : $user->email }}">
                                 </div>
 
-                                @canany(['role-list', 'role-create', 'role-edit', 'role-delete'])
+                                @canany(['role.index', 'role.all-data', 'role.create', 'role.edit', 'role.delete'])
                                     <div class="form-group mb-3">
                                         <label for="roles" class="form-label">Role</label>
                                         <select name="roles[]" id="roles" class="form-control" multiple>
