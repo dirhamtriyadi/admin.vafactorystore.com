@@ -123,7 +123,7 @@
                                                 <td>{{ $transactionReport->customer->name }}</td>
                                                 <td>{{ $transactionReport->date }}</td>
                                                 <td>@money($totalPrice)</td>
-                                                <td>
+                                                <td class="text-center">
                                                     {{-- <a href="{{ route('transaction-report.show', $transactionReport->id) }}" class="btn btn-info btn-sm">Detail</a> --}}
                                                     <a class="btn btn-info btn-sm btn-show" data-detail="{{ $transactionReport }}">Detail</a>
                                                 </td>
