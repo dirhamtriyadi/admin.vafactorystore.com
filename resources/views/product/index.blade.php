@@ -55,7 +55,7 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('product.create')
-                                        <a href="{{ route('product.create') }}" class="btn btn-primary mb-3">Tambah Barang</a>
+                                        <a href="{{ route('product.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">

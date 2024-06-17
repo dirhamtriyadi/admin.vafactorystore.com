@@ -60,7 +60,7 @@
                             <div class="d-flex flex-column justify-content-end">
                                 <div class="d-flex justify-content-end">
                                     @can('user.create')
-                                        <a href="{{ route('user.create') }}" class="btn btn-primary mb-3">Tambah User</a>
+                                        <a href="{{ route('user.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">

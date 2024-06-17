@@ -51,7 +51,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-end">
                                 @can('role.create')
-                                    <a href="{{ route('role.create') }}" class="btn btn-primary mb-3">Tambah Role</a>
+                                    <a href="{{ route('role.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                 @endcan
                             </div>
                             <div class="table-responsive">
