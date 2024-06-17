@@ -20,6 +20,7 @@ use App\Http\Controllers\OrderTrackingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MakloonController;
 use App\Http\Controllers\MakloonTransactionController;
+use App\Http\Controllers\RawMaterialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,5 +65,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('makloon/print', [MakloonController::class, 'print'])->name('makloon.print');
     Route::resource('makloon', MakloonController::class);
     Route::resource('makloon-transaction', MakloonTransactionController::class);
+    Route::resource('raw-material', RawMaterialController::class);
     Route::resource('profile', ProfileController::class);
 });
