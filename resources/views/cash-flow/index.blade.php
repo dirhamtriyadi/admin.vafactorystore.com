@@ -52,18 +52,16 @@
                                 </div>
                                 <div class="d-flex justify-content-end mb-3">
                                     <form action="{{ route('cash-flow.index') }}" method="GET">
-                                        <select name="perPage" id="perPage">
-                                            <option value="3" {{ $perPage == 3 ? 'selected' : '' }}>3</option>
-                                            <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
-                                            <option value="7" {{ $perPage == 7 ? 'selected' : '' }}>7</option>
-                                            <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
-                                            <option value="15" {{ $perPage == 15 ? 'selected' : '' }}>15</option>
-                                            <option value="20" {{ $perPage == 20 ? 'selected' : '' }}>20</option>
-                                            <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
-                                            <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
-                                            <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
-                                        </select>
-                                        <button type="submit" class="btn btn-primary ml-3">Apply</button>
+                                        <div class="input-group">
+                                            <select name="perPage" class="select" id="perPage">
+                                                <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
+                                                <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
+                                                <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
+                                                <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
+                                                <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-primary ml-3">Apply</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

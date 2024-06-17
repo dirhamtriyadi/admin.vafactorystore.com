@@ -25,14 +25,23 @@ class UserController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $users = User::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $users = User::query();
+
+        if (!auth()->user()->hasPermissionTo('user.all-data')) {
+            $users->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $users->latest();
+        }
 
         if ($request->has('search')) {
-            $users = User::where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('email', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+            $users->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            });
         }
+
+        $users = $users->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('user.index', [
             'users' => $users,
@@ -47,7 +56,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
-        // dd($roles);
+
         return view('user.create', [
             'roles' => $roles,
         ]);

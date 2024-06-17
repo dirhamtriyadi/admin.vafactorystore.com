@@ -25,7 +25,14 @@ class MakloonTransactionController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $makloonTransactions = MakloonTransaction::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $makloonTransactions = MakloonTransaction::with('makloon', 'paymentMethod', 'createdBy', 'updatedBy');
+
+        if (!auth()->user()->hasPermissionTo('makloon-transaction.all-data')) {
+            $makloonTransactions->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $makloonTransactions->latest();
+        }
 
         if ($request->has('search')) {
             $makloonTransactions = MakloonTransaction::with('makloon', 'paymentMethod', 'createdBy', 'updatedBy')
@@ -44,6 +51,8 @@ class MakloonTransactionController extends Controller
                 ->paginate($perPage)
                 ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
         }
+
+        $makloonTransactions = $makloonTransactions->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('makloon-transaction.index', [
             'makloonTransactions' => $makloonTransactions,

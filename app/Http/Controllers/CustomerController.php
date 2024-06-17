@@ -23,15 +23,24 @@ class CustomerController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $customers = Customer::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $customers = Customer::query();
+
+        if (!auth()->user()->hasPermissionTo('customer.all-data')) {
+            $customers->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $customers->latest();
+        }
 
         if ($request->has('search')) {
-            $customers = Customer::where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('phone', 'like', '%' . $request->search . '%')
-                ->orWhere('address', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+            $customers->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('phone', 'like', '%' . $search . '%')
+                    ->orWhere('address', 'like', '%' . $search . '%');
+            });
         }
+
+        $customers = $customers->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('customer.index', [
             'customers' => $customers,

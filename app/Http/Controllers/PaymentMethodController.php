@@ -23,14 +23,23 @@ class PaymentMethodController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $paymentMethods = PaymentMethod::latest()->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $paymentMethods = PaymentMethod::query();
+
+        if (!auth()->user()->hasPermissionTo('payment-method.all-data')) {
+            $paymentMethods->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $paymentMethods->latest();
+        }
 
         if ($request->has('search')) {
-            $paymentMethods = PaymentMethod::where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('description', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+            $paymentMethods->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            });
         }
+
+        $paymentMethods = $paymentMethods->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('payment-method.index', [
             'paymentMethods' => $paymentMethods,

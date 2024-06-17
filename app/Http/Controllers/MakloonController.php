@@ -26,24 +26,30 @@ class MakloonController extends Controller
         $perPage = $request->perPage ?? 5;
         $search = $request->search;
 
-        $makloons = Makloon::with('createdBy', 'updatedBy', 'customer', 'details')->paginate($perPage)->withQueryString('perPage=' . $perPage);
+        $makloons = Makloon::with('createdBy', 'updatedBy', 'customer', 'details');
 
-        if($request->has('search')) {
-            $makloons = Makloon::with('createdBy', 'updatedBy', 'customer', 'details')
-                ->where('makloon_number', 'like', '%' . $request->search . '%')
-                ->orWhereHas('createdBy', function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%');
-                })
-                ->orWhereHas('customer', function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%');
-                })
-                ->orWhere('name', 'like', '%' . $request->search . '%')
-                ->orWhere('date', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
+        if (!auth()->user()->hasPermissionTo('makloon.all-data')) {
+            $makloons->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $makloons->latest();
         }
 
-        // dd($makloons);
+        if ($request->has('search')) {
+            $makloons->where(function($q) use ($search) {
+                $q->where('makloon_number', 'like', '%' . $search . '%')
+                    ->orWhereHas('createdBy', function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('customer', function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    })
+                    ->orWhere('name', 'like', '%' . $search . '%')
+                    ->orWhere('date', 'like', '%' . $search . '%');
+            });
+        }
+
+        $makloons = $makloons->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
 
         return view('makloon.index', [
             'makloons' => $makloons,
