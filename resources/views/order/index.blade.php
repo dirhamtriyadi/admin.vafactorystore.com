@@ -55,7 +55,7 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('order.create')
-                                        <a href="{{ route('order.create') }}" class="btn btn-primary mb-3">Tambah Order</a>
+                                        <a href="{{ route('order.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
@@ -109,8 +109,36 @@
                                                 <td>{{ $order->printType->name }}</td>
                                                 <td>{{ $order->name }}</td>
                                                 <td>{{ $order->date }}</td>
-                                                <td>
-                                                    @can('order.edit')
+                                                <td class="text-center">
+                                                    <div class="dropdown">
+                                                        <button
+                                                            class="btn btn-sm btn-info dropdown-toggle"
+                                                            type="button"
+                                                            data-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            Aksi
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            @can('order.edit')
+                                                                <li>
+                                                                    <a class="dropdown-item" href="{{ route('order.edit', $order->id) }}">Edit</a>
+                                                                </li>
+                                                            @endcan
+                                                            <li>
+                                                                <a class="dropdown-item btn-show" data-detail="{{ $order }}">Detail</a>
+                                                            </li>
+                                                            @can('order.delete')
+                                                                <li>
+                                                                    <form action="{{ route('order.destroy', $order->id) }}" method="post" class="d-inline">
+                                                                        @csrf
+                                                                        @method('delete')
+                                                                        <button type="submit" class="dropdown-item">Hapus</button>
+                                                                    </form>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
+                                                    {{-- @can('order.edit')
                                                         <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     <a href="#" class="btn btn-info btn-sm btn-show" data-detail="{{ $order }}">Detail</a>
@@ -120,7 +148,7 @@
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                         </form>
-                                                    @endcan
+                                                    @endcan --}}
                                                 </td>
                                             </tr>
                                         @endforeach

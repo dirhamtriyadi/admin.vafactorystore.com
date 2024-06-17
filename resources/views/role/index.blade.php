@@ -51,7 +51,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-end">
                                 @can('role.create')
-                                    <a href="{{ route('role.create') }}" class="btn btn-primary mb-3">Tambah Role</a>
+                                    <a href="{{ route('role.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                 @endcan
                             </div>
                             <div class="table-responsive">
@@ -68,8 +68,35 @@
                                             <tr>
                                                 <td>{{ $i + $roles->firstitem() }}</td>
                                                 <td>{{ $role->name }}</td>
-                                                <td>
-                                                    @can('role.edit')
+                                                <td class="text-center">
+                                                    @canany(['role.edit', 'role.delete'])
+                                                        <div class="dropdown">
+                                                            <button
+                                                                class="btn btn-sm btn-info dropdown-toggle"
+                                                                type="button"
+                                                                data-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                Aksi
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                @can('role.edit')
+                                                                    <li>
+                                                                        <a href="{{ route('role.edit', $role->id) }}" class="dropdown-item">Edit</a>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('role.delete')
+                                                                    <li>
+                                                                        <form action="{{ route('role.destroy', $role->id) }}" method="post" class="d-inline">
+                                                                            @csrf
+                                                                            @method('delete')
+                                                                            <button type="submit" class="dropdown-item">Hapus</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    @endcanany
+                                                    {{-- @can('role.edit')
                                                         <a href="{{ route('role.edit', $role->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     @can('role.delete')
@@ -78,7 +105,7 @@
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                         </form>
-                                                    @endcan
+                                                    @endcan --}}
                                                 </td>
                                             </tr>
                                         @endforeach

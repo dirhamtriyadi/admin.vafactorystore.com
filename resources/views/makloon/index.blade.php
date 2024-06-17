@@ -55,7 +55,7 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('makloon.create')
-                                        <a href="{{ route('makloon.create') }}" class="btn btn-primary mb-3">Tambah Maklun</a>
+                                        <a href="{{ route('makloon.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
@@ -109,8 +109,36 @@
                                                 <td>{{ $makloon->name }}</td>
                                                 <td>{{ $makloon->description }}</td>
                                                 <td>{{ $makloon->date }}</td>
-                                                <td>
-                                                    @can('makloon.edit')
+                                                <td class="text-center">
+                                                    <div class="dropdown">
+                                                        <button
+                                                            class="btn btn-sm btn-info dropdown-toggle"
+                                                            type="button"
+                                                            data-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            Aksi
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            @can('makloon.edit')
+                                                                <li>
+                                                                    <a href="{{ route('makloon.edit', $makloon->id) }}" class="dropdown-item">Edit</a>
+                                                                </li>
+                                                            @endcan
+                                                            <li>
+                                                                <a href="#" class="dropdown-item btn-show" data-detail="{{ $makloon }}">Detail</a>
+                                                            </li>
+                                                            @can('makloon.delete')
+                                                                <li>
+                                                                    <form action="{{ route('makloon.destroy', $makloon->id) }}" method="post" class="d-inline">
+                                                                        @csrf
+                                                                        @method('delete')
+                                                                        <button type="submit" class="dropdown-item">Hapus</button>
+                                                                    </form>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
+                                                    {{-- @can('makloon.edit')
                                                         <a href="{{ route('makloon.edit', $makloon->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     <a href="#" class="btn btn-info btn-sm btn-show" data-detail="{{ $makloon }}">Detail</a>
@@ -120,7 +148,7 @@
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                         </form>
-                                                    @endcan
+                                                    @endcan --}}
                                                 </td>
                                             </tr>
                                         @endforeach

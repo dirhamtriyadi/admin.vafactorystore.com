@@ -47,7 +47,7 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('order-transaction.create')
-                                        <a href="{{ route('order-transaction.create') }}" class="btn btn-primary mb-3">Tambah Order Transaksi</a>
+                                        <a href="{{ route('order-transaction.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
@@ -101,8 +101,35 @@
                                                 <td>@money($orderTransaction->amount)</td>
                                                 <td>{{ $orderTransaction->description }}</td>
                                                 <td>{{ $orderTransaction->date }}</td>
-                                                <td>
-                                                    @can('order-transaction.edit')
+                                                <td class="text-center">
+                                                    @canany(['order-transaction.edit', 'order-transaction.destroy'])
+                                                        <div class="dropdown">
+                                                            <button
+                                                                class="btn btn-sm btn-info dropdown-toggle"
+                                                                type="button"
+                                                                data-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                Aksi
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                @can('order-transaction.edit')
+                                                                    <li>
+                                                                        <a href="{{ route('order-transaction.edit', $orderTransaction->id) }}" class="dropdown-item">Edit</a>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('order-transaction.delete')
+                                                                    <li>
+                                                                        <form action="{{ route('order-transaction.destroy', $orderTransaction->id) }}" method="post">
+                                                                            @csrf
+                                                                            @method('delete')
+                                                                            <button type="submit" class="dropdown-item">Hapus</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    @endcanany
+                                                    {{-- @can('order-transaction.edit')
                                                         <a href="{{ route('order-transaction.edit', $orderTransaction->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     @can('order-transaction.delete')
@@ -111,7 +138,7 @@
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                         </form>
-                                                    @endcan
+                                                    @endcan --}}
                                                 </td>
                                             </tr>
                                         @endforeach

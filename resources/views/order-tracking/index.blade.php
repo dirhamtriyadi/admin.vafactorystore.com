@@ -47,7 +47,7 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('order-tracking.create')
-                                        <a href="{{ route('order-tracking.create') }}" class="btn btn-primary mb-3">Tambah Order Pelacakan</a>
+                                        <a href="{{ route('order-tracking.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
@@ -107,8 +107,35 @@
                                                 @endphp</td>
                                                 <td>{{ $orderTracking->description }}</td>
                                                 <td>{{ $orderTracking->date }}</td>
-                                                <td>
-                                                    @can('order-tracking.edit')
+                                                <td class="text-center">
+                                                    @canany(['order-tracking.edit', 'order-tracking.delete'])
+                                                        <div class="dropdown">
+                                                            <button
+                                                                class="btn btn-sm btn-info dropdown-toggle"
+                                                                type="button"
+                                                                data-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                Aksi
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                @can('order-tracking.edit')
+                                                                    <li>
+                                                                        <a href="{{ route('order-tracking.edit', $orderTracking->id) }}" class="dropdown-item">Edit</a>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('order-tracking.delete')
+                                                                    <li>
+                                                                        <form action="{{ route('order-tracking.destroy', $orderTracking->id) }}" method="post">
+                                                                            @csrf
+                                                                            @method('delete')
+                                                                            <button type="submit" class="dropdown-item">Hapus</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    @endcanany
+                                                    {{-- @can('order-tracking.edit')
                                                         <a href="{{ route('order-tracking.edit', $orderTracking->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     @can('order-tracking.delete')
@@ -117,7 +144,7 @@
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                         </form>
-                                                    @endcan
+                                                    @endcan --}}
                                                 </td>
                                             </tr>
                                         @endforeach

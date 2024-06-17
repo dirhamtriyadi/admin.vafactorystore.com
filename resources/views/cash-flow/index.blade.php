@@ -47,7 +47,7 @@
                             <div class="d-flex flex-column justify-content-end">
                                 <div class="d-flex justify-content-end">
                                     @can('cashflow.create')
-                                        <a href="{{ route('cash-flow.create') }}" class="btn btn-primary mb-3">Tambah Uang Kas</a>
+                                        <a href="{{ route('cash-flow.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex justify-content-end mb-3">
@@ -105,8 +105,35 @@
                                                     <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
                                                     <td>{{ $cashFlow->created_at }}</td>
                                                     <td>@money($cashFlow->amount)</td>
-                                                    <td>
-                                                        @can('cashflow.edit')
+                                                    <td class="text-center">
+                                                        @canany(['cashflow.edit', 'cashflow.delete'])
+                                                            <div class="dropdown">
+                                                                <button
+                                                                    class="btn btn-sm btn-info dropdown-toggle"
+                                                                    type="button"
+                                                                    data-toggle="dropdown"
+                                                                    aria-expanded="false">
+                                                                    Aksi
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    @can('cashflow.edit')
+                                                                        <li>
+                                                                            <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="dropdown-item">Edit</a>
+                                                                        </li>
+                                                                    @endcan
+                                                                    @can('cashflow.delete')
+                                                                        <li>
+                                                                            <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
+                                                                                @csrf
+                                                                                @method('delete')
+                                                                                <button type="submit" class="dropdown-item">Hapus</button>
+                                                                            </form>
+                                                                        </li>
+                                                                    @endcan
+                                                                </ul>
+                                                            </div>
+                                                        @endcanany
+                                                        {{-- @can('cashflow.edit')
                                                             <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="btn btn-warning">Edit</a>
                                                         @endcan
                                                         @can('cashflow.delete')
@@ -115,7 +142,7 @@
                                                                 @method('delete')
                                                                 <button type="submit" class="btn btn-danger">Hapus</button>
                                                             </form>
-                                                        @endcan
+                                                        @endcan --}}
                                                     </td>
                                                 </tr>
                                             @else
@@ -126,13 +153,44 @@
                                                     <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
                                                     <td>{{ $cashFlow->transaction_date }}</td>
                                                     <td>@money($cashFlow->amount)</td>
-                                                    <td>
-                                                        <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="btn btn-warning">Edit</a>
-                                                        <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                                        </form>
+                                                    <td class="text-center">
+                                                        @canany(['cashflow.edit', 'cashflow.delete'])
+                                                            <div class="dropdown">
+                                                                <button
+                                                                    class="btn btn-sm btn-info dropdown-toggle"
+                                                                    type="button"
+                                                                    data-toggle="dropdown"
+                                                                    aria-expanded="false">
+                                                                    Aksi
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    @can('cashflow.edit')
+                                                                        <li>
+                                                                            <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="dropdown-item">Edit</a>
+                                                                        </li>
+                                                                    @endcan
+                                                                    @can('cashflow.delete')
+                                                                        <li>
+                                                                            <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
+                                                                                @csrf
+                                                                                @method('delete')
+                                                                                <button type="submit" class="dropdown-item">Hapus</button>
+                                                                            </form>
+                                                                        </li>
+                                                                    @endcan
+                                                                </ul>
+                                                            </div>
+                                                        @endcanany
+                                                        {{-- @can('cashflow.edit')
+                                                            <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="btn btn-warning">Edit</a>
+                                                        @endcan
+                                                        @can('cashflow.delete')
+                                                            <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                                            </form>
+                                                        @endcan --}}
                                                     </td>
                                                 </tr>
                                             @endif

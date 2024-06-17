@@ -55,7 +55,7 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('product.create')
-                                        <a href="{{ route('product.create') }}" class="btn btn-primary mb-3">Tambah Barang</a>
+                                        <a href="{{ route('product.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
@@ -105,19 +105,46 @@
                                                 <td>{{ $product->name }}</td>
                                                 <td>{{ $product->description }}</td>
                                                 <td>@money($product->price)</td>
-                                                <td>
-                                                    @can('product.edit')
+                                                <td class="text-center">
+                                                    <div class="dropdown">
+                                                        <button
+                                                            class="btn btn-sm btn-info dropdown-toggle"
+                                                            type="button"
+                                                            data-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            Aksi
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            @can('product.edit')
+                                                                <li>
+                                                                    <a href="{{ route('product.edit', $product->id) }}" class="dropdown-item">Edit</a>
+                                                                </li>
+                                                            @endcan
+                                                            <li>
+                                                                <a href="#" class="dropdown-item btn-show" data-image="/images/products/{{ $product->image }}">Gambar</a>
+                                                            </li>
+                                                            @can('product.delete')
+                                                                <li>
+                                                                    <form action="{{ route('product.destroy', $product->id) }}" method="post" class="d-inline">
+                                                                        @csrf
+                                                                        @method('delete')
+                                                                        <button type="submit" class="dropdown-item">Hapus</button>
+                                                                    </form>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
+                                                    {{-- @can('product.edit')
                                                         <a href="{{ route('product.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     <a href="#" class="btn btn-info btn-sm btn-show" data-image="/images/products/{{ $product->image }}">Gambar</a>
-                                                    {{-- <a href="#" class="btn btn-info btn-sm btn-show" data-image="/storage/images/products/{{ $product->image }}">Gambar</a> --}}
                                                     @can('product.delete')
                                                         <form action="{{ route('product.destroy', $product->id) }}" method="post" class="d-inline">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                         </form>
-                                                    @endcan
+                                                    @endcan --}}
                                                 </td>
                                             </tr>
                                         @endforeach
