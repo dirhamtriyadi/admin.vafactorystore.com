@@ -115,8 +115,35 @@
                                                         @endif
                                                     @endforeach
                                                 </td>
-                                                <td>
-                                                    @can('user.edit')
+                                                <td class="text-center">
+                                                    @canany(['user.edit', 'user.delete'])
+                                                        <div class="dropdown">
+                                                            <button
+                                                                class="btn btn-sm btn-info dropdown-toggle"
+                                                                type="button"
+                                                                data-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                Aksi
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                @can('user.edit')
+                                                                    <li>
+                                                                        <a href="{{ route('user.edit', $user->id) }}" class="dropdown-item">Edit</a>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('user.delete')
+                                                                    <li>
+                                                                        <form action="{{ route('user.destroy', $user->id) }}" method="post" class="d-inline">
+                                                                            @csrf
+                                                                            @method('delete')
+                                                                            <button type="submit" class="dropdown-item">Hapus</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    @endcanany
+                                                    {{-- @can('user.edit')
                                                         <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                                     @endcan
                                                     @can('user.delete')
@@ -125,7 +152,7 @@
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                                         </form>
-                                                    @endcan
+                                                    @endcan --}}
                                                 </td>
                                             </tr>
                                         @endforeach
