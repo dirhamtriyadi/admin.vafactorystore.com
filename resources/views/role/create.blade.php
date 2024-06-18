@@ -169,6 +169,7 @@
                 var groupCheckboxes = $("." + groupClass);
                 var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
                 $("#" + groupClass + "-select-all").prop("checked", allChecked);
+                $("#select-all-group-permission").prop("checked", allChecked);
             });
 
             // Handle Check If All Checkboxes Are Checked
