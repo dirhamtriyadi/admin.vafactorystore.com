@@ -73,7 +73,10 @@
                                 </div> --}}
 
                                 <div class="mb-3 card p-3">
-                                    <label for="permissions" class="form-label">Permission *</label>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="select-all-group-permission" id="select-all-group-permission">
+                                        <label for="select-all-group-permission" class="custom-control-label">Permission *</label>
+                                    </div>
                                     <div class="row">
                                         @foreach ($permissions as $permission)
                                             @php
@@ -98,7 +101,7 @@
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox"
                                                                         {{ $role->permissions->contains($permission) ? 'checked' : '' }}
-                                                                        class="custom-control-input {{ $group }}"
+                                                                        class="custom-control-input {{ $group }} checkbox"
                                                                         id="{{ $permission->name }}" name="permissions[]"
                                                                         value="{{ $permission->name }}">
                                                                     <label class="custom-control-label"
@@ -143,8 +146,35 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            // Handle select all group permission
+            $('#select-all-group-permission').on('change', function() {
+                if ($(this).is(':checked')) {
+                    $('.select-all').prop('checked', true);
+                    $('.checkbox').prop('checked', true);
+                } else {
+                    $('.select-all').prop('checked', false);
+                    $('.checkbox').prop('checked', false);
+                }
+            });
+
+            // Handle Check If All Checkboxes Select All Are Checked
+            $(".select-all").each(function() {
+                var groupClass = $(this).attr("id").replace("-select-all", ""); // Get the base class for the group
+                var groupCheckboxes = $("." + groupClass);
+                var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
+                $(this).prop("checked", allChecked);
+            });
+
             // Handle Check If All Checkboxes Are Checked
-            $(".custom-control-input").each(function() {
+            $(".checkbox").each(function() {
+                var groupClass = $(this).attr("class").split(' ')[1]; // Get the group class
+                var groupCheckboxes = $("." + groupClass);
+                var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
+                $("#" + groupClass + "-select-all").prop("checked", allChecked);
+            });
+
+            // Handle Check If All Checkboxes Are Checked
+            $(".checkbox").each(function() {
                 var groupClass = $(this).attr("class").split(' ')[1]; // Get the group class
                 var groupCheckboxes = $("." + groupClass);
                 var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
@@ -156,14 +186,37 @@
                 var groupClass = $(this).attr("id").replace("-select-all",
                     ""); // Get the base class for the group
                 $("." + groupClass).prop("checked", $(this).prop("checked"));
+
+                // Check If All Checkboxes Select All Are Checked
+                var groupSelectAllCheckboxes = $(".select-all");
+                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes.filter(":checked").length;
+                $("#select-all-group-permission").prop("checked", allCheckedSelectAll);
             });
 
             // If any checkbox within the group is unchecked, uncheck the "Select All" checkbox
-            $(".custom-control-input").not(".select-all").click(function() {
+            $(".checkbox").not(".select-all").click(function() {
                 var groupClass = $(this).attr("class").split(' ')[1]; // Get the group class
                 var groupCheckboxes = $("." + groupClass);
                 var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
                 $("#" + groupClass + "-select-all").prop("checked", allChecked);
+
+                // Check If All Checkboxes Select All Are Checked
+                var groupSelectAllCheckboxes = $(".select-all");
+                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes.filter(":checked").length;
+                $("#select-all-group-permission").prop("checked", allCheckedSelectAll);
+            });
+
+            // Handle Select All Group Permission
+            $("#select-all-group-permission").click(function() {
+                var groupPermissionCheckboxes = $(".checkbox");
+                groupPermissionCheckboxes.prop("checked", $(this).prop("checked"));
+            });
+
+            // If any checkbox within the group is unchecked, uncheck the "Select All" checkbox
+            $(".checkbox").not(".select-all").click(function() {
+                var groupPermissionCheckboxes = $(".checkbox").not(".select-all");
+                var allChecked = groupPermissionCheckboxes.length === groupPermissionCheckboxes.filter(":checked").length;
+                $("#select-all-group-permission").prop("checked", allChecked);
             });
         });
     </script>
