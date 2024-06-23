@@ -92,7 +92,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($makloonTransactions as $i => $makloonTransaction)
+                                        @forelse ($makloonTransactions as $i => $makloonTransaction)
                                             <tr>
                                                 <td>{{ $i + $makloonTransactions->firstitem() }}</td>
                                                 <td>{{ $makloonTransaction->makloon->makloon_number }}</td>
@@ -141,7 +141,11 @@
                                                     @endcan --}}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="8" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {!! $makloonTransactions->links() !!}

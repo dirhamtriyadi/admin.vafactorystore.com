@@ -92,7 +92,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($orderTransactions as $i => $orderTransaction)
+                                        @forelse ($orderTransactions as $i => $orderTransaction)
                                             <tr>
                                                 <td>{{ $i + $orderTransactions->firstitem() }}</td>
                                                 <td>{{ $orderTransaction->order->order_number }}</td>
@@ -141,7 +141,11 @@
                                                     @endcan --}}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="8" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {!! $orderTransactions->links() !!}

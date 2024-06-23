@@ -97,7 +97,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($printTypes as $i => $printType)
+                                        @forelse ($printTypes as $i => $printType)
                                             <tr>
                                                 <td>{{ $i + $printTypes->firstitem() }}</td>
                                                 <td>{{ $printType->name }}</td>
@@ -143,7 +143,11 @@
                                                     @endcan --}}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="5" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {{ $printTypes->links() }}

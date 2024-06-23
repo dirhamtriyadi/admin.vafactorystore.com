@@ -64,7 +64,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($roles as $i => $role)
+                                        @forelse ($roles as $i => $role)
                                             <tr>
                                                 <td>{{ $i + $roles->firstitem() }}</td>
                                                 <td>{{ $role->name }}</td>
@@ -108,7 +108,11 @@
                                                     @endcan --}}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {{ $roles->links() }}

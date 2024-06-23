@@ -108,7 +108,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($transactionReports as $i => $transactionReport)
+                                        @forelse ($transactionReports as $i => $transactionReport)
                                             @php
                                                 $totalPrice = 0;
                                             @endphp
@@ -128,7 +128,11 @@
                                                     <a class="btn btn-info btn-sm btn-show" data-detail="{{ $transactionReport }}">Detail</a>
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {{ $transactionReports->links() }}
