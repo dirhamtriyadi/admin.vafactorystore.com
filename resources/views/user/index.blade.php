@@ -102,7 +102,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $i => $user)
+                                        @forelse ($users as $i => $user)
                                             <tr>
                                                 <td>{{ $i + $users->firstitem() }}</td>
                                                 <td>{{ $user->name }}</td>
@@ -155,7 +155,11 @@
                                                     @endcan --}}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="5" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {{ $users->links() }}

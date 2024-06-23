@@ -98,7 +98,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($products as $i => $product)
+                                        @forelse ($products as $i => $product)
                                             <tr>
                                                 <td>{{ $i + $products->firstitem() }}</td>
                                                 <td>{{ $product->code }}</td>
@@ -147,7 +147,11 @@
                                                     @endcan --}}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {{ $products->links() }}

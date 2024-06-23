@@ -99,7 +99,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($rawMaterials as $i => $rawMaterial)
+                                        @forelse ($rawMaterials as $i => $rawMaterial)
                                             <tr>
                                                 <td>{{ $i + $rawMaterials->firstitem() }}</td>
                                                 <td>{{ $rawMaterial->name }}</td>
@@ -147,7 +147,11 @@
                                                     @endcan --}}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="7" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {{ $rawMaterials->links() }}

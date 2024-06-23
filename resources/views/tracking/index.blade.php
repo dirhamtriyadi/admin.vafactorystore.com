@@ -96,7 +96,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($trackings as $i => $tracking)
+                                        @forelse ($trackings as $i => $tracking)
                                             <tr>
                                                 <td>{{ $i + $trackings->firstitem() }}</td>
                                                 <td>{{ $tracking->name }}</td>
@@ -141,7 +141,11 @@
                                                     @endcan --}}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {{ $trackings->links() }}

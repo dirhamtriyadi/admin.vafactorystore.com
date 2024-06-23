@@ -96,7 +96,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($paymentMethods as $i => $paymentMethod)
+                                        @forelse ($paymentMethods as $i => $paymentMethod)
                                             <tr>
                                                 <td>{{ $i + $paymentMethods->firstitem() }}</td>
                                                 <td>{{ $paymentMethod->name }}</td>
@@ -141,7 +141,11 @@
                                                     @endcan --}}
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 {{ $paymentMethods->links() }}

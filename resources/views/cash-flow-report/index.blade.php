@@ -124,8 +124,8 @@
                                             $totalUangKeluar = 0;
                                             $totalUangKas = 0;
                                         @endphp
-                                        @foreach ($cashFlows as $i => $cashFlow)
-                                        @if ($cashFlow->cash_flow_type === "UANGMASUK")
+                                        @forelse ($cashFlows as $i => $cashFlow)
+                                            @if ($cashFlow->cash_flow_type === "UANGMASUK")
                                                 @php
                                                     $totalUangMasuk += $cashFlow->amount;
                                                     $totalUangKas += $cashFlow->amount;
@@ -156,7 +156,11 @@
                                                     <td>@money($cashFlow->amount)</td>
                                                 </tr>
                                             @endif
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center">Data tidak ditemukan</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                     <tfoot>
                                         <tr>
