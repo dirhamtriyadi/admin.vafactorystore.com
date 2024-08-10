@@ -21,6 +21,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MakloonController;
 use App\Http\Controllers\MakloonTransactionController;
 use App\Http\Controllers\RawMaterialController;
+use App\Http\Controllers\RawMaterialInController;
+use App\Http\Controllers\RawMaterialOutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,5 +68,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('makloon', MakloonController::class);
     Route::resource('makloon-transaction', MakloonTransactionController::class);
     Route::resource('raw-material', RawMaterialController::class);
+    Route::resource('raw-material-in', RawMaterialInController::class);
+    Route::resource('raw-material-out', RawMaterialOutController::class);
     Route::resource('profile', ProfileController::class);
 });

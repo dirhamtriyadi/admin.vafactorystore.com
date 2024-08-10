@@ -192,8 +192,8 @@
                     </li>
                 @endcanany
                 @canany(['payment-method.index', 'payment-method.create', 'payment-method.edit', 'payment-method.delete', 'print-type.index', 'print-type.create', 'print-type.edit', 'print-type.delete', 'tracking.index', 'tracking.create', 'tracking.edit', 'tracking.delete'])
-                    <li class="nav-item {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') | Route::is('raw-material.*') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') | Route::is('raw-material.*') ? 'active' : '' }}">
+                    <li class="nav-item {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ Route::is('payment-method.*') | Route::is('print-type.*') | Route::is('tracking.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-database"></i>
                             <p>
                                 Master
@@ -225,11 +225,40 @@
                                     </a>
                                 </li>
                             @endcanany
+                        </ul>
+                    </li>
+                @endcanany
+                @canany(['raw-material.index', 'raw-material.create', 'raw-material.edit', 'raw-material.delete', 'raw-material-in.index', 'raw-material-in.create', 'raw-material-in.edit', 'raw-material-in.delete', 'raw-material-out.outdex', 'raw-material-out.create', 'raw-material-out.edit', 'raw-material-out.delete'])
+                    <li class="nav-item {{ Route::is('raw-material.*') | Route::is('raw-material-in.*') | Route::is('raw-material-out.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ Route::is('raw-material.*') | Route::is('raw-material-in.*') | Route::is('raw-material-out.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-cubes"></i>
+                            <p>
+                                Bahan Baku
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
                             @canany(['raw-material.index', 'raw-material.create', 'raw-material.edit', 'raw-material.delete'])
                                 <li class="nav-item">
                                     <a href="{{ route('raw-material.index') }}" class="nav-link {{ Route::is('raw-material.*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Bahan Baku</p>
+                                    </a>
+                                </li>
+                            @endcanany
+                            @canany(['raw-material-in.index', 'raw-material-in.create', 'raw-material-in.edit', 'raw-material-in.delete'])
+                                <li class="nav-item">
+                                    <a href="{{ route('raw-material-in.index') }}" class="nav-link {{ Route::is('raw-material-in.*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Bahan Baku Masuk</p>
+                                    </a>
+                                </li>
+                            @endcanany
+                            @canany(['raw-material-out.outdex', 'raw-material-out.create', 'raw-material-out.edit', 'raw-material-out.delete'])
+                                <li class="nav-item">
+                                    <a href="{{ route('raw-material-out.index') }}" class="nav-link {{ Route::is('raw-material-out.*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Bahan Baku Keluar</p>
                                     </a>
                                 </li>
                             @endcanany
