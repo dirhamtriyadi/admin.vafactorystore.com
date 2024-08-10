@@ -90,7 +90,7 @@
                                     <thead class="table-primary">
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Kategori</th>
+                                            <th>Nama Bahan Baku</th>
                                             <th>Satuan</th>
                                             <th>Qty</th>
                                             <th>Deskripsi</th>
