@@ -59,7 +59,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama *</label>
+                                    <label for="name" class="form-label">Nama Bahan Baku *</label>
                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ? old('name') : $rawMaterial->name }}">
                                 </div>
 
