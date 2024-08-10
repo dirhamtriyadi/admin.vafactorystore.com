@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Tambah Bahan Baku</h1>
+                <h1>Bahan Baku</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -58,7 +58,7 @@
                             <form action="{{ route('raw-material.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama Kategori *</label>
+                                    <label for="name" class="form-label">Nama Bahan Baku *</label>
                                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
                                 </div>
 
