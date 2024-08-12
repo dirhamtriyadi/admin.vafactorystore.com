@@ -98,11 +98,11 @@
                     <tr>
                         <th>Nama Barang</th>
                         <th>Kode Barang</th>
+                        <th>Ukuran</th>
+                        <th>Satuan</th>
                         <th>Qty</th>
                         <th>Harga Barang</th>
                         <th>Total</th>
-                        <th>Ukuran</th>
-                        <th>Satuan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -120,21 +120,20 @@
                         <tr>
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->code }}</td>
+                            <td>{{ $item->size }}</td>
+                            <td>{{ $item->unit }}</td>
                             <td>{{ $item->qty }}</td>
                             <td>@money($item->price)</td>
                             <td>@money($item->price * $item->qty)</td>
-                            <td>{{ $item->size }}</td>
-                            <td>{{ $item->unit }}</td>
                         </tr>
                     @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td class="text-center text-bold" colspan="2">Total</td>
+                        <td class="text-center text-bold" colspan="4">Total</td>
                         <td class="text-bold">{{ $qty }}</td>
                         <td class="text-bold">@money($price)</td>
                         <td class="text-bold">@money($total)</td>
-                        <td colspan="2"></td>
                     </tr>
                 </tfoot>
             </table>

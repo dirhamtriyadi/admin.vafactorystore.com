@@ -240,11 +240,11 @@
                     tr.append($('<td>').text(index + 1));
                     tr.append($('<td>').text(item.name));
                     tr.append($('<td>').text(item.code));
+                    tr.append($('<td>').text(item.size));
+                    tr.append($('<td>').text(item.unit));
                     tr.append($('<td>').text(item.qty));
                     tr.append($('<td>').text('Rp. ' + item.price.toLocaleString('id-ID')));
                     tr.append($('<td>').text('Rp. ' + (item.qty * item.price).toLocaleString('id-ID')));
-                    tr.append($('<td>').text(item.size));
-                    tr.append($('<td>').text(item.unit));
                     tableItemMakloonBody.append(tr);
                 });
 
@@ -252,13 +252,12 @@
                 tableItemMakloonFoot.empty();
                 let trFoot = $('<tr>');
                 trFoot.append($('<td>').text('Total').attr({
-                    'colspan': 3,
+                    'colspan': 5,
                     'class': 'text-bold text-center',
-                }));
+                }));;
                 trFoot.append($('<td>').text(qty).attr('class', 'text-bold'));
                 trFoot.append($('<td>').text('Rp. ' + price.toLocaleString('id-ID')).attr('class', 'text-bold'));
                 trFoot.append($('<td>').text('Rp. ' + totalPrice.toLocaleString('id-ID')).attr('class', 'text-bold'));
-                trFoot.append($('<td>').text('').attr('colspan', 2));
                 tableItemMakloonFoot.append(trFoot);
 
                 $('.btn-print').attr('href', `{{ route('makloon.print') }}?id=${detail.id}`);

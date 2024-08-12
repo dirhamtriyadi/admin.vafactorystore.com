@@ -112,6 +112,10 @@
                         <!-- /.card-footer-->
                     </div>
                     <!-- /.card -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
@@ -187,6 +191,8 @@
                         <!-- /.card-footer-->
                     </div>
                     <!-- /.card -->
+                </div>
+                <div class="col-6">
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
@@ -209,12 +215,12 @@
                                             <th>No</th>
                                             <th>Nama Barang</th>
                                             <th>Kode barang</th>
-                                            <th>Qty</th>
-                                            <th>Harga</th>
-                                            <th>Total</th>
                                             <th>Ukuran</th>
                                             <th>Satuan</th>
                                             <th>Deskripsi</th>
+                                            <th>Qty</th>
+                                            <th>Harga</th>
+                                            <th>Total</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -278,13 +284,13 @@
                 tr.append($('<td>').text(i + 1));
                 tr.append($('<td>').text(data.name));
                 tr.append($('<td>').text(data.code));
+                tr.append($('<td>').text(data.size));
+                tr.append($('<td>').text(data.unit));
                 tr.append($('<td>').text(data.qty));
                 tr.append($('<td>').text("Rp. " + data.price.toLocaleString("id-ID")));
                 tr.append($('<td>').text("Rp. " + (parseInt(data.qty) * parseInt(data.price)).toLocaleString("id-ID")));
-                tr.append($('<td>').text(data.size));
-                tr.append($('<td>').text(data.unit));
                 tr.append($('<td>').text(data.description));
-                tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger').text('Hapus').on('click', function (e) {
+                tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger btn-sm').text('Hapus').on('click', function (e) {
                     e.preventDefault();
                     storedFormData.splice(i, 1);
                     localStorage.setItem('formData', JSON.stringify(storedFormData));
@@ -296,7 +302,7 @@
             let tableItemMakloonFooter = tableItemMakloon.find('tfoot');
             let trFooter = $('<tr>');
             trFooter.append($('<td>').text('Total').attr({
-                'colspan': 3,
+                'colspan': 6,
                 'class': 'text-center font-weight-bold'
             }));
             trFooter.append($('<td>').text(qty).addClass('font-weight-bold'));
@@ -310,11 +316,11 @@
                 let dataForm = {
                     name: $('#add-item-makloon-form #name').val(),
                     code: $('#add-item-makloon-form #code').val(),
-                    qty: $('#add-item-makloon-form #qty').val(),
-                    price: $('#add-item-makloon-form #price').val(),
                     size: $('#add-item-makloon-form #size').val(),
                     unit: $('#add-item-makloon-form #unit').val(),
                     description: $('#add-item-makloon-form #description').val(),
+                    qty: $('#add-item-makloon-form #qty').val(),
+                    price: $('#add-item-makloon-form #price').val(),
                 }
 
                 let storedFormData = JSON.parse(localStorage.getItem('formData')) || [];
@@ -343,13 +349,13 @@
                     tr.append($('<td>').text(i + 1));
                     tr.append($('<td>').text(data.name));
                     tr.append($('<td>').text(data.code));
-                    tr.append($('<td>').text(data.qty));
-                    tr.append($('<td>').text("Rp. " + data.price.toLocaleString("id-ID")));
-                    tr.append($('<td>').text("Rp. " + (parseInt(data.qty) * parseInt(data.price)).toLocaleString("id-ID")));
                     tr.append($('<td>').text(data.size));
                     tr.append($('<td>').text(data.unit));
                     tr.append($('<td>').text(data.description));
-                    tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger').text('Hapus').on('click', function (e) {
+                    tr.append($('<td>').text(data.qty));
+                    tr.append($('<td>').text("Rp. " + data.price.toLocaleString("id-ID")));
+                    tr.append($('<td>').text("Rp. " + (parseInt(data.qty) * parseInt(data.price)).toLocaleString("id-ID")));
+                    tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger btn-sm').text('Hapus').on('click', function (e) {
                         e.preventDefault();
                         storedFormData.splice(i, 1);
                         localStorage.setItem('formData', JSON.stringify(storedFormData));
@@ -362,7 +368,7 @@
                 tableItemMakloonFooter.empty();
                 let trFooter = $('<tr>');
                 trFooter.append($('<td>').text('Total').attr({
-                    'colspan': 3,
+                    'colspan': 6,
                     'class': 'text-center font-weight-bold'
                 }));
                 trFooter.append($('<td>').text(qty).addClass('font-weight-bold'));
