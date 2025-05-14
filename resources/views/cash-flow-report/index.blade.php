@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>List Data Laporan Uang Kas</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>List Data Laporan Uang Kas</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -50,18 +49,26 @@
                                         <div class="d-flex flex-col">
                                             <div class="mr-3">
                                                 <label for="start_date" class="form-label">Tanggal Dari</label>
-                                                <div class="input-group date mb-3" id="start_date" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#start_date" name="start_date" value="{{ old('start_date') ? old('start_date') : $start_date }}">
-                                                    <div class="input-group-append" data-target="#start_date" data-toggle="datetimepicker">
+                                                <div class="input-group date mb-3" id="start_date"
+                                                    data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input"
+                                                        data-target="#start_date" name="start_date"
+                                                        value="{{ old('start_date') ? old('start_date') : $start_date }}">
+                                                    <div class="input-group-append" data-target="#start_date"
+                                                        data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mr-3">
                                                 <label for="end_date" class="form-label">Tanggal Sampai</label>
-                                                <div class="input-group date mb-3" id="end_date" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#end_date" name="end_date" value="{{ old('end_date') ? old('end_date') : $end_date }}">
-                                                    <div class="input-group-append" data-target="#end_date" data-toggle="datetimepicker">
+                                                <div class="input-group date mb-3" id="end_date"
+                                                    data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input"
+                                                        data-target="#end_date" name="end_date"
+                                                        value="{{ old('end_date') ? old('end_date') : $end_date }}">
+                                                    <div class="input-group-append" data-target="#end_date"
+                                                        data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
@@ -84,9 +91,12 @@
                                                 <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
                                                 <option value="250" {{ $perPage == 250 ? 'selected' : '' }}>250</option>
                                                 <option value="500" {{ $perPage == 500 ? 'selected' : '' }}>500</option>
-                                                <option value="1000" {{ $perPage == 1000 ? 'selected' : '' }}>1000</option>
-                                                <option value="5000" {{ $perPage == 5000 ? 'selected' : '' }}>5000</option>
-                                                <option value="10000" {{ $perPage == 10000 ? 'selected' : '' }}>10000</option>
+                                                <option value="1000" {{ $perPage == 1000 ? 'selected' : '' }}>1000
+                                                </option>
+                                                <option value="5000" {{ $perPage == 5000 ? 'selected' : '' }}>5000
+                                                </option>
+                                                <option value="10000" {{ $perPage == 10000 ? 'selected' : '' }}>10000
+                                                </option>
                                             </select>
                                             <input type="hidden" name="start_date" value="{{ $start_date }}">
                                             <input type="hidden" name="end_date" value="{{ $end_date }}">
@@ -108,7 +118,7 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-primary">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
                                             <th>Type</th>
@@ -125,7 +135,7 @@
                                             $totalUangKas = 0;
                                         @endphp
                                         @forelse ($cashFlows as $i => $cashFlow)
-                                            @if ($cashFlow->cash_flow_type === "UANGMASUK")
+                                            @if ($cashFlow->cash_flow_type === 'UANGMASUK')
                                                 @php
                                                     $totalUangMasuk += $cashFlow->amount;
                                                     $totalUangKas += $cashFlow->amount;
@@ -137,12 +147,13 @@
                                                 @endphp
                                             @endif
 
-                                            @if ($cashFlow->cash_flow_type === "UANGMASUK")
+                                            @if ($cashFlow->cash_flow_type === 'UANGMASUK')
                                                 <tr class="table-success">
                                                     <td>{{ $i + $cashFlows->firstitem() }}</td>
                                                     <td>{{ $cashFlow->cash_flow_type }}</td>
                                                     <td>{{ $cashFlow->description }}</td>
-                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
+                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}
+                                                    </td>
                                                     <td>{{ $cashFlow->transaction_date }}</td>
                                                     <td>@money($cashFlow->amount)</td>
                                                 </tr>
@@ -151,7 +162,8 @@
                                                     <td>{{ $i + $cashFlows->firstitem() }}</td>
                                                     <td>{{ $cashFlow->cash_flow_type }}</td>
                                                     <td>{{ $cashFlow->description }}</td>
-                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
+                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}
+                                                    </td>
                                                     <td>{{ $cashFlow->transaction_date }}</td>
                                                     <td>@money($cashFlow->amount)</td>
                                                 </tr>
@@ -195,7 +207,7 @@
 
 @push('scripts')
     <script>
-        $(function () {
+        $(function() {
             $('#start_date').datetimepicker({
                 format: 'YYYY-MM-DD'
             });

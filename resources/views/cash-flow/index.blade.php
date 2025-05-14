@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>List Data Uang Kas</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>List Data Uang Kas</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -47,7 +46,8 @@
                             <div class="d-flex flex-column justify-content-end">
                                 <div class="d-flex justify-content-end">
                                     @can('cashflow.create')
-                                        <a href="{{ route('cash-flow.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
+                                        <a href="{{ route('cash-flow.create') }}" class="btn btn-primary mb-3"><i
+                                                class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex justify-content-end mb-3">
@@ -67,7 +67,7 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-primary">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
                                             <th>Type</th>
@@ -85,7 +85,7 @@
                                             $totalUangKas = 0;
                                         @endphp
                                         @forelse ($cashFlows as $i => $cashFlow)
-                                            @if ($cashFlow->cash_flow_type === "UANGMASUK")
+                                            @if ($cashFlow->cash_flow_type === 'UANGMASUK')
                                                 @php
                                                     $totalUangMasuk += $cashFlow->amount;
                                                     $totalUangKas += $cashFlow->amount;
@@ -97,36 +97,38 @@
                                                 @endphp
                                             @endif
 
-                                            @if ($cashFlow->cash_flow_type === "UANGMASUK")
+                                            @if ($cashFlow->cash_flow_type === 'UANGMASUK')
                                                 <tr class="table-success">
                                                     <td>{{ $i + 1 }}</td>
                                                     <td>{{ $cashFlow->cash_flow_type }}</td>
                                                     <td>{{ $cashFlow->description }}</td>
-                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
+                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}
+                                                    </td>
                                                     <td>{{ $cashFlow->created_at }}</td>
                                                     <td>@money($cashFlow->amount)</td>
                                                     <td class="text-center">
                                                         @canany(['cashflow.edit', 'cashflow.delete'])
                                                             <div class="dropdown">
-                                                                <button
-                                                                    class="btn btn-sm btn-info dropdown-toggle"
-                                                                    type="button"
-                                                                    data-toggle="dropdown"
-                                                                    aria-expanded="false">
+                                                                <button class="btn btn-sm btn-info dropdown-toggle"
+                                                                    type="button" data-toggle="dropdown" aria-expanded="false">
                                                                     Aksi
                                                                 </button>
                                                                 <ul class="dropdown-menu">
                                                                     @can('cashflow.edit')
                                                                         <li>
-                                                                            <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="dropdown-item">Edit</a>
+                                                                            <a href="{{ route('cash-flow.edit', $cashFlow->id) }}"
+                                                                                class="dropdown-item">Edit</a>
                                                                         </li>
                                                                     @endcan
                                                                     @can('cashflow.delete')
                                                                         <li>
-                                                                            <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
+                                                                            <form
+                                                                                action="{{ route('cash-flow.destroy', $cashFlow->id) }}"
+                                                                                method="post" class="d-inline">
                                                                                 @csrf
                                                                                 @method('delete')
-                                                                                <button type="submit" class="dropdown-item">Hapus</button>
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item">Hapus</button>
                                                                             </form>
                                                                         </li>
                                                                     @endcan
@@ -150,31 +152,33 @@
                                                     <td>{{ $i + $cashFlows->firstitem() }}</td>
                                                     <td>{{ $cashFlow->cash_flow_type }}</td>
                                                     <td>{{ $cashFlow->description }}</td>
-                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}</td>
+                                                    <td>{{ isset($cashFlow->createdBy->name) ? $cashFlow->createdBy->name : '' }}
+                                                    </td>
                                                     <td>{{ $cashFlow->transaction_date }}</td>
                                                     <td>@money($cashFlow->amount)</td>
                                                     <td class="text-center">
                                                         @canany(['cashflow.edit', 'cashflow.delete'])
                                                             <div class="dropdown">
-                                                                <button
-                                                                    class="btn btn-sm btn-info dropdown-toggle"
-                                                                    type="button"
-                                                                    data-toggle="dropdown"
-                                                                    aria-expanded="false">
+                                                                <button class="btn btn-sm btn-info dropdown-toggle"
+                                                                    type="button" data-toggle="dropdown" aria-expanded="false">
                                                                     Aksi
                                                                 </button>
                                                                 <ul class="dropdown-menu">
                                                                     @can('cashflow.edit')
                                                                         <li>
-                                                                            <a href="{{ route('cash-flow.edit', $cashFlow->id) }}" class="dropdown-item">Edit</a>
+                                                                            <a href="{{ route('cash-flow.edit', $cashFlow->id) }}"
+                                                                                class="dropdown-item">Edit</a>
                                                                         </li>
                                                                     @endcan
                                                                     @can('cashflow.delete')
                                                                         <li>
-                                                                            <form action="{{ route('cash-flow.destroy', $cashFlow->id) }}" method="post" class="d-inline">
+                                                                            <form
+                                                                                action="{{ route('cash-flow.destroy', $cashFlow->id) }}"
+                                                                                method="post" class="d-inline">
                                                                                 @csrf
                                                                                 @method('delete')
-                                                                                <button type="submit" class="dropdown-item">Hapus</button>
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item">Hapus</button>
                                                                             </form>
                                                                         </li>
                                                                     @endcan
@@ -235,5 +239,4 @@
 @endsection
 
 @push('scripts')
-
 @endpush

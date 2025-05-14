@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>List Data Order Pelacakan</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>List Data Order Pelacakan</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -47,7 +46,8 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('order-tracking.create')
-                                        <a href="{{ route('order-tracking.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
+                                        <a href="{{ route('order-tracking.create') }}" class="btn btn-primary mb-3"><i
+                                                class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
@@ -55,7 +55,8 @@
                                         <form action="{{ route('order-tracking.index') }}" method="GET">
                                             <div class="input-group">
                                                 <input type="hidden" name="perPage" value="{{ $perPage }}">
-                                                <input type="text" name="search" id="search" class="form-control" placeholder="Cari Order Tracking" value="{{ $search }}">
+                                                <input type="text" name="search" id="search" class="form-control"
+                                                    placeholder="Cari Order Tracking" value="{{ $search }}">
                                                 <input type="submit" value="Cari" class="btn btn-primary ml-3">
                                             </div>
                                         </form>
@@ -66,10 +67,14 @@
                                             <div class="input-group">
                                                 <select name="perPage" class="select" id="perPage">
                                                     <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
-                                                    <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
-                                                    <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
-                                                    <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
-                                                    <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                                                    <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10
+                                                    </option>
+                                                    <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25
+                                                    </option>
+                                                    <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50
+                                                    </option>
+                                                    <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100
+                                                    </option>
                                                 </select>
                                                 <button type="submit" class="btn btn-primary ml-3">Apply</button>
                                             </div>
@@ -79,7 +84,7 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-primary">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
                                             <th>Nomor Order</th>
@@ -100,9 +105,9 @@
                                                 <td>{{ $orderTracking->tracking->name }}</td>
                                                 <td>@php
                                                     if ($orderTracking->status == 1) {
-                                                        echo "Selesai";
+                                                        echo 'Selesai';
                                                     } else {
-                                                        echo "Dalam Proses";
+                                                        echo 'Dalam Proses';
                                                     }
                                                 @endphp</td>
                                                 <td>{{ $orderTracking->description }}</td>
@@ -110,25 +115,26 @@
                                                 <td class="text-center">
                                                     @canany(['order-tracking.edit', 'order-tracking.delete'])
                                                         <div class="dropdown">
-                                                            <button
-                                                                class="btn btn-sm btn-info dropdown-toggle"
-                                                                type="button"
-                                                                data-toggle="dropdown"
-                                                                aria-expanded="false">
+                                                            <button class="btn btn-sm btn-info dropdown-toggle" type="button"
+                                                                data-toggle="dropdown" aria-expanded="false">
                                                                 Aksi
                                                             </button>
                                                             <ul class="dropdown-menu">
                                                                 @can('order-tracking.edit')
                                                                     <li>
-                                                                        <a href="{{ route('order-tracking.edit', $orderTracking->id) }}" class="dropdown-item">Edit</a>
+                                                                        <a href="{{ route('order-tracking.edit', $orderTracking->id) }}"
+                                                                            class="dropdown-item">Edit</a>
                                                                     </li>
                                                                 @endcan
                                                                 @can('order-tracking.delete')
                                                                     <li>
-                                                                        <form action="{{ route('order-tracking.destroy', $orderTracking->id) }}" method="post">
+                                                                        <form
+                                                                            action="{{ route('order-tracking.destroy', $orderTracking->id) }}"
+                                                                            method="post">
                                                                             @csrf
                                                                             @method('delete')
-                                                                            <button type="submit" class="dropdown-item">Hapus</button>
+                                                                            <button type="submit"
+                                                                                class="dropdown-item">Hapus</button>
                                                                         </form>
                                                                     </li>
                                                                 @endcan
@@ -171,5 +177,4 @@
 @endsection
 
 @push('scripts')
-
 @endpush

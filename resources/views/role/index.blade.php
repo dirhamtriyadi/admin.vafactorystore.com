@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>List Data Role</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>List Data Role</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -51,12 +50,13 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-end">
                                 @can('role.create')
-                                    <a href="{{ route('role.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
+                                    <a href="{{ route('role.create') }}" class="btn btn-primary mb-3"><i
+                                            class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                 @endcan
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-primary">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
                                             <th>Nama</th>
@@ -71,25 +71,25 @@
                                                 <td class="text-center">
                                                     @canany(['role.edit', 'role.delete'])
                                                         <div class="dropdown">
-                                                            <button
-                                                                class="btn btn-sm btn-info dropdown-toggle"
-                                                                type="button"
-                                                                data-toggle="dropdown"
-                                                                aria-expanded="false">
+                                                            <button class="btn btn-sm btn-info dropdown-toggle" type="button"
+                                                                data-toggle="dropdown" aria-expanded="false">
                                                                 Aksi
                                                             </button>
                                                             <ul class="dropdown-menu">
                                                                 @can('role.edit')
                                                                     <li>
-                                                                        <a href="{{ route('role.edit', $role->id) }}" class="dropdown-item">Edit</a>
+                                                                        <a href="{{ route('role.edit', $role->id) }}"
+                                                                            class="dropdown-item">Edit</a>
                                                                     </li>
                                                                 @endcan
                                                                 @can('role.delete')
                                                                     <li>
-                                                                        <form action="{{ route('role.destroy', $role->id) }}" method="post" class="d-inline">
+                                                                        <form action="{{ route('role.destroy', $role->id) }}"
+                                                                            method="post" class="d-inline">
                                                                             @csrf
                                                                             @method('delete')
-                                                                            <button type="submit" class="dropdown-item">Hapus</button>
+                                                                            <button type="submit"
+                                                                                class="dropdown-item">Hapus</button>
                                                                         </form>
                                                                     </li>
                                                                 @endcan
@@ -132,5 +132,4 @@
 @endsection
 
 @push('scripts')
-
 @endpush

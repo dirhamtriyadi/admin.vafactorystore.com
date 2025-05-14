@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>List Data Maklun</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>List Data Maklun</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -55,7 +54,8 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('makloon.create')
-                                        <a href="{{ route('makloon.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
+                                        <a href="{{ route('makloon.create') }}" class="btn btn-primary mb-3"><i
+                                                class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
@@ -63,7 +63,8 @@
                                         <form action="{{ route('makloon.index') }}" method="GET">
                                             <div class="input-group">
                                                 <input type="hidden" name="perPage" value="{{ $perPage }}">
-                                                <input type="text" name="search" id="search" class="form-control" placeholder="Cari Maklun" value="{{ $search }}">
+                                                <input type="text" name="search" id="search" class="form-control"
+                                                    placeholder="Cari Maklun" value="{{ $search }}">
                                                 <input type="submit" value="Cari" class="btn btn-primary ml-3">
                                             </div>
                                         </form>
@@ -74,10 +75,14 @@
                                             <div class="input-group">
                                                 <select name="perPage" class="select" id="perPage">
                                                     <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
-                                                    <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
-                                                    <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
-                                                    <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
-                                                    <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                                                    <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10
+                                                    </option>
+                                                    <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25
+                                                    </option>
+                                                    <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50
+                                                    </option>
+                                                    <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100
+                                                    </option>
                                                 </select>
                                                 <button type="submit" class="btn btn-primary ml-3">Apply</button>
                                             </div>
@@ -87,7 +92,7 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-primary">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
                                             <th>Nomor Maklun</th>
@@ -104,35 +109,37 @@
                                             <tr>
                                                 <td>{{ $i + $makloons->firstitem() }}</td>
                                                 <td>{{ $makloon->makloon_number }}</td>
-                                                <td>{{ isset($makloon->createdBy->name) ? $makloon->createdBy->name : '' }}</td>
+                                                <td>{{ isset($makloon->createdBy->name) ? $makloon->createdBy->name : '' }}
+                                                </td>
                                                 <td>{{ $makloon->customer->name }}</td>
                                                 <td>{{ $makloon->name }}</td>
                                                 <td>{{ $makloon->description }}</td>
                                                 <td>{{ $makloon->date }}</td>
                                                 <td class="text-center">
                                                     <div class="dropdown">
-                                                        <button
-                                                            class="btn btn-sm btn-info dropdown-toggle"
-                                                            type="button"
-                                                            data-toggle="dropdown"
-                                                            aria-expanded="false">
+                                                        <button class="btn btn-sm btn-info dropdown-toggle" type="button"
+                                                            data-toggle="dropdown" aria-expanded="false">
                                                             Aksi
                                                         </button>
                                                         <ul class="dropdown-menu">
                                                             @can('makloon.edit')
                                                                 <li>
-                                                                    <a href="{{ route('makloon.edit', $makloon->id) }}" class="dropdown-item">Edit</a>
+                                                                    <a href="{{ route('makloon.edit', $makloon->id) }}"
+                                                                        class="dropdown-item">Edit</a>
                                                                 </li>
                                                             @endcan
                                                             <li>
-                                                                <a href="#" class="dropdown-item btn-show" data-detail="{{ $makloon }}">Detail</a>
+                                                                <a href="#" class="dropdown-item btn-show"
+                                                                    data-detail="{{ $makloon }}">Detail</a>
                                                             </li>
                                                             @can('makloon.delete')
                                                                 <li>
-                                                                    <form action="{{ route('makloon.destroy', $makloon->id) }}" method="post" class="d-inline">
+                                                                    <form action="{{ route('makloon.destroy', $makloon->id) }}"
+                                                                        method="post" class="d-inline">
                                                                         @csrf
                                                                         @method('delete')
-                                                                        <button type="submit" class="dropdown-item">Hapus</button>
+                                                                        <button type="submit"
+                                                                            class="dropdown-item">Hapus</button>
                                                                     </form>
                                                                 </li>
                                                             @endcan
@@ -217,8 +224,8 @@
 
 @push('scripts')
     <script>
-        $(function () {
-            $('.btn-show').on('click', function () {
+        $(function() {
+            $('.btn-show').on('click', function() {
                 let detail = $(this).data('detail');
                 $('#modal-lg').modal('show');
                 $('#modal-lg .modal-body tbody').empty();
@@ -244,7 +251,8 @@
                     tr.append($('<td>').text(item.unit));
                     tr.append($('<td>').text(item.qty));
                     tr.append($('<td>').text('Rp. ' + item.price.toLocaleString('id-ID')));
-                    tr.append($('<td>').text('Rp. ' + (item.qty * item.price).toLocaleString('id-ID')));
+                    tr.append($('<td>').text('Rp. ' + (item.qty * item.price).toLocaleString(
+                        'id-ID')));
                     tableItemMakloonBody.append(tr);
                 });
 
@@ -256,8 +264,10 @@
                     'class': 'text-bold text-center',
                 }));;
                 trFoot.append($('<td>').text(qty).attr('class', 'text-bold'));
-                trFoot.append($('<td>').text('Rp. ' + price.toLocaleString('id-ID')).attr('class', 'text-bold'));
-                trFoot.append($('<td>').text('Rp. ' + totalPrice.toLocaleString('id-ID')).attr('class', 'text-bold'));
+                trFoot.append($('<td>').text('Rp. ' + price.toLocaleString('id-ID')).attr('class',
+                    'text-bold'));
+                trFoot.append($('<td>').text('Rp. ' + totalPrice.toLocaleString('id-ID')).attr('class',
+                    'text-bold'));
                 tableItemMakloonFoot.append(trFoot);
 
                 $('.btn-print').attr('href', `{{ route('makloon.print') }}?id=${detail.id}`);

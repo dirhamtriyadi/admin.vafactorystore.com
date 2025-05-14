@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>List Data Barang</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>List Data Barang</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -55,7 +54,8 @@
                             <div class="d-flex flex-column justify-content-end mb-3">
                                 <div class="d-flex justify-content-end">
                                     @can('product.create')
-                                        <a href="{{ route('product.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
+                                        <a href="{{ route('product.create') }}" class="btn btn-primary mb-3"><i
+                                                class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
                                 <div class="d-flex flex-col flex-wrap justify-content-between">
@@ -63,7 +63,8 @@
                                         <form action="{{ route('product.index') }}" method="GET">
                                             <div class="input-group">
                                                 <input type="hidden" name="perPage" value="{{ $perPage }}">
-                                                <input type="text" name="search" id="search" class="form-control" placeholder="Cari Barang" value="{{ $search }}">
+                                                <input type="text" name="search" id="search" class="form-control"
+                                                    placeholder="Cari Barang" value="{{ $search }}">
                                                 <input type="submit" value="Cari" class="btn btn-primary ml-3">
                                             </div>
                                         </form>
@@ -74,10 +75,14 @@
                                             <div class="input-group">
                                                 <select name="perPage" class="select" id="perPage">
                                                     <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
-                                                    <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10</option>
-                                                    <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25</option>
-                                                    <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50</option>
-                                                    <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
+                                                    <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10
+                                                    </option>
+                                                    <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25
+                                                    </option>
+                                                    <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50
+                                                    </option>
+                                                    <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100
+                                                    </option>
                                                 </select>
                                                 <button type="submit" class="btn btn-primary ml-3">Apply</button>
                                             </div>
@@ -87,7 +92,7 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-primary">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
                                             <th>Kode Barang</th>
@@ -107,28 +112,29 @@
                                                 <td>@money($product->price)</td>
                                                 <td class="text-center">
                                                     <div class="dropdown">
-                                                        <button
-                                                            class="btn btn-sm btn-info dropdown-toggle"
-                                                            type="button"
-                                                            data-toggle="dropdown"
-                                                            aria-expanded="false">
+                                                        <button class="btn btn-sm btn-info dropdown-toggle" type="button"
+                                                            data-toggle="dropdown" aria-expanded="false">
                                                             Aksi
                                                         </button>
                                                         <ul class="dropdown-menu">
                                                             @can('product.edit')
                                                                 <li>
-                                                                    <a href="{{ route('product.edit', $product->id) }}" class="dropdown-item">Edit</a>
+                                                                    <a href="{{ route('product.edit', $product->id) }}"
+                                                                        class="dropdown-item">Edit</a>
                                                                 </li>
                                                             @endcan
                                                             <li>
-                                                                <a href="#" class="dropdown-item btn-show" data-image="/images/products/{{ $product->image }}">Gambar</a>
+                                                                <a href="#" class="dropdown-item btn-show"
+                                                                    data-image="/images/products/{{ $product->image }}">Gambar</a>
                                                             </li>
                                                             @can('product.delete')
                                                                 <li>
-                                                                    <form action="{{ route('product.destroy', $product->id) }}" method="post" class="d-inline">
+                                                                    <form action="{{ route('product.destroy', $product->id) }}"
+                                                                        method="post" class="d-inline">
                                                                         @csrf
                                                                         @method('delete')
-                                                                        <button type="submit" class="dropdown-item">Hapus</button>
+                                                                        <button type="submit"
+                                                                            class="dropdown-item">Hapus</button>
                                                                     </form>
                                                                 </li>
                                                             @endcan
@@ -179,7 +185,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                            <img src="" alt="product" id="image" width="100%">
+                        <img src="" alt="product" id="image" width="100%">
                         {{-- <p>One fine body…</p> --}}
                     </div>
                     <div class="modal-footer justify-content-end">
@@ -197,8 +203,8 @@
 
 @push('scripts')
     <script>
-        $(function () {
-            $('.btn-show').on('click', function () {
+        $(function() {
+            $('.btn-show').on('click', function() {
                 $('#modal-lg').modal('show');
                 $('#image').attr('src', $(this).data('image'));
             })

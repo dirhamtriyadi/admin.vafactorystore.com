@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Laporan Transaksi</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Laporan Transaksi</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -50,18 +49,26 @@
                                         <div class="d-flex flex-col">
                                             <div class="mr-3">
                                                 <label for="start_date" class="form-label">Tanggal Dari</label>
-                                                <div class="input-group date mb-3" id="start_date" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#start_date" name="start_date" value="{{ old('start_date') ? old('start_date') : $start_date }}">
-                                                    <div class="input-group-append" data-target="#start_date" data-toggle="datetimepicker">
+                                                <div class="input-group date mb-3" id="start_date"
+                                                    data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input"
+                                                        data-target="#start_date" name="start_date"
+                                                        value="{{ old('start_date') ? old('start_date') : $start_date }}">
+                                                    <div class="input-group-append" data-target="#start_date"
+                                                        data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mr-3">
                                                 <label for="end_date" class="form-label">Tanggal Sampai</label>
-                                                <div class="input-group date mb-3" id="end_date" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#end_date" name="end_date" value="{{ old('end_date') ? old('end_date') : $end_date }}">
-                                                    <div class="input-group-append" data-target="#end_date" data-toggle="datetimepicker">
+                                                <div class="input-group date mb-3" id="end_date"
+                                                    data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input"
+                                                        data-target="#end_date" name="end_date"
+                                                        value="{{ old('end_date') ? old('end_date') : $end_date }}">
+                                                    <div class="input-group-append" data-target="#end_date"
+                                                        data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
@@ -84,9 +91,12 @@
                                                 <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100</option>
                                                 <option value="250" {{ $perPage == 250 ? 'selected' : '' }}>250</option>
                                                 <option value="500" {{ $perPage == 500 ? 'selected' : '' }}>500</option>
-                                                <option value="1000" {{ $perPage == 1000 ? 'selected' : '' }}>1000</option>
-                                                <option value="5000" {{ $perPage == 5000 ? 'selected' : '' }}>5000</option>
-                                                <option value="10000" {{ $perPage == 10000 ? 'selected' : '' }}>10000</option>
+                                                <option value="1000" {{ $perPage == 1000 ? 'selected' : '' }}>1000
+                                                </option>
+                                                <option value="5000" {{ $perPage == 5000 ? 'selected' : '' }}>5000
+                                                </option>
+                                                <option value="10000" {{ $perPage == 10000 ? 'selected' : '' }}>10000
+                                                </option>
                                             </select>
                                             <input type="hidden" name="start_date" value="{{ $start_date }}">
                                             <input type="hidden" name="end_date" value="{{ $end_date }}">
@@ -97,7 +107,7 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-primary">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>No</th>
                                             <th>Nomor Transaksi</th>
@@ -118,14 +128,15 @@
                                                 @endphp
                                             @endforeach
                                             <tr>
-                                                <td>{{ $i +  + $transactionReports->firstitem() }}</td>
+                                                <td>{{ $i + +$transactionReports->firstitem() }}</td>
                                                 <td>{{ $transactionReport->transaction_number }}</td>
                                                 <td>{{ $transactionReport->customer->name }}</td>
                                                 <td>{{ $transactionReport->date }}</td>
                                                 <td>@money($totalPrice)</td>
                                                 <td class="text-center">
                                                     {{-- <a href="{{ route('transaction-report.show', $transactionReport->id) }}" class="btn btn-info btn-sm">Detail</a> --}}
-                                                    <a class="btn btn-info btn-sm btn-show" data-detail="{{ $transactionReport }}">Detail</a>
+                                                    <a class="btn btn-info btn-sm btn-show"
+                                                        data-detail="{{ $transactionReport }}">Detail</a>
                                                 </td>
                                             </tr>
                                         @empty
@@ -162,7 +173,8 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="transaction_number" class="form-label">Nomor Transaksi</label>
-                            <input type="text" class="form-control" id="transaction_number" name="transaction_number" readonly>
+                            <input type="text" class="form-control" id="transaction_number" name="transaction_number"
+                                readonly>
                         </div>
 
                         <div class="mb-3">
@@ -188,7 +200,7 @@
                         <div class="mb-3">
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-primary">
+                                    <thead class="table-dark">
                                         <tr>
                                             <th>Kode Barang</th>
                                             <th>Nama Barang</th>
@@ -217,33 +229,33 @@
 @endsection
 
 @push('scripts')
-<script>
-    $(function () {
-        $('#start_date').datetimepicker({
-            format: 'YYYY-MM-DD'
-        });
-        $('#end_date').datetimepicker({
-            format: 'YYYY-MM-DD'
-        });
+    <script>
+        $(function() {
+            $('#start_date').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+            $('#end_date').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
 
-        $('.btn-show').on('click', function () {
-            let detail = $(this).data('detail');
-            $('#modal-lg').modal('show');
+            $('.btn-show').on('click', function() {
+                let detail = $(this).data('detail');
+                $('#modal-lg').modal('show');
 
-            console.log(detail);
+                console.log(detail);
 
-            $('.modal-title').text("Detail Transaksi");
-            $('#transaction_number').val(detail.transaction_number);
-            $('#created_by').val(detail.created_by?.name);
-            $('#updated_by').val(detail.updated_by?.name);
-            $('#customer_name').val(detail.customer.name);
-            $('#date').val(moment(detail.date).format('DD-MM-YYYY'));
-            $('#table-detail').empty();
+                $('.modal-title').text("Detail Transaksi");
+                $('#transaction_number').val(detail.transaction_number);
+                $('#created_by').val(detail.created_by?.name);
+                $('#updated_by').val(detail.updated_by?.name);
+                $('#customer_name').val(detail.customer.name);
+                $('#date').val(moment(detail.date).format('DD-MM-YYYY'));
+                $('#table-detail').empty();
 
-            $.each(detail, function (indexInArray, valueOfElement) {
-                if (indexInArray == 'transaction_details') {
-                    $.each(valueOfElement, function (indexInArray, valueOfElement) {
-                        $('#table-detail').append(`
+                $.each(detail, function(indexInArray, valueOfElement) {
+                    if (indexInArray == 'transaction_details') {
+                        $.each(valueOfElement, function(indexInArray, valueOfElement) {
+                            $('#table-detail').append(`
                             <tr>
                                 <td>${valueOfElement.product.code}</td>
                                 <td>${valueOfElement.product.name}</td>
@@ -252,12 +264,12 @@
                                 <td>Rp. ${valueOfElement.total.toLocaleString('id-ID')}</td>
                             </tr>
                         `);
-                    });
-                }
-            });
+                        });
+                    }
+                });
 
-            $('.btn-print').attr('href', `{{ route('transaction-report.print') }}?id=${detail.id}`);
+                $('.btn-print').attr('href', `{{ route('transaction-report.print') }}?id=${detail.id}`);
+            })
         })
-    })
-</script>
+    </script>
 @endpush
