@@ -247,11 +247,6 @@
                 },
                 "dom": `<<"d-flex justify-content-between"lf>Brt<"d-flex justify-content-between"ip>>`,
             });
-
-            $('.btn-show').on('click', function() {
-                $('#modal-lg').modal('show');
-                $('#image').attr('src', $(this).data('image'));
-            })
         })
     </script>
 @endpush

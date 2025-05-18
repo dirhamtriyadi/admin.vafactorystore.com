@@ -9,8 +9,8 @@
             </li>
         @endcan
         <li>
-            <a href="#" class="dropdown-item btn-show"
-                data-image="/images/products/{{ $product->image }}">Gambar</a>
+            <a href="/images/products/{{ $product->image }}" target="_blank" class="dropdown-item btn-show"
+                data-image="">Gambar</a>
         </li>
         @can('product.delete')
             <li>
