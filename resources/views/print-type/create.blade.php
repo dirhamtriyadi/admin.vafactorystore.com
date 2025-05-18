@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Tambah Kategori</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Tambah Kategori</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -53,18 +52,22 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('print-type.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('print-type.index') }}" class="btn btn-warning"><i
+                                        class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
                             </div>
                             <form action="{{ route('print-type.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama *</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                                    <label for="name" class="form-label">Nama <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ old('name') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="price" class="form-label">Harga *</label>
-                                    <input type="text" class="form-control mask-money" id="price" name="price" value="{{ old('price') }}">
+                                    <label for="price" class="form-label">Harga <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control mask-money" id="price" name="price"
+                                        value="{{ old('price') }}">
                                 </div>
 
                                 <div class="mb-3">
@@ -73,14 +76,7 @@
                                     <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('name') }}</textarea>
                                 </div>
 
-                                <div class="mb-3">
-                                    <table>
-                                        <tr>
-                                            <td>Catatan: </td>
-                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                @include('templates.partials.input.required')
 
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -101,5 +97,4 @@
 @endsection
 
 @push('scripts')
-
 @endpush

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PrintType;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PrintTypeController extends Controller
 {
@@ -18,28 +19,28 @@ class PrintTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
+        return view('print-type.index');
+    }
 
+    public function getPrintTypeDataTable(Request $request)
+    {
         $printTypes = PrintType::query();
 
-        if ($request->has('search')) {
-            $printTypes->where(function($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('price', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-            });
+        if (!auth()->user()->hasPermissionTo('print-type.all-data')) {
+            $printTypes->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $printTypes->latest();
         }
 
-        $printTypes = $printTypes->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('print-type.index', [
-            'printTypes' => $printTypes,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return DataTables::of($printTypes)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($printType) {
+                return view('print-type.actions', ['printType' => $printType]);
+            })
+            ->make(true);
     }
 
     /**
