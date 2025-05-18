@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Edit Pelanggan</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Edit Pelanggan</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -53,19 +52,22 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('customer.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('customer.index') }}" class="btn btn-warning"><i class="fa fa-arrow-left"
+                                        aria-hidden="true"></i> Kembali</a>
                             </div>
                             <form action="{{ route('customer.update', $customer->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama *</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ? old('name') : $customer->name }}">
+                                    <label for="name" class="form-label">Nama <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ old('name') ? old('name') : $customer->name }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="phone" class="form-label">Nomor HP *</label>
-                                    <input type="number" class="form-control" id="phone" name="phone" value="{{ old('phone') ? old('phone') : $customer->phone }}">
+                                    <label for="phone" class="form-label">Nomor HP <span class="text-danger">*</label>
+                                    <input type="number" class="form-control" id="phone" name="phone"
+                                        value="{{ old('phone') ? old('phone') : $customer->phone }}">
                                 </div>
 
                                 <div class="mb-3">
@@ -102,5 +104,4 @@
 @endsection
 
 @push('scripts')
-
 @endpush

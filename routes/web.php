@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('user', UserController::class);
     Route::resource('role', RoleController::class);
+    Route::get('customer/get-customer-data-table', [CustomerController::class, 'getCustomerDataTable'])->name('customer.get-customer-data-table');
     Route::resource('customer', CustomerController::class);
     Route::resource('payment-method', PaymentMethodController::class);
     Route::resource('print-type', PrintTypeController::class);

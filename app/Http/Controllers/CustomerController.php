@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class CustomerController extends Controller
 {
@@ -47,6 +48,25 @@ class CustomerController extends Controller
             'perPage' => $perPage,
             'search' => $search,
         ]);
+    }
+
+    public function getCustomerDataTable(Request $request)
+    {
+         $customers = Customer::query();
+
+        if (!auth()->user()->hasPermissionTo('customer.all-data')) {
+            $customers->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $customers->latest();
+        }
+
+        return DataTables::of($customers)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($customer) {
+                return view('customer.actions', ['customer' => $customer]);
+            })
+            ->make(true);
     }
 
     /**

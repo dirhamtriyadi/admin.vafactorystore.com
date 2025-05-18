@@ -1,6 +1,10 @@
 @extends('templates.main')
 
 @push('styles')
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 @endpush
 
 @section('content-header')
@@ -44,47 +48,19 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex flex-column justify-content-end mb-3">
-                                <div class="d-flex justify-content-end">
-                                    @can('customer.create')
+                                @can('customer.create')
+                                    <div class="d-flex justify-content-end">
+                                        {{-- <a href="{{ route('customer.create') }}" class="btn btn-primary mb-3"><i
+                                                class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a> --}}
+
                                         <a href="{{ route('customer.create') }}" class="btn btn-primary mb-3"><i
                                                 class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
-                                    @endcan
-                                </div>
-                                <div class="d-flex flex-col flex-wrap justify-content-between">
-                                    <div class="mb-3">
-                                        <form action="{{ route('customer.index') }}" method="GET">
-                                            <div class="input-group">
-                                                <input type="hidden" name="perPage" value="{{ $perPage }}">
-                                                <input type="text" name="search" id="search" class="form-control"
-                                                    placeholder="Cari Pelanggan" value="{{ $search }}">
-                                                <input type="submit" value="Cari" class="btn btn-primary ml-3">
-                                            </div>
-                                        </form>
                                     </div>
-                                    <div class="mb-3">
-                                        <form action="{{ route('customer.index') }}" method="GET">
-                                            <input type="hidden" name="search" value="{{ $search }}">
-                                            <div class="input-group">
-                                                <select name="perPage" class="select" id="perPage">
-                                                    <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
-                                                    <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10
-                                                    </option>
-                                                    <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25
-                                                    </option>
-                                                    <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50
-                                                    </option>
-                                                    <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100
-                                                    </option>
-                                                </select>
-                                                <button type="submit" class="btn btn-primary ml-3">Apply</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                                @endcan
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-dark">
+                                <table class="table table-bordered table-hover table-striped" id="table">
+                                    <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Pelanggan</th>
@@ -93,7 +69,7 @@
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    {{-- <tbody>
                                         @forelse ($customers as $i => $customer)
                                             <tr>
                                                 <td>{{ $i + $customers->firstitem() }}</td>
@@ -129,16 +105,6 @@
                                                             </ul>
                                                         </div>
                                                     @endcanany
-                                                    {{-- @can('customer.edit')
-                                                        <a href="{{ route('customer.edit', $customer->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    @endcan
-                                                    @can('customer.delete')
-                                                        <form action="{{ route('customer.destroy', $customer->id) }}" method="post" class="d-inline">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                        </form>
-                                                    @endcan --}}
                                                 </td>
                                             </tr>
                                         @empty
@@ -146,9 +112,9 @@
                                                 <td colspan="5" class="text-center">Data tidak ditemukan</td>
                                             </tr>
                                         @endforelse
-                                    </tbody>
+                                    </tbody> --}}
                                 </table>
-                                {{ $customers->links() }}
+                                {{-- {{ $customers->links() }} --}}
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -165,4 +131,78 @@
 @endsection
 
 @push('scripts')
+    <!-- jQuery -->
+    <script src="{{ asset('adminlte') }}/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    {{-- <script src="{{ asset('adminlte') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+    <!-- DataTables  & Plugins -->
+    <script src="{{ asset('adminlte') }}/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/jszip/jszip.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const table = $('#table').DataTable({
+                "responsive": true,
+                "serverSide": true,
+                "processing": true,
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "All"]
+                ],
+                "ajax": {
+                    "url": "{{ route('customer.get-customer-data-table') }}",
+                },
+                "autoWidth": false,
+                "columnDefs": [{
+                    "targets": 0,
+                    "orderable": false,
+                    "searchable": false
+                }],
+                "columns": [{
+                        "data": "DT_RowIndex",
+                        "defaultContent": "",
+                    },
+                    {
+                        "data": "name"
+                    },
+                    {
+                        "data": "phone"
+                    },
+                    {
+                        "data": "address"
+                    },
+                    {
+                        "data": "actions",
+                        "orderable": false,
+                        "searchable": false
+                    }
+                    // {
+                    //     "data": null,
+                    //     "defaultContent": "",
+                    //     "orderable": false,
+                    //     "searchable": false
+                    // }
+                ],
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                "language": {
+                    "emptyTable": "Tidak ada data yang tersedia di tabel ini",
+                    "zeroRecords": "Tidak ada data yang ditemukan",
+                    "info": "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri",
+                    "infoEmpty": "Menampilkan 0 hingga 0 dari 0 entri",
+                    "infoFiltered": "(disaring dari _MAX_ total entri)",
+                    // Add other language options as needed
+                },
+                "dom": `<<"d-flex justify-content-between"lf>Brt<"d-flex justify-content-between"ip>>`,
+            });
+        });
+    </script>
 @endpush
