@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Codexshaper\WooCommerce\Facades\Product as ProductWooCommerce;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
@@ -50,6 +51,28 @@ class ProductController extends Controller
             'perPage' => $perPage,
             'search' => $search,
         ]);
+    }
+
+    public function getProductDataTable(Request $request)
+    {
+        $products = Product::query();
+
+        if (!auth()->user()->hasPermissionTo('product.all-data')) {
+            $products->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $products->latest();
+        }
+
+        return DataTables::of($products)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($product) {
+                return view('product.actions', [
+                    'product' => $product,
+                ]);
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**

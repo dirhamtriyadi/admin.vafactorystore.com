@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('cash-flow', CashFlowController::class);
     Route::get('cash-flow-report/print', [CashFlowReportController::class, 'print'])->name('cash-flow-report.print');
     Route::resource('cash-flow-report', CashFlowReportController::class);
+    Route::get('product/get-product-data-table', [ProductController::class, 'getProductDataTable'])->name('product.get-product-data-table');
     Route::resource('product', ProductController::class);
     Route::resource('transaction', TransactionController::class);
     Route::get('transaction-report/print', [TransactionReportController::class, 'print'])->name('transaction-report.print');
