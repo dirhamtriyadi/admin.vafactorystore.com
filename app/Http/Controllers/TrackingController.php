@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tracking;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class TrackingController extends Controller
 {
@@ -18,11 +19,13 @@ class TrackingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
+        return view('tracking.index');
+    }
 
+    public function getTrackingDataTable(Request $request)
+    {
         $trackings = Tracking::query();
 
         if (!auth()->user()->hasPermissionTo('tracking.all-data')) {
@@ -32,20 +35,15 @@ class TrackingController extends Controller
             $trackings->latest();
         }
 
-        if ($request->has('search')) {
-            $trackings->where(function($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-            });
-        }
-
-        $trackings = $trackings->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('tracking.index', [
-            'trackings' => $trackings,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return DataTables::of($trackings)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($tracking) {
+                return view('tracking.actions', [
+                    'tracking' => $tracking,
+                ]);
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**

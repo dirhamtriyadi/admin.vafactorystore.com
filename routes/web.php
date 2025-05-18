@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('payment-method', PaymentMethodController::class);
     Route::get('print-type/get-customer-data-table', [PrintTypeController::class, 'getPrintTypeDataTable'])->name('print-type.get-customer-data-table');
     Route::resource('print-type', PrintTypeController::class);
+    Route::get('tracking/get-customer-data-table', [TrackingController::class, 'getTrackingDataTable'])->name('tracking.get-customer-data-table');
     Route::resource('tracking', TrackingController::class);
     Route::resource('cash-flow', CashFlowController::class);
     Route::get('cash-flow-report/print', [CashFlowReportController::class, 'print'])->name('cash-flow-report.print');
