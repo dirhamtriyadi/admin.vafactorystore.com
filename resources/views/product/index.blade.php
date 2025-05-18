@@ -124,7 +124,7 @@
                                         @endforelse
                                     </tbody> --}}
                                 </table>
-                                {{ $products->links() }}
+                                {{-- {{ $products->links() }} --}}
                             </div>
                         </div>
                         <!-- /.card-body -->

@@ -21,36 +21,9 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
-
-        $products = Product::query();
-
-        if (!auth()->user()->hasPermissionTo('product.all-data')) {
-            $products->where('created_by', auth()->id())
-                ->latest();
-        } else {
-            $products->latest();
-        }
-
-        if ($request->has('search')) {
-            $products->where(function($q) use ($search) {
-                $q->where('code', 'like', '%' . $search . '%')
-                    ->orWhere('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhere('price', 'like', '%' . $search . '%');
-            });
-        }
-
-        $products = $products->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('product.index', [
-            'products' => $products,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return view('product.index');
     }
 
     public function getProductDataTable(Request $request)
