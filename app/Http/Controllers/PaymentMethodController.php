@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentMethodController extends Controller
 {
@@ -18,11 +19,13 @@ class PaymentMethodController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
+        return view('payment-method.index');
+    }
 
+    public function getPaymentMethodDataTable(Request $request)
+    {
         $paymentMethods = PaymentMethod::query();
 
         if (!auth()->user()->hasPermissionTo('payment-method.all-data')) {
@@ -32,20 +35,15 @@ class PaymentMethodController extends Controller
             $paymentMethods->latest();
         }
 
-        if ($request->has('search')) {
-            $paymentMethods->where(function($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-            });
-        }
-
-        $paymentMethods = $paymentMethods->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('payment-method.index', [
-            'paymentMethods' => $paymentMethods,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return DataTables::of($paymentMethods)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($paymentMethod) {
+                return view('payment-method.actions', [
+                    'paymentMethod' => $paymentMethod,
+                ]);
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**

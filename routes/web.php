@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('role', RoleController::class);
     Route::get('customer/get-customer-data-table', [CustomerController::class, 'getCustomerDataTable'])->name('customer.get-customer-data-table');
     Route::resource('customer', CustomerController::class);
+    Route::get('payment-method/get-customer-data-table', [PaymentMethodController::class, 'getPaymentMethodDataTable'])->name('payment-method.get-customer-data-table');
     Route::resource('payment-method', PaymentMethodController::class);
     Route::resource('print-type', PrintTypeController::class);
     Route::resource('tracking', TrackingController::class);
