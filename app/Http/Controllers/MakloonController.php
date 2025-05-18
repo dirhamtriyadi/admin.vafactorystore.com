@@ -7,6 +7,7 @@ use App\Models\Makloon;
 use App\Models\MakloonDetail;
 use Illuminate\Http\Request;
 use PDF;
+use Yajra\DataTables\Facades\DataTables;
 
 class MakloonController extends Controller
 {
@@ -21,11 +22,13 @@ class MakloonController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
+        return view('makloon.index');
+    }
 
+    public function getMakloonDataTable(Request $request)
+    {
         $makloons = Makloon::with('createdBy', 'updatedBy', 'customer', 'details');
 
         if (!auth()->user()->hasPermissionTo('makloon.all-data')) {
@@ -35,27 +38,19 @@ class MakloonController extends Controller
             $makloons->latest();
         }
 
-        if ($request->has('search')) {
-            $makloons->where(function($q) use ($search) {
-                $q->where('makloon_number', 'like', '%' . $search . '%')
-                    ->orWhereHas('createdBy', function ($query) use ($search) {
-                        $query->where('name', 'like', '%' . $search . '%');
-                    })
-                    ->orWhereHas('customer', function ($query) use ($search) {
-                        $query->where('name', 'like', '%' . $search . '%');
-                    })
-                    ->orWhere('name', 'like', '%' . $search . '%')
-                    ->orWhere('date', 'like', '%' . $search . '%');
-            });
-        }
-
-        $makloons = $makloons->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('makloon.index', [
-            'makloons' => $makloons,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return DataTables::of($makloons)
+            ->addIndexColumn()
+            ->addColumn('created_by', function ($makloon) {
+                return $makloon->createdBy->name ?? '-';
+            })
+            ->addColumn('customer', function ($makloon) {
+                return $makloon->customer->name ?? '-';
+            })
+            ->addColumn('actions', function ($makloon) {
+                return view('makloon.actions', ['makloon' => $makloon]);
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**

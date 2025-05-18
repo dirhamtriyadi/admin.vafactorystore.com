@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Tambah Maklun</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Tambah Maklun</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -53,23 +52,29 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('makloon.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('makloon.index') }}" class="btn btn-warning"><i class="fa fa-arrow-left"
+                                        aria-hidden="true"></i> Kembali</a>
                             </div>
                             <form action="#" id="makloon-form">
                                 <input type="hidden" id="user_id" name="user_id" value="{{ auth()->user()->id }}">
 
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama Maklun *</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                                    <label for="name" class="form-label">Nama Maklun <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ old('name') }}">
                                 </div>
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="customer_id" class="form-label">Pelanggan *</label>
+                                        <label for="customer_id" class="form-label">Pelanggan <span
+                                                class="text-danger">*</span></label>
                                         <select class="form-control select2" id="customer_id" name="customer_id">
                                             <option selected value="">-- Pilih Pelanggan --</option>
                                             @foreach ($customers as $i => $customer)
-                                                <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : ''  }}>{{ $customer->name }}</option>
+                                                <option value="{{ $customer->id }}"
+                                                    {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                                                    {{ $customer->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -82,23 +87,19 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="date" class="form-label">Tanggal *</label>
+                                    <label for="date" class="form-label">Tanggal <span
+                                            class="text-danger">*</span></label>
                                     <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{{ old('date') }}">
-                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input"
+                                            data-target="#reservationdate" name="date" value="{{ old('date') }}">
+                                        <div class="input-group-append" data-target="#reservationdate"
+                                            data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <table>
-                                        <tr>
-                                            <td>Catatan: </td>
-                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                @include('templates.partials.input.required')
 
                                 {{-- <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -134,33 +135,45 @@
 
                             <form action="#" id="add-item-makloon-form">
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama Barang *</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                                    <label for="name" class="form-label">Nama Barang <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ old('name') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="code" class="form-label">Kode Barang *</label>
-                                    <input type="text" class="form-control" id="code" name="code" value="{{ old('code') }}">
+                                    <label for="code" class="form-label">Kode Barang <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="code" name="code"
+                                        value="{{ old('code') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="qty" class="form-label">Qty Barang *</label>
-                                    <input type="number" class="form-control" id="qty" name="qty" value="{{ old('qty') }}">
+                                    <label for="qty" class="form-label">Qty Barang <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="qty" name="qty"
+                                        value="{{ old('qty') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="price" class="form-label">Harga Barang *</label>
-                                    <input type="text" class="form-control mask-money" id="price" name="price" value="{{ old('price') }}">
+                                    <label for="price" class="form-label">Harga Barang <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control mask-money" id="price" name="price"
+                                        value="{{ old('price') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="size" class="form-label">Ukuran Barang *</label>
-                                    <input type="text" class="form-control" id="size" name="size" value="{{ old('size') }}">
+                                    <label for="size" class="form-label">Ukuran Barang <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="size" name="size"
+                                        value="{{ old('size') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="unit" class="form-label">Satuan Barang *</label>
-                                    <input type="text" class="form-control" id="unit" name="unit" value="{{ old('unit') }}">
+                                    <label for="unit" class="form-label">Satuan Barang <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="unit" name="unit"
+                                        value="{{ old('unit') }}">
                                 </div>
 
                                 <div class="mb-3">
@@ -170,17 +183,11 @@
                                 </div>
 
 
-                                <div class="mb-3">
-                                    <table>
-                                        <tr>
-                                            <td>Catatan: </td>
-                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                @include('templates.partials.input.required')
 
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" href="#" class="btn btn-primary" id="add-item-makloon">Tambah</button>
+                                    <button type="submit" href="#" class="btn btn-primary"
+                                        id="add-item-makloon">Tambah</button>
                                 </div>
                             </form>
                         </div>
@@ -249,7 +256,7 @@
 
 @push('scripts')
     <script>
-        $(function () {
+        $(function() {
             var Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -288,9 +295,11 @@
                 tr.append($('<td>').text(data.unit));
                 tr.append($('<td>').text(data.qty));
                 tr.append($('<td>').text("Rp. " + data.price.toLocaleString("id-ID")));
-                tr.append($('<td>').text("Rp. " + (parseInt(data.qty) * parseInt(data.price)).toLocaleString("id-ID")));
+                tr.append($('<td>').text("Rp. " + (parseInt(data.qty) * parseInt(data.price)).toLocaleString(
+                    "id-ID")));
                 tr.append($('<td>').text(data.description));
-                tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger btn-sm').text('Hapus').on('click', function (e) {
+                tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger btn-sm').text(
+                    'Hapus').on('click', function(e) {
                     e.preventDefault();
                     storedFormData.splice(i, 1);
                     localStorage.setItem('formData', JSON.stringify(storedFormData));
@@ -313,8 +322,10 @@
                         'class': 'text-center font-weight-bold'
                     }));
                     trFooter.append($('<td>').text(tempQty).addClass('font-weight-bold'));
-                    trFooter.append($('<td>').text("Rp. " + tempPrice.toLocaleString("id-ID")).addClass('font-weight-bold'));
-                    trFooter.append($('<td>').text("Rp. " + tempTotal.toLocaleString("id-ID")).addClass('font-weight-bold'));
+                    trFooter.append($('<td>').text("Rp. " + tempPrice.toLocaleString("id-ID"))
+                        .addClass('font-weight-bold'));
+                    trFooter.append($('<td>').text("Rp. " + tempTotal.toLocaleString("id-ID"))
+                        .addClass('font-weight-bold'));
                     trFooter.append($('<td>').text('').attr('colspan', 4));
                     tableItemMakloonFooter.append(trFooter);
                 })));
@@ -333,7 +344,7 @@
             trFooter.append($('<td>').text('').attr('colspan', 4));
             tableItemMakloonFooter.append(trFooter);
 
-            $('#add-item-makloon-form').on('submit', function (e) {
+            $('#add-item-makloon-form').on('submit', function(e) {
                 e.preventDefault();
                 let dataForm = {
                     name: $('#add-item-makloon-form #name').val(),
@@ -376,35 +387,41 @@
                     tr.append($('<td>').text(data.description));
                     tr.append($('<td>').text(data.qty));
                     tr.append($('<td>').text("Rp. " + data.price.toLocaleString("id-ID")));
-                    tr.append($('<td>').text("Rp. " + (parseInt(data.qty) * parseInt(data.price)).toLocaleString("id-ID")));
-                    tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger btn-sm').text('Hapus').on('click', function (e) {
-                        e.preventDefault();
-                        storedFormData.splice(i, 1);
-                        localStorage.setItem('formData', JSON.stringify(storedFormData));
-                        $(this).closest('tr').remove();
-                        let tempData = JSON.parse(localStorage.getItem('formData')) || [];
-                        let tempDataLength = tempData.length;
-                        let tempQty = 0;
-                        let tempPrice = 0;
-                        let tempTotal = 0;
-                        for (let j = 0; j < tempDataLength; j++) {
-                            tempQty += parseInt(tempData[j].qty);
-                            tempPrice += parseInt(tempData[j].price);
-                            tempTotal += parseInt(tempData[j].qty) * parseInt(tempData[j].price);
-                        }
-                        let tableItemMakloonFooter = tableItemMakloon.find('tfoot');
-                        tableItemMakloonFooter.empty();
-                        let trFooter = $('<tr>');
-                        trFooter.append($('<td>').text('Total').attr({
-                            'colspan': 6,
-                            'class': 'text-center font-weight-bold'
-                        }));
-                        trFooter.append($('<td>').text(tempQty).addClass('font-weight-bold'));
-                        trFooter.append($('<td>').text("Rp. " + tempPrice.toLocaleString("id-ID")).addClass('font-weight-bold'));
-                        trFooter.append($('<td>').text("Rp. " + tempTotal.toLocaleString("id-ID")).addClass('font-weight-bold'));
-                        trFooter.append($('<td>').text('').attr('colspan', 4));
-                        tableItemMakloonFooter.append(trFooter);
-                    })));
+                    tr.append($('<td>').text("Rp. " + (parseInt(data.qty) * parseInt(data.price))
+                        .toLocaleString("id-ID")));
+                    tr.append($('<td>').append($('<a>').attr('href', '#').addClass('btn btn-danger btn-sm')
+                        .text('Hapus').on('click', function(e) {
+                            e.preventDefault();
+                            storedFormData.splice(i, 1);
+                            localStorage.setItem('formData', JSON.stringify(storedFormData));
+                            $(this).closest('tr').remove();
+                            let tempData = JSON.parse(localStorage.getItem('formData')) || [];
+                            let tempDataLength = tempData.length;
+                            let tempQty = 0;
+                            let tempPrice = 0;
+                            let tempTotal = 0;
+                            for (let j = 0; j < tempDataLength; j++) {
+                                tempQty += parseInt(tempData[j].qty);
+                                tempPrice += parseInt(tempData[j].price);
+                                tempTotal += parseInt(tempData[j].qty) * parseInt(tempData[j]
+                                    .price);
+                            }
+                            let tableItemMakloonFooter = tableItemMakloon.find('tfoot');
+                            tableItemMakloonFooter.empty();
+                            let trFooter = $('<tr>');
+                            trFooter.append($('<td>').text('Total').attr({
+                                'colspan': 6,
+                                'class': 'text-center font-weight-bold'
+                            }));
+                            trFooter.append($('<td>').text(tempQty).addClass(
+                                'font-weight-bold'));
+                            trFooter.append($('<td>').text("Rp. " + tempPrice.toLocaleString(
+                                "id-ID")).addClass('font-weight-bold'));
+                            trFooter.append($('<td>').text("Rp. " + tempTotal.toLocaleString(
+                                "id-ID")).addClass('font-weight-bold'));
+                            trFooter.append($('<td>').text('').attr('colspan', 4));
+                            tableItemMakloonFooter.append(trFooter);
+                        })));
                     tableItemMakloonBody.append(tr);
                 }
 
@@ -416,14 +433,16 @@
                     'class': 'text-center font-weight-bold'
                 }));
                 trFooter.append($('<td>').text(qty).addClass('font-weight-bold'));
-                trFooter.append($('<td>').text("Rp. " + price.toLocaleString("id-ID")).addClass('font-weight-bold'));
-                trFooter.append($('<td>').text("Rp. " + total.toLocaleString("id-ID")).addClass('font-weight-bold'));
+                trFooter.append($('<td>').text("Rp. " + price.toLocaleString("id-ID")).addClass(
+                    'font-weight-bold'));
+                trFooter.append($('<td>').text("Rp. " + total.toLocaleString("id-ID")).addClass(
+                    'font-weight-bold'));
                 trFooter.append($('<td>').text('').attr('colspan', 4));
                 tableItemMakloonFooter.append(trFooter);
 
             });
 
-            $('#save-makloon').on('click', function (e) {
+            $('#save-makloon').on('click', function(e) {
                 e.preventDefault();
                 let storedFormData = JSON.parse(localStorage.getItem('formData')) || [];
                 let user_id = $('#user_id').val();
@@ -448,17 +467,17 @@
                     url: "{{ route('makloon.store') }}",
                     method: 'POST',
                     data: data,
-                    success: function (response) {
+                    success: function(response) {
                         console.log('response', response);
                         localStorage.removeItem('formData');
                         Toast.fire({
                             icon: 'success',
                             title: response.message
-                        }).then(function () {
+                        }).then(function() {
                             window.location.href = "{{ route('makloon.index') }}";
                         });
                     },
-                    error: function (xhr, status, error) {
+                    error: function(xhr, status, error) {
                         console.error('error', error);
                         Toast.fire({
                             icon: 'error',
