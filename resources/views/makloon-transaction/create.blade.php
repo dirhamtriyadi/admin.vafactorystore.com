@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Tambah Maklun Transaksi</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Tambah Maklun Transaksi</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -53,7 +52,8 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('makloon-transaction.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('makloon-transaction.index') }}" class="btn btn-warning"><i
+                                        class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
                             </div>
                             <form action="{{ route('makloon-transaction.store') }}" method="POST">
                                 @csrf
@@ -61,11 +61,14 @@
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="makloon_id" class="form-label">Maklun *</label>
+                                        <label for="makloon_id" class="form-label">Maklun <span
+                                                class="text-danger">*</span></label>
                                         <select class="form-control select2" id="makloon_id" name="makloon_id">
                                             <option selected value="">-- Pilih Maklun --</option>
                                             @foreach ($makloons as $i => $makloon)
-                                                <option value="{{ $makloon->id }}" {{ old('makloon_id') == $makloon->id ? 'selected' : ''  }}>{{ $makloon->makloon_number }} - {{ $makloon->name }}</option>
+                                                <option value="{{ $makloon->id }}"
+                                                    {{ old('makloon_id') == $makloon->id ? 'selected' : '' }}>
+                                                    {{ $makloon->makloon_number }} - {{ $makloon->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -73,45 +76,47 @@
 
                                 <div class="mb-3">
                                     <div class="form-group">
-                                        <label for="payment_method_id" class="form-label">Jenis Pembayaran *</label>
-                                        <select class="form-control select2" id="payment_method_id" name="payment_method_id">
+                                        <label for="payment_method_id" class="form-label">Jenis Pembayaran <span
+                                                class="text-danger">*</span></label>
+                                        <select class="form-control select2" id="payment_method_id"
+                                            name="payment_method_id">
                                             <option selected value="">-- Pilih Jenis Pembayaran --</option>
                                             @foreach ($paymentMethods as $i => $paymentMethod)
-                                                <option value="{{ $paymentMethod->id }}" {{ old('payment_method_id') == $paymentMethod->id ? 'selected' : ''  }}>{{ $paymentMethod->name }}</option>
+                                                <option value="{{ $paymentMethod->id }}"
+                                                    {{ old('payment_method_id') == $paymentMethod->id ? 'selected' : '' }}>
+                                                    {{ $paymentMethod->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="amount" class="form-label">Uang *</label>
-                                    <input type="number=" class="form-control mask-money" id="amount" name="amount" value="{{ old('amount') }}">
+                                    <label for="amount" class="form-label">Uang <span class="text-danger">*</span></label>
+                                    <input type="number=" class="form-control mask-money" id="amount" name="amount"
+                                        value="{{ old('amount') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">Deskripsi *</label>
+                                    <label for="description" class="form-label">Deskripsi <span
+                                            class="text-danger">*</span></label>
                                     {{-- <input type="text" class="form-control" id="description" name="description"> --}}
                                     <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') }}</textarea>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="date" class="form-label">Tanggal *</label>
+                                    <label for="date" class="form-label">Tanggal <span
+                                            class="text-danger">*</span></label>
                                     <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{{ old('date') }}">
-                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input"
+                                            data-target="#reservationdate" name="date" value="{{ old('date') }}">
+                                        <div class="input-group-append" data-target="#reservationdate"
+                                            data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <table>
-                                        <tr>
-                                            <td>Catatan: </td>
-                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                @include('templates.partials.input.required')
 
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -132,5 +137,4 @@
 @endsection
 
 @push('scripts')
-
 @endpush

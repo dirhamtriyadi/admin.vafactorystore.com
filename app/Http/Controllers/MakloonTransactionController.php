@@ -6,6 +6,7 @@ use App\Models\MakloonTransaction;
 use Illuminate\Http\Request;
 use App\Models\Makloon;
 use App\Models\PaymentMethod;
+use Yajra\DataTables\Facades\DataTables;
 
 class MakloonTransactionController extends Controller
 {
@@ -20,11 +21,13 @@ class MakloonTransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
+        return view('makloon-transaction.index');
+    }
 
+    public function getMakloonTransactionDataTable(Request $request)
+    {
         $makloonTransactions = MakloonTransaction::with('makloon', 'paymentMethod', 'createdBy', 'updatedBy');
 
         if (!auth()->user()->hasPermissionTo('makloon-transaction.all-data')) {
@@ -34,31 +37,24 @@ class MakloonTransactionController extends Controller
             $makloonTransactions->latest();
         }
 
-        if ($request->has('search')) {
-            $makloonTransactions = MakloonTransaction::with('makloon', 'paymentMethod', 'createdBy', 'updatedBy')
-                ->whereHas('makloon', function ($query) use ($request) {
-                    $query->where('makloon_number', 'like', '%' . $request->search . '%');
-                })
-                ->orWhereHas('paymentMethod', function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%');
-                })
-                ->orWhereHas('createdBy', function ($query) use ($request) {
-                    $query->where('name', 'like', '%' . $request->search . '%');
-                })
-                ->orWhere('amount', 'like', '%' . $request->search . '%')
-                ->orWhere('description', 'like', '%' . $request->search . '%')
-                ->orWhere('date', 'like', '%' . $request->search . '%')
-                ->paginate($perPage)
-                ->withQueryString('perPage=' . $perPage, 'search=' . $request->search);
-        }
-
-        $makloonTransactions = $makloonTransactions->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('makloon-transaction.index', [
-            'makloonTransactions' => $makloonTransactions,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return DataTables::of($makloonTransactions)
+            ->addIndexColumn()
+            ->addColumn('makloon_number', function ($makloonTransaction) {
+                return $makloonTransaction->makloon->makloon_number ?? '-';
+            })
+            ->addColumn('created_by', function ($makloonTransaction) {
+                return $makloonTransaction->createdBy->name ?? '-';
+            })
+            ->addColumn('payment_method', function ($makloonTransaction) {
+                return $makloonTransaction->paymentMethod->name ?? '-';
+            })
+            ->addColumn('actions', function ($makloonTransaction) {
+                return view('makloon-transaction.actions', [
+                    'makloonTransaction' => $makloonTransaction,
+                ]);
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**

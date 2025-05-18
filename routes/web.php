@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('profile/{id}/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::get('makloon/print', [MakloonController::class, 'print'])->name('makloon.print');
     Route::resource('makloon', MakloonController::class);
+    Route::get('makloon-transaction/get-makloon-transaction-data-table', [MakloonTransactionController::class, 'getMakloonTransactionDataTable'])->name('makloon-transaction.get-makloon-transaction-data-table');
     Route::resource('makloon-transaction', MakloonTransactionController::class);
     Route::get('raw-material/get-raw-material-data-table', [RawMaterialController::class, 'getRawMaterialDataTable'])->name('raw-material.get-raw-material-data-table');
     Route::resource('raw-material', RawMaterialController::class);
