@@ -19,35 +19,9 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
-
-        $customers = Customer::query();
-
-        if (!auth()->user()->hasPermissionTo('customer.all-data')) {
-            $customers->where('created_by', auth()->id())
-                ->latest();
-        } else {
-            $customers->latest();
-        }
-
-        if ($request->has('search')) {
-            $customers->where(function($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('phone', 'like', '%' . $search . '%')
-                    ->orWhere('address', 'like', '%' . $search . '%');
-            });
-        }
-
-        $customers = $customers->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('customer.index', [
-            'customers' => $customers,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return view('customer.index');
     }
 
     public function getCustomerDataTable(Request $request)
