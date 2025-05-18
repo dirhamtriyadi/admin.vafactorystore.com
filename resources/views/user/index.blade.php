@@ -1,6 +1,10 @@
 @extends('templates.main')
 
 @push('styles')
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('adminlte') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 @endpush
 
 @section('content-header')
@@ -63,41 +67,10 @@
                                                 class="fa fa-plus-square" aria-hidden="true"></i> Tambah</a>
                                     @endcan
                                 </div>
-                                <div class="d-flex flex-col flex-wrap justify-content-between">
-                                    <div class="mb-3">
-                                        <form action="{{ route('user.index') }}" method="GET">
-                                            <div class="input-group">
-                                                <input type="hidden" name="perPage" value="{{ $perPage }}">
-                                                <input type="text" name="search" id="search" class="form-control"
-                                                    placeholder="Cari User" value="{{ $search }}">
-                                                <input type="submit" value="Cari" class="btn btn-primary ml-3">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="mb-3">
-                                        <form action="{{ route('user.index') }}" method="GET">
-                                            <input type="hidden" name="search" value="{{ $search }}">
-                                            <div class="input-group">
-                                                <select name="perPage" class="select" id="perPage">
-                                                    <option value="5" {{ $perPage == 5 ? 'selected' : '' }}>5</option>
-                                                    <option value="10" {{ $perPage == 10 ? 'selected' : '' }}>10
-                                                    </option>
-                                                    <option value="25" {{ $perPage == 25 ? 'selected' : '' }}>25
-                                                    </option>
-                                                    <option value="50" {{ $perPage == 50 ? 'selected' : '' }}>50
-                                                    </option>
-                                                    <option value="100" {{ $perPage == 100 ? 'selected' : '' }}>100
-                                                    </option>
-                                                </select>
-                                                <button type="submit" class="btn btn-primary ml-3">Apply</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover table-striped">
-                                    <thead class="table-dark">
+                                <table class="table table-bordered table-hover table-striped" id="table">
+                                    <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Nama</th>
@@ -106,7 +79,7 @@
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    {{-- <tbody>
                                         @forelse ($users as $i => $user)
                                             <tr>
                                                 <td>{{ $i + $users->firstitem() }}</td>
@@ -148,16 +121,6 @@
                                                             </ul>
                                                         </div>
                                                     @endcanany
-                                                    {{-- @can('user.edit')
-                                                        <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    @endcan
-                                                    @can('user.delete')
-                                                        <form action="{{ route('user.destroy', $user->id) }}" method="post" class="d-inline">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                                        </form>
-                                                    @endcan --}}
                                                 </td>
                                             </tr>
                                         @empty
@@ -165,9 +128,9 @@
                                                 <td colspan="5" class="text-center">Data tidak ditemukan</td>
                                             </tr>
                                         @endforelse
-                                    </tbody>
+                                    </tbody> --}}
                                 </table>
-                                {{ $users->links() }}
+                                {{-- {{ $users->links() }} --}}
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -184,4 +147,72 @@
 @endsection
 
 @push('scripts')
+    <!-- jQuery -->
+    <script src="{{ asset('adminlte') }}/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    {{-- <script src="{{ asset('adminlte') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+    <!-- DataTables  & Plugins -->
+    <script src="{{ asset('adminlte') }}/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/jszip/jszip.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="{{ asset('adminlte') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script>
+        $(function() {
+            const table = $('#table').DataTable({
+                responsive: true,
+                serverSide: true,
+                processing: true,
+                lengthMenu: [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, 'All']
+                ],
+                ajax: {
+                    url: "{{ route('user.get-user-data-table') }}",
+                },
+                autoWidth: false,
+                columnDefs: [{
+                    targets: 0,
+                    orderable: false,
+                    searchable: false
+                }],
+                columns: [{
+                        data: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'name',
+                    },
+                    {
+                        data: 'email',
+                    },
+                    {
+                        data: 'roles',
+                    },
+                    {
+                        data: 'actions',
+                        orderable: false,
+                        searchable: false
+                    }
+                ],
+                buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                language: {
+                    emptyTable: "Tidak ada data yang tersedia di tabel ini",
+                    zeroRecords: "Tidak ada data yang ditemukan",
+                    info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri",
+                    infoEmpty: "Menampilkan 0 hingga 0 dari 0 entri",
+                    infoFiltered: "(disaring dari _MAX_ total entri)",
+                },
+                dom: `<<"d-flex justify-content-between"lf>Brt<"d-flex justify-content-between"ip>>`,
+            })
+        });
+    </script>
 @endpush

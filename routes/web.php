@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [DashboardController::class, 'index']);
 
     Route::resource('dashboard', DashboardController::class);
+    Route::get('user/get-user-data-table', [UserController::class, 'getUserDataTable'])->name('user.get-user-data-table');
     Route::resource('user', UserController::class);
     Route::resource('role', RoleController::class);
     Route::get('customer/get-customer-data-table', [CustomerController::class, 'getCustomerDataTable'])->name('customer.get-customer-data-table');

@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Tambah User</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Tambah User</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -53,18 +52,22 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('user.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('user.index') }}" class="btn btn-warning"><i class="fa fa-arrow-left"
+                                        aria-hidden="true"></i> Kembali</a>
                             </div>
                             <form action="{{ route('user.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama *</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                                    <label for="name" class="form-label">Nama <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ old('name') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email address *</label>
-                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="{{ old('email') }}">
+                                    <label for="email" class="form-label">Email address <span
+                                            class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                                        name="email" value="{{ old('email') }}">
                                 </div>
 
                                 <div class="form-group mb-3">
@@ -77,24 +80,30 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Password *</label>
+                                    <label for="exampleInputPassword1" class="form-label">Password <span
+                                            class="text-danger">*</span></label>
                                     <input type="password" class="form-control" id="exampleInputPassword1" name="password">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Konfirmasi Password *</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password_confirmation">
+                                    <label for="exampleInputPassword1" class="form-label">Konfirmasi Password <span
+                                            class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="exampleInputPassword1"
+                                        name="password_confirmation">
                                 </div>
+
 
                                 <div class="mb-3">
                                     <table>
                                         <tr>
                                             <td>Catatan: </td>
-                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
+                                            <td>Kolom yang bertanda bintang (<span class="text-danger">*</span>) wajib
+                                                diisi.</td>
                                         </tr>
                                         <tr>
                                             <td></td>
-                                            <td>Jika password dan konfirmasi password tidak diisi maka password otomatis jadi "password"</td>
+                                            <td>Jika password dan konfirmasi password tidak diisi maka password otomatis
+                                                jadi "password"</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -118,5 +127,4 @@
 @endsection
 
 @push('scripts')
-
 @endpush

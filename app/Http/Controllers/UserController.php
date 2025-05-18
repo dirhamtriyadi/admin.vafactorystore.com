@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -48,6 +49,31 @@ class UserController extends Controller
             'perPage' => $perPage,
             'search' => $search,
         ]);
+    }
+
+    public function getUserDataTable(Request $request)
+    {
+        $users = User::query();
+
+        if (!auth()->user()->hasPermissionTo('user.all-data')) {
+            $users->where('created_by', auth()->id())
+                ->latest();
+        } else {
+            $users->latest();
+        }
+
+        return DataTables::of($users)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($user) {
+                return view('user.actions', [
+                    'user' => $user,
+                ]);
+            })
+            ->addColumn('roles', function ($user) {
+                return $user->getRoleNames()->implode(', ');
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
     }
 
     /**
