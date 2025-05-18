@@ -52,7 +52,8 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('role.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('role.index') }}" class="btn btn-warning"><i class="fa fa-arrow-left"
+                                        aria-hidden="true"></i> Kembali</a>
                             </div>
                             <form action="{{ route('role.store') }}" method="POST">
                                 @csrf
@@ -73,8 +74,10 @@
 
                                 <div class="mb-3 card p-3">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="select-all-group-permission" id="select-all-group-permission">
-                                        <label for="select-all-group-permission" class="custom-control-label">Permission *</label>
+                                        <input type="checkbox" class="custom-control-input"
+                                            name="select-all-group-permission" id="select-all-group-permission">
+                                        <label for="select-all-group-permission" class="custom-control-label">Permission
+                                            *</label>
                                     </div>
                                     <div class="row">
                                         @foreach ($permissions as $permission)
@@ -157,7 +160,8 @@
 
             // Handle Check If All Checkboxes Select All Are Checked
             $(".select-all").each(function() {
-                var groupClass = $(this).attr("id").replace("-select-all", ""); // Get the base class for the group
+                var groupClass = $(this).attr("id").replace("-select-all",
+                    ""); // Get the base class for the group
                 var groupCheckboxes = $("." + groupClass);
                 var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
                 $(this).prop("checked", allChecked);
@@ -188,7 +192,8 @@
 
                 // Check If All Checkboxes Select All Are Checked
                 var groupSelectAllCheckboxes = $(".select-all");
-                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes.filter(":checked").length;
+                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes
+                    .filter(":checked").length;
                 $("#select-all-group-permission").prop("checked", allCheckedSelectAll);
             });
 
@@ -201,7 +206,8 @@
 
                 // Check If All Checkboxes Select All Are Checked
                 var groupSelectAllCheckboxes = $(".select-all");
-                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes.filter(":checked").length;
+                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes
+                    .filter(":checked").length;
                 $("#select-all-group-permission").prop("checked", allCheckedSelectAll);
             });
 
@@ -214,7 +220,8 @@
             // If any checkbox within the group is unchecked, uncheck the "Select All" checkbox
             $(".checkbox").not(".select-all").click(function() {
                 var groupPermissionCheckboxes = $(".checkbox").not(".select-all");
-                var allChecked = groupPermissionCheckboxes.length === groupPermissionCheckboxes.filter(":checked").length;
+                var allChecked = groupPermissionCheckboxes.length === groupPermissionCheckboxes.filter(
+                    ":checked").length;
                 $("#select-all-group-permission").prop("checked", allChecked);
             });
         });

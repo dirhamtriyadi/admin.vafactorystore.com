@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Edit Role</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Edit Role</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -53,14 +52,16 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('role.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('role.index') }}" class="btn btn-warning"><i class="fa fa-arrow-left"
+                                        aria-hidden="true"></i> Kembali</a>
                             </div>
                             <form action="{{ route('role.update', $role->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Nama *</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ? old('name') : $role->name }}">
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ old('name') ? old('name') : $role->name }}">
                                 </div>
 
                                 {{-- <div class="form-group mb-3">
@@ -74,8 +75,10 @@
 
                                 <div class="mb-3 card p-3">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="select-all-group-permission" id="select-all-group-permission">
-                                        <label for="select-all-group-permission" class="custom-control-label">Permission *</label>
+                                        <input type="checkbox" class="custom-control-input"
+                                            name="select-all-group-permission" id="select-all-group-permission">
+                                        <label for="select-all-group-permission" class="custom-control-label">Permission
+                                            *</label>
                                     </div>
                                     <div class="row">
                                         @foreach ($permissions as $permission)
@@ -159,7 +162,8 @@
 
             // Handle Check If All Checkboxes Select All Are Checked
             $(".select-all").each(function() {
-                var groupClass = $(this).attr("id").replace("-select-all", ""); // Get the base class for the group
+                var groupClass = $(this).attr("id").replace("-select-all",
+                ""); // Get the base class for the group
                 var groupCheckboxes = $("." + groupClass);
                 var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
                 $(this).prop("checked", allChecked);
@@ -190,7 +194,8 @@
 
                 // Check If All Checkboxes Select All Are Checked
                 var groupSelectAllCheckboxes = $(".select-all");
-                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes.filter(":checked").length;
+                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes
+                    .filter(":checked").length;
                 $("#select-all-group-permission").prop("checked", allCheckedSelectAll);
             });
 
@@ -203,7 +208,8 @@
 
                 // Check If All Checkboxes Select All Are Checked
                 var groupSelectAllCheckboxes = $(".select-all");
-                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes.filter(":checked").length;
+                var allCheckedSelectAll = groupSelectAllCheckboxes.length === groupSelectAllCheckboxes
+                    .filter(":checked").length;
                 $("#select-all-group-permission").prop("checked", allCheckedSelectAll);
             });
 
@@ -216,7 +222,8 @@
             // If any checkbox within the group is unchecked, uncheck the "Select All" checkbox
             $(".checkbox").not(".select-all").click(function() {
                 var groupPermissionCheckboxes = $(".checkbox").not(".select-all");
-                var allChecked = groupPermissionCheckboxes.length === groupPermissionCheckboxes.filter(":checked").length;
+                var allChecked = groupPermissionCheckboxes.length === groupPermissionCheckboxes.filter(
+                    ":checked").length;
                 $("#select-all-group-permission").prop("checked", allChecked);
             });
         });

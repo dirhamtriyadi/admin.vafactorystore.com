@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('dashboard', DashboardController::class);
     Route::get('user/get-user-data-table', [UserController::class, 'getUserDataTable'])->name('user.get-user-data-table');
     Route::resource('user', UserController::class);
+    Route::get('role/get-role-data-table', [RoleController::class, 'getRoleDataTable'])->name('role.get-role-data-table');
     Route::resource('role', RoleController::class);
     Route::get('customer/get-customer-data-table', [CustomerController::class, 'getCustomerDataTable'])->name('customer.get-customer-data-table');
     Route::resource('customer', CustomerController::class);
