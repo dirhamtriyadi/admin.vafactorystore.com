@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RawMaterialOut;
 use App\Models\RawMaterial;
+use Yajra\DataTables\Facades\DataTables;
 
 class RawMaterialOutController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
+        return view('raw-material-out.index');
+    }
 
+    public function getRawMaterialOutDataTable(Request $request)
+    {
         $rawMaterialsOut = RawMaterialOut::query();
 
         if (!auth()->user()->hasPermissionTo('raw-material-out.all-data')) {
@@ -25,23 +28,18 @@ class RawMaterialOutController extends Controller
             $rawMaterialsOut->latest();
         }
 
-        if ($request->has('search')) {
-            $rawMaterialsOut->where(function($q) use ($search) {
-                $q->where('raw_material_id', 'like', '%' . $search . '%')
-                    ->orWhere('quantity', 'like', '%' . $search . '%')
-                    ->orWhere('date', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhere('created_by', 'like', '%' . $search . '%');
-            });
-        }
-
-        $rawMaterialsOut = $rawMaterialsOut->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('raw-material-out.index', [
-            'rawMaterialsOut' => $rawMaterialsOut,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return DataTables::of($rawMaterialsOut)
+            ->addIndexColumn()
+            ->addColumn('name', function ($rawMaterialOut) {
+                return $rawMaterialOut->rawMaterial->name ?? '-';
+            })
+            ->addColumn('created_by', function ($rawMaterialOut) {
+                return $rawMaterialOut->createdBy->name ?? '-';
+            })
+            ->addColumn('actions', function ($rawMaterialOut) {
+                return view('raw-material-out.actions', ['rawMaterialOut' => $rawMaterialOut]);
+            })
+            ->make(true);
     }
 
     /**

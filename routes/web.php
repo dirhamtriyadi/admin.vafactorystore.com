@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('raw-material', RawMaterialController::class);
     Route::get('raw-material-in/get-raw-material-in-data-table', [RawMaterialInController::class, 'getRawMaterialInDataTable'])->name('raw-material-in.get-raw-material-in-data-table');
     Route::resource('raw-material-in', RawMaterialInController::class);
+    Route::get('raw-material-out/get-raw-material-out-data-table', [RawMaterialOutController::class, 'getRawMaterialOutDataTable'])->name('raw-material-out.get-raw-material-out-data-table');
     Route::resource('raw-material-out', RawMaterialOutController::class);
     Route::resource('profile', ProfileController::class);
 });

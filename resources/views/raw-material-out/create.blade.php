@@ -1,26 +1,25 @@
 @extends('templates.main')
 
 @push('styles')
-
 @endpush
 
 @section('content-header')
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Bahan Baku Keluar</h1>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Bahan Baku Keluar</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                        <li class="breadcrumb-item active">Fixed Layout</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                    <li class="breadcrumb-item active">Fixed Layout</li>
-                </ol>
-            </div>
-        </div>
-    </div><!-- /.container-fluid -->
-</section>
+        </div><!-- /.container-fluid -->
+    </section>
 @endsection
 
 @section('main-content')
@@ -53,30 +52,38 @@
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3">
-                                <a href="{{ route('raw-material-out.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('raw-material-out.index') }}" class="btn btn-warning"><i
+                                        class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a>
                             </div>
                             <form action="{{ route('raw-material-out.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Bahan Baku *</label>
+                                    <label for="name" class="form-label">Bahan Baku <span
+                                            class="text-danger">*</span></label>
                                     <select class="form-control select2" id="raw_material_id" name="raw_material_id">
                                         <option selected value="">-- Pilih Bahan Baku --</option>
                                         @foreach ($rawMaterials as $item => $i)
-                                            <option value="{{ $i->id }}" {{ old('raw_material_id') == $i->id ? 'selected' : ''  }}>{{ $i->name }}</option>
+                                            <option value="{{ $i->id }}"
+                                                {{ old('raw_material_id') == $i->id ? 'selected' : '' }}>{{ $i->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="qty" class="form-label">Qty *</label>
-                                    <input type="number" class="form-control" id="qty" name="qty" value="{{ old('qty') }}">
+                                    <label for="qty" class="form-label">Qty <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="qty" name="qty"
+                                        value="{{ old('qty') }}">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="date" class="form-label">Tanggal *</label>
+                                    <label for="date" class="form-label">Tanggal <span
+                                            class="text-danger">*</span></label>
                                     <div class="input-group date mb-3" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="date" value="{{ old('date') }}">
-                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <input type="text" class="form-control datetimepicker-input"
+                                            data-target="#reservationdate" name="date" value="{{ old('date') }}">
+                                        <div class="input-group-append" data-target="#reservationdate"
+                                            data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
@@ -116,5 +123,4 @@
 @endsection
 
 @push('scripts')
-
 @endpush
