@@ -190,10 +190,10 @@
                         data: 'description',
                     },
                     {
-                        data: 'date',
+                        data: 'created_by',
                     },
                     {
-                        data: 'created_by',
+                        data: 'date',
                     },
                     {
                         data: 'actions',
