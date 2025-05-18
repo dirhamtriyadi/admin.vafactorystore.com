@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RawMaterialIn;
 use App\Models\RawMaterial;
+use Yajra\DataTables\Facades\DataTables;
 
 class RawMaterialInController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
+        return view('raw-material-in.index');
+    }
 
+    public function getRawMaterialInDataTable(Request $request)
+    {
         $rawMaterialsIn = RawMaterialIn::query();
 
         if (!auth()->user()->hasPermissionTo('raw-material-in.all-data')) {
@@ -25,23 +28,18 @@ class RawMaterialInController extends Controller
             $rawMaterialsIn->latest();
         }
 
-        if ($request->has('search')) {
-            $rawMaterialsIn->where(function($q) use ($search) {
-                $q->where('raw_material_id', 'like', '%' . $search . '%')
-                    ->orWhere('quantity', 'like', '%' . $search . '%')
-                    ->orWhere('date', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhere('created_by', 'like', '%' . $search . '%');
-            });
-        }
-
-        $rawMaterialsIn = $rawMaterialsIn->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('raw-material-in.index', [
-            'rawMaterialsIn' => $rawMaterialsIn,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return DataTables::of($rawMaterialsIn)
+            ->addIndexColumn()
+            ->addColumn('name', function ($rawMaterialIn) {
+                return $rawMaterialIn->rawMaterial->name ?? '-';
+            })
+            ->addColumn('created_by', function ($rawMaterialIn) {
+                return $rawMaterialIn->createdBy->name ?? '-';
+            })
+            ->addColumn('actions', function ($rawMaterialIn) {
+                return view('raw-material-in.actions', ['rawMaterialIn' => $rawMaterialIn]);
+            })
+            ->make(true);
     }
 
     /**
@@ -65,7 +63,7 @@ class RawMaterialInController extends Controller
             'raw_material_id' => 'required|exists:raw_materials,id',
             'qty' => 'required|numeric',
             'date' => 'required',
-            'description' => 'required',
+            'description' => 'nullable',
         ]);
 
         $validatedData['created_by'] = auth()->user()->id;
@@ -110,7 +108,7 @@ class RawMaterialInController extends Controller
             'raw_material_id' => 'required',
             'qty' => 'required|numeric',
             'date' => 'required',
-            'description' => 'required',
+            'description' => 'nullable',
         ]);
 
         $validatedData['updated_by'] = auth()->user()->id;

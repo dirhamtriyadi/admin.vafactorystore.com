@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('makloon-transaction', MakloonTransactionController::class);
     Route::get('raw-material/get-raw-material-data-table', [RawMaterialController::class, 'getRawMaterialDataTable'])->name('raw-material.get-raw-material-data-table');
     Route::resource('raw-material', RawMaterialController::class);
+    Route::get('raw-material-in/get-raw-material-in-data-table', [RawMaterialInController::class, 'getRawMaterialInDataTable'])->name('raw-material-in.get-raw-material-in-data-table');
     Route::resource('raw-material-in', RawMaterialInController::class);
     Route::resource('raw-material-out', RawMaterialOutController::class);
     Route::resource('profile', ProfileController::class);
