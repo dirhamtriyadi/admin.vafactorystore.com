@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\RawMaterial;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class RawMaterialController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->perPage ?? 10;
-        $search = $request->search;
+        return view('raw-material.index');
+    }
 
+    public function getRawMaterialDataTable(Request $request)
+    {
         $rawMaterials = RawMaterial::query();
 
         if (!auth()->user()->hasPermissionTo('raw-material.all-data')) {
@@ -24,23 +27,15 @@ class RawMaterialController extends Controller
             $rawMaterials->latest();
         }
 
-        if ($request->has('search')) {
-            $rawMaterials->where(function($q) use ($search) {
-                $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('unit', 'like', '%' . $search . '%')
-                    ->orWhere('qty', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhere('created_by', 'like', '%' . $search . '%');
-            });
-        }
-
-        $rawMaterials = $rawMaterials->paginate($perPage)->withQueryString('perPage=' . $perPage, 'search=' . $search);
-
-        return view('raw-material.index', [
-            'rawMaterials' => $rawMaterials,
-            'perPage' => $perPage,
-            'search' => $search,
-        ]);
+        return DataTables::of($rawMaterials)
+            ->addIndexColumn()
+            ->addColumn('actions', function ($rawMaterial) {
+                return view('raw-material.actions', ['rawMaterial' => $rawMaterial]);
+            })
+            ->addColumn('created_by', function ($rawMaterial) {
+                return $rawMaterial->createdBy->name ?? '-';
+            })
+            ->make(true);
     }
 
     /**
@@ -60,7 +55,7 @@ class RawMaterialController extends Controller
             'name' => 'required|unique:raw_materials|max:255',
             'unit' => 'required',
             'qty' => 'required|numeric',
-            'description' => 'required',
+            'description' => 'nullable',
         ]);
 
         $validatedData['created_by'] = auth()->user()->id;
@@ -100,7 +95,7 @@ class RawMaterialController extends Controller
             'name' => 'required|unique:raw_materials,name,' . $id . '|max:255',
             'unit' => 'required',
             'qty' => 'required|numeric',
-            'description' => 'required',
+            'description' => 'nullable',
         ]);
 
         $validatedData['updated_by'] = auth()->user()->id;
