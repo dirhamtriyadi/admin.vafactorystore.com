@@ -59,7 +59,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama *</label>
+                                    <label for="name" class="form-label">Nama <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="name" name="name"
                                         value="{{ old('name') ? old('name') : $role->name }}">
                                 </div>
@@ -119,14 +119,7 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <table>
-                                        <tr>
-                                            <td>Catatan: </td>
-                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                @include('templates.partials.input.required')
 
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -163,7 +156,7 @@
             // Handle Check If All Checkboxes Select All Are Checked
             $(".select-all").each(function() {
                 var groupClass = $(this).attr("id").replace("-select-all",
-                ""); // Get the base class for the group
+                    ""); // Get the base class for the group
                 var groupCheckboxes = $("." + groupClass);
                 var allChecked = groupCheckboxes.length === groupCheckboxes.filter(":checked").length;
                 $(this).prop("checked", allChecked);

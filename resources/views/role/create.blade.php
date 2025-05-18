@@ -58,7 +58,7 @@
                             <form action="{{ route('role.store') }}" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">Nama *</label>
+                                    <label for="name" class="form-label">Nama <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="name" name="name"
                                         value="{{ old('name') }}">
                                 </div>
@@ -117,14 +117,7 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <table>
-                                        <tr>
-                                            <td>Catatan: </td>
-                                            <td>Kolom yang bertanda bintang (*) wajib diisi.</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                @include('templates.partials.input.required')
 
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
